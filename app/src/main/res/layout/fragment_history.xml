@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/history_toolbar"
-            android:textColor="#5C9E2B"
+            android:textColor="@color/green2"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>

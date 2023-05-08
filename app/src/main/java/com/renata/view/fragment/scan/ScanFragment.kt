@@ -14,10 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.dicoding.storyapp.utils.createCustomTempFile
-import com.dicoding.storyapp.utils.rotateFile
-import com.dicoding.storyapp.utils.uriToFile
 import com.renata.databinding.FragmentScanBinding
+import com.renata.utils.createCustomTempFile
+import com.renata.utils.rotateFile
+import com.renata.utils.uriToFile
 import java.io.File
 
 class ScanFragment : Fragment() {

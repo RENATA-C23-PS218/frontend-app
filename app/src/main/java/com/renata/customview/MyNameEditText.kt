@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.customview
+package com.renata.customview
 
 import android.content.Context
 import android.graphics.drawable.Drawable

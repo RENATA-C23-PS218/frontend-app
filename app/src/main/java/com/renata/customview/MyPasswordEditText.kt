@@ -1,12 +1,12 @@
-package com.dicoding.storyapp.customview
+package com.renata.customview
 
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import com.dicoding.storyapp.utils.passwordValidation
 import com.google.android.material.textfield.TextInputEditText
 import com.renata.R
+import com.renata.utils.passwordValidation
 
 class MyPasswordEditText : TextInputEditText {
 

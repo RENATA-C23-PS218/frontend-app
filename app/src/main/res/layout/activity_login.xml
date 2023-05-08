@@ -35,7 +35,7 @@
             android:alpha="0"
             android:text="@string/login_page"
             android:textAlignment="center"
-            android:textColor="#466F1E"
+            android:textColor="@color/green1"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/errorEmail">
 
-            <com.dicoding.storyapp.customview.MyEmailEditText
+            <com.renata.customview.MyEmailEditText
                 android:id="@+id/ed_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -134,7 +134,7 @@
             app:layout_constraintTop_toBottomOf="@+id/errorPass"
             app:passwordToggleEnabled="true">
 
-            <com.dicoding.storyapp.customview.MyPasswordEditText
+            <com.renata.customview.MyPasswordEditText
                 android:id="@+id/ed_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,7 +153,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"
             android:alpha="0"
-            android:backgroundTint="#466F1E"
             android:text="@string/login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -181,9 +180,10 @@
                 android:id="@+id/createAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
                 android:text="@string/register_intent"
                 android:textAlignment="center"
-                android:textColor="#466F1E"
+                android:textColor="@color/green1"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.utils
+package com.renata.utils
 
 import android.app.AlarmManager
 import android.app.NotificationChannel

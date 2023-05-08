@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.utils
+package com.renata.utils
 
 import android.content.ContentResolver
 import android.content.Context

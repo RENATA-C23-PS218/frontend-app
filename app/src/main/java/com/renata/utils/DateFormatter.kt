@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.utils
+package com.renata.utils
 
 import java.time.Instant
 import java.time.ZoneId

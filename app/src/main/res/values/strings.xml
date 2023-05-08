@@ -9,8 +9,11 @@
     <string name="camera_button">Camera</string>
     <string name="gallery_button">Gallery</string>
     <string name="detect_button">Detect</string>
+    <string name="logout_button">Logout</string>
+    <string name="setting_button">Setting</string>
     <string name="notification_enabled_button">Notification Enabled</string>
     <string name="notification_disabled_button">Notification Disabled</string>
+    <string name="change_language_button">Change Language</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Character count should be at least 8</string>
@@ -18,6 +21,7 @@
     <string name="account_toolbar">Account</string>
     <string name="history_toolbar">History</string>
     <string name="scanner_toolbar">Scanner</string>
+    <string name="setting_toolbar">Setting</string>
     <!-- INTENT TEXT -->
     <string name="want_register">Don\'t have an account?</string>
     <string name="register_intent">Register here</string>
@@ -35,4 +39,9 @@
     <string name="otp_verification_page">OTP Verification</string>
     <string name="otp_sent">The 4 digit code has been sent to</string>
     <string name="otp_req">Enter the code to verification</string>
+    <!-- PLACEHOLDER -->
+    <string name="holder_name">Username</string>
+    <string name="holder_email">User Email</string>
+    <!-- MESSAGE -->
+    <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now.</string>
 </resources>

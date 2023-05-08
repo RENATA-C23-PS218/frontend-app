@@ -1,4 +1,4 @@
-package com.dicoding.storyapp.customview
+package com.renata.customview
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -9,8 +9,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import com.dicoding.storyapp.utils.emailValidation
 import com.renata.R
+import com.renata.utils.emailValidation
 
 class MyEmailEditText : AppCompatEditText, View.OnTouchListener {
 

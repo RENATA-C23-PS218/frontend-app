@@ -11,10 +11,10 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.storyapp.utils.emailValidation
-import com.dicoding.storyapp.utils.passwordValidation
 import com.renata.R
 import com.renata.databinding.ActivityRegisterBinding
+import com.renata.utils.emailValidation
+import com.renata.utils.passwordValidation
 import com.renata.view.activity.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {

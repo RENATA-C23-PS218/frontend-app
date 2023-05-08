@@ -36,4 +36,6 @@
     <string name="otp_verification_page">OTP Verification</string>
     <string name="otp_sent">The 4 digit code has been sent to</string>
     <string name="otp_req">Enter the code to verification</string>
+    <string name="holder_name">Nama User</string>
+    <string name="holder_email">Email User</string>
 </resources>
