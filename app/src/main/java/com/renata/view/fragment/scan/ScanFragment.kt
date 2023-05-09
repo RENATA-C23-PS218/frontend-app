@@ -38,11 +38,11 @@ class ScanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showLoading(false)
-
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
         scanBinding.detectButton.setOnClickListener {}
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -64,6 +64,7 @@ class ScanFragment : Fragment() {
             launcherIntentCamera.launch(intent)
         }
     }
+
 
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()

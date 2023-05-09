@@ -57,4 +57,5 @@
     <string name="auth_success">Authentication Success</string>
     <string name="auth_to_login">Congratulations! Your account has been successfully created. Please login to get started</string>
     <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now.</string>
+    <string name="permission_denied">Permission Denied</string>
 </resources>

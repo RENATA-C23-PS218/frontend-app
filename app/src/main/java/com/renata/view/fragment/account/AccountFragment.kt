@@ -45,6 +45,7 @@ class AccountFragment : Fragment() {
         accountBinding.logoutButton.setOnClickListener {
             val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
             startActivity(intentToSplash)
+            getActivity()?.finish()
         }
     }
 
