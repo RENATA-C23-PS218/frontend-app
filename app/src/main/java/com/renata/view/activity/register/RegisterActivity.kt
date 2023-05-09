@@ -2,19 +2,23 @@ package com.renata.view.activity.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
 import com.renata.databinding.ActivityRegisterBinding
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
+import com.renata.view.activity.authentication.AuthenticationActivity
 import com.renata.view.activity.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
@@ -33,6 +37,7 @@ class RegisterActivity : AppCompatActivity() {
         emailET()
         passwordET()
         loginET()
+        registerButton()
     }
 
     private fun nameET() {
@@ -81,6 +86,65 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun registerButton() {
+        registerBinding.registerButton.setOnClickListener {
+            showLoading(true)
+            val name = registerBinding.edRegisterName.text.toString()
+            val email = registerBinding.edRegisterEmail.text.toString()
+            val password = registerBinding.edRegisterPassword.text.toString()
+            when {
+                name.isEmpty() && email.isEmpty() && password.isEmpty() -> {
+                    showLoading(false)
+                    insertName()
+                    insertEmail()
+                    insertPass()
+                }
+                name.isEmpty() -> {
+                    showLoading(false)
+                    insertName()
+                }
+                email.isEmpty() -> {
+                    showLoading(false)
+                    insertEmail()
+                }
+                password.isEmpty() -> {
+                    showLoading(false)
+                    insertPass()
+                }
+                else -> {
+                    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(
+                            name
+                        )
+                    ) {
+                        if (passwordValidation(password) && emailValidation(email)) {
+                            //register(name, email, password)
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_success),
+                                getString(R.string.regis_to_auth)
+                            )
+                            { login() }
+                        } else {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_fail),
+                                getString(R.string.regis_fail_cause2)
+                            )
+                            { }
+                        }
+                    } else {
+                        showLoading(false)
+                        showAlert(
+                            getString(R.string.regis_fail),
+                            getString(R.string.regis_fail_cause1)
+                        )
+                        { finish() }
+                    }
+                }
+            }
+        }
     }
 
     private fun passwordET() {
@@ -167,10 +231,49 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    private fun showAlert(
+        title: String,
+        message: String,
+        positiveAction: (dialog: DialogInterface) -> Unit
+    ) {
+        AlertDialog.Builder(this).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                positiveAction.invoke(dialog)
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
+    }
+
+    private fun insertEmail() {
+        registerBinding.errorEmail.visibility = View.VISIBLE
+        registerBinding.errorEmail.text = getString(R.string.insert_email)
+    }
+
+    private fun insertPass() {
+        registerBinding.errorPass.visibility = View.VISIBLE
+        registerBinding.errorPass.text = getString(R.string.insert_pass)
+    }
+
+    private fun insertName() {
+        registerBinding.errorName.visibility = View.VISIBLE
+        registerBinding.errorName.text = getString(R.string.insert_name)
+    }
+
+    private fun login() {
+        val moveToAuth = Intent(this@RegisterActivity, AuthenticationActivity::class.java)
+        startActivity(moveToAuth)
+        finish()
+    }
+
     private fun loginET() {
         registerBinding.loginAccount.setOnClickListener {
-            val moveToLogin = Intent(this, LoginActivity::class.java)
+            val moveToLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(moveToLogin)
+            finish()
         }
     }
 

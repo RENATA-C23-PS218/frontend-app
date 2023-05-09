@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.renata.databinding.FragmentAccountBinding
 import com.renata.view.activity.setting.SettingActivity
+import com.renata.view.activity.splash.SplashScreenActivity
 
 class AccountFragment : Fragment() {
 
@@ -25,7 +26,8 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        accountBinding.settingButton.setOnClickListener { goToSetting() }
+        goToSetting()
+        logoutAccount()
     }
 
     override fun onDestroyView() {
@@ -33,9 +35,18 @@ class AccountFragment : Fragment() {
         _binding = null
     }
 
+    private fun logoutAccount() {
+        accountBinding.logoutButton.setOnClickListener {
+            val moveToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
+            startActivity(moveToSplash)
+        }
+    }
+
     private fun goToSetting() {
-        val intentToSetting = Intent(requireContext(), SettingActivity::class.java)
-        startActivity(intentToSetting)
+        accountBinding.settingButton.setOnClickListener {
+            val intentToSetting = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intentToSetting)
+        }
     }
 
 }

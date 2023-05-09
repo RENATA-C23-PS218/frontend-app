@@ -43,5 +43,16 @@
     <string name="holder_name">Username</string>
     <string name="holder_email">User Email</string>
     <!-- MESSAGE -->
+    <string name="insert_email">Please insert your Email</string>
+    <string name="insert_pass">Please insert your Password</string>
+    <string name="insert_name">Please insert your Name</string>
+    <string name="login_fail">Login Failed</string>
+    <string name="login_fail_cause1">Invalid Email/Password</string>
+    <string name="login_fail_cause2">Make sure Email and Password are filled in correctly</string>
+    <string name="regis_fail">Registration Failed</string>
+    <string name="regis_success">Registration Success</string>
+    <string name="regis_fail_cause1">Sorry, there was an error creating your account. Please try again later.</string>
+    <string name="regis_fail_cause2">Sorry, your registration failed. Make sure all the information entered is correct and complete.</string>
+    <string name="regis_to_auth">Congratulations! Your account has been successfully created. Please authentication your account first to get started</string>
     <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now.</string>
 </resources>
