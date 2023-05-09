@@ -119,7 +119,6 @@ class RegisterActivity : AppCompatActivity() {
                         )
                     ) {
                         if (passwordValidation(password) && emailValidation(email)) {
-                            //register(name, email, password)
                             showLoading(false)
                             showAlert(
                                 getString(R.string.regis_success),

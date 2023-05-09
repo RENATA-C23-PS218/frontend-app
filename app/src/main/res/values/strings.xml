@@ -54,5 +54,7 @@
     <string name="regis_fail_cause1">Sorry, there was an error creating your account. Please try again later.</string>
     <string name="regis_fail_cause2">Sorry, your registration failed. Make sure all the information entered is correct and complete.</string>
     <string name="regis_to_auth">Congratulations! Your account has been successfully created. Please authentication your account first to get started</string>
+    <string name="auth_success">Authentication Success</string>
+    <string name="auth_to_login">Congratulations! Your account has been successfully created. Please login to get started</string>
     <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now.</string>
 </resources>
