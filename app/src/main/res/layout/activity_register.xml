@@ -35,7 +35,7 @@
             android:alpha="0"
             android:text="@string/register_page"
             android:textAlignment="center"
-            android:textColor="@color/green1"
+            android:textColor="?attr/colorPrimary"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -194,6 +194,7 @@
             android:layout_marginEnd="32dp"
             android:alpha="0"
             android:text="@string/register_button"
+            android:contentDescription="@string/register_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditTextLayout" />
@@ -223,7 +224,7 @@
                 android:layout_marginStart="3dp"
                 android:text="@string/login_intent"
                 android:textAlignment="center"
-                android:textColor="@color/green1"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>

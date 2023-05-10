@@ -24,7 +24,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
+        android:background="?attr/colorPrimaryVariant"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/scanner_toolbar"
-            android:textColor="@color/green2"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -86,6 +86,7 @@
             android:elevation="2dp"
             android:scaleType="fitCenter"
             android:text="@string/camera_button"
+            android:contentDescription="@string/camera_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
 
@@ -96,6 +97,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
             android:text="@string/gallery_button"
+            android:contentDescription="@string/gallery_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
 
@@ -107,6 +109,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
             android:text="@string/detect_button"
+            android:contentDescription="@string/detect_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cameraButton" />

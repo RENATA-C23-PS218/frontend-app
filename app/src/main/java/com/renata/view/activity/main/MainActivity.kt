@@ -2,6 +2,7 @@ package com.renata.view.activity.main
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,8 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-
-        val activeColor = ContextCompat.getColor(this, R.color.green_bottomNav)
+        val colorPrimary = TypedValue()
+        theme.resolveAttribute(android.R.attr.colorPrimary, colorPrimary, true)
+        val activeColor = colorPrimary.data
         val inactiveColor = ContextCompat.getColor(this, R.color.grey_bottomNav)
 
         val colorStateList = ColorStateList(

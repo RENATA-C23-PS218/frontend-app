@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
+        android:background="?attr/colorPrimaryVariant"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Update Profile"
-            android:textColor="@color/green2"
+            android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -56,6 +56,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:text="Change Avatar"
+            android:contentDescription="Change Avatar"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="First Name"
-            android:textSize="22sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
@@ -88,7 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:hint="ex : John"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -97,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Phone"
-            android:textSize="22sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/lNameEditTextLayout" />
 
@@ -117,7 +119,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:inputType="phone"
+                android:hint="ex : 085718620532"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -126,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Address"
-            android:textSize="22sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/phoneEditTextLayout" />
 
@@ -146,7 +150,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:hint="ex : Cimahi, Jawa Barat"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -156,7 +161,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="Last Name"
-            android:textSize="22sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/fNameEditTextLayout" />
 
@@ -176,7 +181,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:hint="ex : Doe"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -187,6 +193,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"
             android:text="Save Changes"
+            android:contentDescription="Save Changes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressEditTextLayout" />

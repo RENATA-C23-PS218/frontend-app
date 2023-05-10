@@ -35,7 +35,7 @@
             android:alpha="0"
             android:text="Forgot Password"
             android:textAlignment="center"
-            android:textColor="@color/green1"
+            android:textColor="?attr/colorPrimary"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,6 +99,7 @@
             android:layout_marginEnd="32dp"
             android:alpha="0"
             android:text="@string/send_otp_button"
+            android:contentDescription="@string/send_otp_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout" />
