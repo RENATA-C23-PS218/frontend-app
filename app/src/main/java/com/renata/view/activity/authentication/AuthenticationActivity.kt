@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
 import com.renata.databinding.ActivityAuthenticationBinding
 import com.renata.view.activity.login.LoginActivity
-import com.renata.view.activity.main.MainActivity
 
 class AuthenticationActivity : AppCompatActivity() {
 
@@ -22,10 +21,22 @@ class AuthenticationActivity : AppCompatActivity() {
 
         showLoading(false)
         verifyButton()
+        resendOTP()
+    }
+
+    private fun resendOTP() {
+        authenticationBinding.resendOTP.setOnClickListener {
+            showLoading(false)
+            showAlert(
+                getString(R.string.resend_otp_req),
+                getString(R.string.resend_otp_res)
+            )
+            { }
+        }
     }
 
     private fun verifyButton() {
-        authenticationBinding.loginButton.setOnClickListener {
+        authenticationBinding.verifyButton.setOnClickListener {
             showLoading(false)
             showAlert(
                 getString(R.string.auth_success),

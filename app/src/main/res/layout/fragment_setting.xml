@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.setting.SettingActivity">
+    tools:context=".view.fragment.settings.SettingFragment">
 
     <View
         android:id="@+id/guideline_top_margin"

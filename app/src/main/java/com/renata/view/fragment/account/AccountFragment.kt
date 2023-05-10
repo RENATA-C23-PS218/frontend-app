@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.renata.R
 import com.renata.databinding.FragmentAccountBinding
-import com.renata.view.activity.setting.SettingActivity
 import com.renata.view.activity.splash.SplashScreenActivity
+import com.renata.view.fragment.profile.ProfileFragment
+import com.renata.view.fragment.settings.SettingFragment
 
 class AccountFragment : Fragment() {
 
@@ -26,7 +28,18 @@ class AccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         goToSetting()
+        changeProfile()
         logout()
+    }
+
+    private fun changeProfile() {
+        accountBinding.editProfile.setOnClickListener {
+            val profileFragment = ProfileFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_container, profileFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onDestroyView() {
@@ -36,8 +49,11 @@ class AccountFragment : Fragment() {
 
     private fun goToSetting() {
         accountBinding.settingButton.setOnClickListener {
-            val intentToSetting = Intent(requireContext(), SettingActivity::class.java)
-            startActivity(intentToSetting)
+            val settingFragment = SettingFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_container, settingFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -45,7 +61,7 @@ class AccountFragment : Fragment() {
         accountBinding.logoutButton.setOnClickListener {
             val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
             startActivity(intentToSplash)
-            getActivity()?.finish()
+            activity?.finish()
         }
     }
 

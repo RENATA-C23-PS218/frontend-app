@@ -18,6 +18,7 @@ import com.renata.R
 import com.renata.databinding.ActivityLoginBinding
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
+import com.renata.view.activity.ForgotPassActivity
 import com.renata.view.activity.main.MainActivity
 import com.renata.view.activity.register.RegisterActivity
 
@@ -37,6 +38,15 @@ class LoginActivity : AppCompatActivity() {
         passwordET()
         registerET()
         loginButton()
+        forgotPassET()
+    }
+
+    private fun forgotPassET() {
+        loginBinding.forgotPassword.setOnClickListener {
+            showLoading(true)
+            val moveToForgotPass = Intent(this, ForgotPassActivity::class.java)
+            startActivity(moveToForgotPass)
+        }
     }
 
     private fun emailET() {
@@ -121,6 +131,9 @@ class LoginActivity : AppCompatActivity() {
         val passwordInput =
             ObjectAnimator.ofFloat(loginBinding.passwordEditTextLayout, View.ALPHA, 1f)
                 .setDuration(500)
+        val forgotPass =
+            ObjectAnimator.ofFloat(loginBinding.forgotPassword, View.ALPHA, 1f)
+                .setDuration(500)
         val login =
             ObjectAnimator.ofFloat(loginBinding.loginButton, View.ALPHA, 1f).setDuration(500)
         val create =
@@ -134,6 +147,7 @@ class LoginActivity : AppCompatActivity() {
                 emailInput,
                 password,
                 passwordInput,
+                forgotPass,
                 login,
                 create
             )

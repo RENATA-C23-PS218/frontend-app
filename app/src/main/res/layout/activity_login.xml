@@ -156,6 +156,17 @@
             android:text="@string/login_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+
+        <TextView
+            android:id="@+id/forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            android:text="@string/forgot_pass"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/passwordEditTextLayout"
             app:layout_constraintTop_toBottomOf="@+id/passwordEditTextLayout" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

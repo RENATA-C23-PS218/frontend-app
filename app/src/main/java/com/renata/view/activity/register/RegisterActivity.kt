@@ -33,25 +33,32 @@ class RegisterActivity : AppCompatActivity() {
         showLoading(false)
         setupView()
         setupAnimation()
-        nameET()
         emailET()
         passwordET()
+        confirmPasswordET()
         loginET()
         registerButton()
     }
 
-    private fun nameET() {
-        val myRegisterNameET = registerBinding.edRegisterName
-        myRegisterNameET.addTextChangedListener(object : TextWatcher {
+    private fun confirmPasswordET() {
+        val myRegisterConPassET = registerBinding.edRegisterConfirmPassword
+        myRegisterConPassET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val name = registerBinding.edRegisterName.text.toString()
-                if (name.isNotEmpty()) {
-                    registerBinding.errorName.visibility = View.GONE
+                val password = registerBinding.edRegisterPassword.text.toString()
+                val conPass = registerBinding.edRegisterConfirmPassword.text.toString()
+                if (conPass.isEmpty()) {
+                    registerBinding.errorConfirmPass.visibility = View.GONE
                 } else {
-                    registerBinding.errorName.visibility = View.VISIBLE
+                    if (conPass == password) {
+                        registerBinding.errorConfirmPass.visibility = View.GONE
+                    } else {
+                        registerBinding.errorConfirmPass.visibility = View.VISIBLE
+                        registerBinding.errorConfirmPass.text =
+                            getString(R.string.error_confirm_password)
+                    }
                 }
             }
 
@@ -91,19 +98,19 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerButton() {
         registerBinding.registerButton.setOnClickListener {
             showLoading(true)
-            val name = registerBinding.edRegisterName.text.toString()
+            val confirmPass = registerBinding.edRegisterConfirmPassword.text.toString()
             val email = registerBinding.edRegisterEmail.text.toString()
             val password = registerBinding.edRegisterPassword.text.toString()
             when {
-                name.isEmpty() && email.isEmpty() && password.isEmpty() -> {
+                confirmPass.isEmpty() && email.isEmpty() && password.isEmpty() -> {
                     showLoading(false)
-                    insertName()
                     insertEmail()
                     insertPass()
+                    insertConfirmPAss()
                 }
-                name.isEmpty() -> {
+                confirmPass.isEmpty() -> {
                     showLoading(false)
-                    insertName()
+                    insertConfirmPAss()
                 }
                 email.isEmpty() -> {
                     showLoading(false)
@@ -115,36 +122,42 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 else -> {
                     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(
-                            name
+                            confirmPass
                         )
                     ) {
                         if (passwordValidation(password) && emailValidation(email)) {
-                            showLoading(false)
-                            showAlert(
-                                getString(R.string.regis_success),
-                                getString(R.string.regis_to_auth)
-                            )
-                            { login() }
+                            if (confirmPass == password) {
+                                showLoading(false)
+                                showAlert(
+                                    getString(R.string.regis_success),
+                                    getString(R.string.regis_to_auth)
+                                ) { login() }
+                            } else {
+                                showLoading(false)
+                                showAlert(
+                                    getString(R.string.regis_fail),
+                                    getString(R.string.regis_fail_cause3)
+                                ) { }
+                            }
                         } else {
                             showLoading(false)
                             showAlert(
                                 getString(R.string.regis_fail),
                                 getString(R.string.regis_fail_cause2)
-                            )
-                            { }
+                            ) { }
                         }
                     } else {
                         showLoading(false)
                         showAlert(
                             getString(R.string.regis_fail),
                             getString(R.string.regis_fail_cause1)
-                        )
-                        { finish() }
+                        ) { finish() }
                     }
                 }
             }
         }
     }
+
 
     private fun passwordET() {
         val myRegisterPasswordET = registerBinding.edRegisterPassword
@@ -183,7 +196,7 @@ class RegisterActivity : AppCompatActivity() {
             )
         }
         supportActionBar?.hide()
-        registerBinding.errorName.visibility = View.GONE
+        registerBinding.errorConfirmPass.visibility = View.GONE
         registerBinding.errorEmail.visibility = View.GONE
         registerBinding.errorPass.visibility = View.GONE
     }
@@ -193,10 +206,11 @@ class RegisterActivity : AppCompatActivity() {
             ObjectAnimator.ofFloat(registerBinding.titleTextView, View.ALPHA, 1f).setDuration(500)
         val title2 =
             ObjectAnimator.ofFloat(registerBinding.titleTextView2, View.ALPHA, 1f).setDuration(500)
-        val name =
-            ObjectAnimator.ofFloat(registerBinding.nameTextView, View.ALPHA, 1f).setDuration(500)
-        val nameInput =
-            ObjectAnimator.ofFloat(registerBinding.nameEditTextLayout, View.ALPHA, 1f)
+        val confirmPass =
+            ObjectAnimator.ofFloat(registerBinding.confirmPasswordTextView, View.ALPHA, 1f)
+                .setDuration(500)
+        val confirmPassInput =
+            ObjectAnimator.ofFloat(registerBinding.confirmPasswordEditTextLayout, View.ALPHA, 1f)
                 .setDuration(500)
         val email =
             ObjectAnimator.ofFloat(registerBinding.emailTextView, View.ALPHA, 1f).setDuration(500)
@@ -217,12 +231,12 @@ class RegisterActivity : AppCompatActivity() {
             playSequentially(
                 title,
                 title2,
-                name,
-                nameInput,
                 email,
                 emailInput,
                 password,
                 passwordInput,
+                confirmPass,
+                confirmPassInput,
                 register,
                 login
             )
@@ -257,9 +271,9 @@ class RegisterActivity : AppCompatActivity() {
         registerBinding.errorPass.text = getString(R.string.insert_pass)
     }
 
-    private fun insertName() {
-        registerBinding.errorName.visibility = View.VISIBLE
-        registerBinding.errorName.text = getString(R.string.insert_name)
+    private fun insertConfirmPAss() {
+        registerBinding.errorConfirmPass.visibility = View.VISIBLE
+        registerBinding.errorConfirmPass.text = "Please insert your Password"
     }
 
     private fun login() {
