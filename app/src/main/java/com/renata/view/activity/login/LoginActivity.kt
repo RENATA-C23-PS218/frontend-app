@@ -18,7 +18,7 @@ import com.renata.R
 import com.renata.databinding.ActivityLoginBinding
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
-import com.renata.view.activity.ForgotPassActivity
+import com.renata.view.activity.forgotpass.ForgotPassActivity
 import com.renata.view.activity.main.MainActivity
 import com.renata.view.activity.register.RegisterActivity
 
@@ -43,9 +43,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun forgotPassET() {
         loginBinding.forgotPassword.setOnClickListener {
-            showLoading(true)
             val moveToForgotPass = Intent(this, ForgotPassActivity::class.java)
             startActivity(moveToForgotPass)
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
         }
     }
 
@@ -159,6 +159,7 @@ class LoginActivity : AppCompatActivity() {
         loginBinding.createAccount.setOnClickListener {
             val moveToRegister = Intent(this, RegisterActivity::class.java)
             startActivity(moveToRegister)
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
         }
     }
 
@@ -182,6 +183,10 @@ class LoginActivity : AppCompatActivity() {
                         if (passwordValidation(password) && emailValidation(email)) {
                             val moveToMain = Intent(this, MainActivity::class.java)
                             startActivity(moveToMain)
+                            overridePendingTransition(
+                                R.anim.slide_out_bottom,
+                                R.anim.slide_in_bottom
+                            )
                         } else {
                             showAlert(
                                 getString(R.string.login_fail),

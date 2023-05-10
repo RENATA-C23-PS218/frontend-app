@@ -74,11 +74,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(mainBinding.layoutContainer.id, fragment, fragment.javaClass.simpleName)
-            .addToBackStack(null)
-            .commit()
+        supportFragmentManager.beginTransaction().apply {
+            setCustomAnimations(
+                R.anim.slide_in,
+                R.anim.slide_out
+            )
+            replace(mainBinding.layoutContainer.id, fragment, fragment.javaClass.simpleName)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private fun scannerButton() {

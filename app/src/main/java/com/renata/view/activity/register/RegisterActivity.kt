@@ -286,7 +286,8 @@ class RegisterActivity : AppCompatActivity() {
         registerBinding.loginAccount.setOnClickListener {
             val moveToLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(moveToLogin)
-            finish()
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+            finishAffinity()
         }
     }
 

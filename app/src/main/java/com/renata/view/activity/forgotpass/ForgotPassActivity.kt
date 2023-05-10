@@ -1,4 +1,4 @@
-package com.renata.view.activity
+package com.renata.view.activity.forgotpass
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator

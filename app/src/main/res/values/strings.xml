@@ -15,11 +15,11 @@
     <string name="notification_enabled_button">Notification Enabled</string>
     <string name="notification_disabled_button">Notification Disabled</string>
     <string name="change_language_button">Change Language</string>
+    <string name="save_changes_button">Save Changes</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Character count should be at least 8</string>
     <string name="error_confirm_password">"Password and Confirm Password must match</string>
-
     <!-- TOOLBAR TEXT -->
     <string name="account_toolbar">Account</string>
     <string name="history_toolbar">History</string>
@@ -45,6 +45,8 @@
     <string name="otp_verification_page">OTP Verification</string>
     <string name="otp_sent">The 4 digit code has been sent to</string>
     <string name="otp_req">Enter the code to verification</string>
+    <string name="forgot_pass_page">Forgot Password</string>
+    <string name="forgot_pass_req">Enter your Email</string>
     <!-- PLACEHOLDER -->
     <string name="holder_name">Username</string>
     <string name="holder_email">User Email</string>
@@ -67,6 +69,4 @@
     <string name="permission_denied">Permission Denied</string>
     <string name="resend_otp_req">Resend OTP Request</string>
     <string name="resend_otp_res">The OTP has been sent again, please check your email</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -54,6 +54,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
         settingBinding.backButton.setOnClickListener {
             val accountFragment = AccountFragment()
             parentFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
                 .replace(R.id.layout_container, accountFragment)
                 .addToBackStack(null)
                 .commit()

@@ -35,34 +35,41 @@ class AccountFragment : Fragment() {
     private fun changeProfile() {
         accountBinding.editProfile.setOnClickListener {
             val profileFragment = ProfileFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.layout_container, profileFragment)
-                .addToBackStack(null)
-                .commit()
+            replaceFragment(profileFragment)
+        }
+    }
+
+    private fun goToSetting() {
+        accountBinding.settingButton.setOnClickListener {
+            val settingFragment = SettingFragment()
+            replaceFragment(settingFragment)
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
+            .replace(R.id.layout_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+
+    private fun logout() {
+        accountBinding.logoutButton.setOnClickListener {
+            val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
+            startActivity(intentToSplash)
+            requireActivity().overridePendingTransition(
+                R.anim.slide_out_bottom,
+                R.anim.slide_in_bottom
+            )
+            activity?.finishAffinity()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun goToSetting() {
-        accountBinding.settingButton.setOnClickListener {
-            val settingFragment = SettingFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.layout_container, settingFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-    }
-
-    private fun logout() {
-        accountBinding.logoutButton.setOnClickListener {
-            val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
-            startActivity(intentToSplash)
-            activity?.finish()
-        }
     }
 
 }

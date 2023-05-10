@@ -48,9 +48,9 @@
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/circle_background"
+            android:contentDescription="Change Profile"
             android:padding="8dp"
             android:src="@drawable/ic_edit"
-            android:contentDescription="Change Profile"
             app:layout_constraintEnd_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
@@ -85,8 +85,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
-            android:text="SETTING"
-            android:contentDescription="SETTING"
+            android:contentDescription="@string/setting_button"
+            android:text="@string/setting_button"
+            android:textAllCaps="false"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
@@ -98,8 +100,10 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/logout_button"
             android:contentDescription="@string/logout_button"
+            android:text="@string/logout_button"
+            android:textAllCaps="false"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settingButton" />
