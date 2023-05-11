@@ -1,0 +1,63 @@
+package com.renata.view.activity.authentication
+
+import android.content.DialogInterface
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import com.renata.R
+import com.renata.databinding.ActivityAuthenticationBinding
+import com.renata.view.activity.login.LoginActivity
+import com.renata.view.activity.main.MainActivity
+
+class AuthenticationActivity : AppCompatActivity() {
+
+    private lateinit var authenticationBinding: ActivityAuthenticationBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        authenticationBinding = ActivityAuthenticationBinding.inflate(layoutInflater)
+        setContentView(authenticationBinding.root)
+
+        showLoading(false)
+        verifyButton()
+    }
+
+    private fun verifyButton() {
+        authenticationBinding.loginButton.setOnClickListener {
+            showLoading(false)
+            showAlert(
+                getString(R.string.auth_success),
+                getString(R.string.auth_to_login)
+            )
+            { moveToLogin() }
+        }
+    }
+
+    private fun moveToLogin() {
+        val moveToLogin = Intent(this, LoginActivity::class.java)
+        startActivity(moveToLogin)
+    }
+
+    private fun showAlert(
+        title: String,
+        message: String,
+        positiveAction: (dialog: DialogInterface) -> Unit
+    ) {
+        AlertDialog.Builder(this).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                positiveAction.invoke(dialog)
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        authenticationBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+}
