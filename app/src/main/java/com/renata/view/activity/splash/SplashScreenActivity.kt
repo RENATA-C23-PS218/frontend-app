@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
-import com.renata.view.activity.login.LoginActivity
+import com.renata.view.activity.main.MainActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -15,7 +15,7 @@ class SplashScreenActivity : AppCompatActivity() {
         val splashTime: Long = 3000
 
         Handler().postDelayed({
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
             finish()
