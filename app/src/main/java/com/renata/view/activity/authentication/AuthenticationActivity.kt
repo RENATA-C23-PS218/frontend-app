@@ -1,9 +1,14 @@
 package com.renata.view.activity.authentication
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
@@ -20,35 +25,81 @@ class AuthenticationActivity : AppCompatActivity() {
         setContentView(authenticationBinding.root)
 
         showLoading(false)
-        verifyButton()
-        resendOTP()
-    }
-
-    private fun resendOTP() {
+        setupView()
+        setupAnimation()
         authenticationBinding.resendOTP.setOnClickListener {
-            showLoading(false)
             showAlert(
                 getString(R.string.resend_otp_req),
                 getString(R.string.resend_otp_res)
-            )
-            { }
+            ) {}
         }
-    }
-
-    private fun verifyButton() {
         authenticationBinding.verifyButton.setOnClickListener {
-            showLoading(false)
             showAlert(
                 getString(R.string.auth_success),
                 getString(R.string.auth_to_login)
+            ) { moveToLogin() }
+        }
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
-            { moveToLogin() }
+        }
+        supportActionBar?.hide()
+    }
+
+    private fun setupAnimation() {
+        val title =
+            ObjectAnimator.ofFloat(authenticationBinding.titleTextView, View.ALPHA, 1f)
+                .setDuration(500)
+        val title2 =
+            ObjectAnimator.ofFloat(authenticationBinding.titleTextView2, View.ALPHA, 1f)
+                .setDuration(500)
+        val email =
+            ObjectAnimator.ofFloat(authenticationBinding.email, View.ALPHA, 1f).setDuration(500)
+        val title3 =
+            ObjectAnimator.ofFloat(authenticationBinding.titleTextView3, View.ALPHA, 1f)
+                .setDuration(500)
+        val otp1 =
+            ObjectAnimator.ofFloat(authenticationBinding.editText1, View.ALPHA, 1f).setDuration(500)
+        val otp2 =
+            ObjectAnimator.ofFloat(authenticationBinding.editText2, View.ALPHA, 1f).setDuration(500)
+        val otp3 =
+            ObjectAnimator.ofFloat(authenticationBinding.editText3, View.ALPHA, 1f).setDuration(500)
+        val otp4 =
+            ObjectAnimator.ofFloat(authenticationBinding.editText4, View.ALPHA, 1f).setDuration(500)
+        val verifyButton =
+            ObjectAnimator.ofFloat(authenticationBinding.verifyButton, View.ALPHA, 1f)
+                .setDuration(500)
+        val didnReceive =
+            ObjectAnimator.ofFloat(authenticationBinding.notReceiveOTP, View.ALPHA, 1f)
+                .setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(
+                title,
+                title2,
+                email,
+                title3,
+                otp1,
+                otp2,
+                otp3,
+                otp4,
+                verifyButton,
+                didnReceive
+            )
+            start()
         }
     }
 
     private fun moveToLogin() {
-        val moveToLogin = Intent(this, LoginActivity::class.java)
-        startActivity(moveToLogin)
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun showAlert(

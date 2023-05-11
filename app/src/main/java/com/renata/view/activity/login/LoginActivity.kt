@@ -14,8 +14,11 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.renata.R
 import com.renata.databinding.ActivityLoginBinding
+import com.renata.utils.AlarmReceiver
+import com.renata.utils.ViewModelFactory
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
 import com.renata.view.activity.forgotpass.ForgotPassActivity
@@ -25,28 +28,35 @@ import com.renata.view.activity.register.RegisterActivity
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var alarmReceiver: AlarmReceiver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
-
+        alarmReceiver = AlarmReceiver()
+        loginViewModel = obtainViewModel(this as AppCompatActivity)
         showLoading(false)
         setupView()
         setupAnimation()
         emailET()
         passwordET()
-        registerET()
-        loginButton()
-        forgotPassET()
+        loginBinding.forgotPassword.setOnClickListener { forgotPassET() }
+        loginBinding.createAccount.setOnClickListener { registerET() }
+        loginBinding.loginButton.setOnClickListener { loginButton() }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): LoginViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[LoginViewModel::class.java]
     }
 
     private fun forgotPassET() {
-        loginBinding.forgotPassword.setOnClickListener {
-            val moveToForgotPass = Intent(this, ForgotPassActivity::class.java)
-            startActivity(moveToForgotPass)
-            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
-        }
+        val moveToForgotPass = Intent(this, ForgotPassActivity::class.java)
+        startActivity(moveToForgotPass)
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun emailET() {
@@ -156,51 +166,49 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun registerET() {
-        loginBinding.createAccount.setOnClickListener {
-            val moveToRegister = Intent(this, RegisterActivity::class.java)
-            startActivity(moveToRegister)
-            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
-        }
+        val moveToRegister = Intent(this, RegisterActivity::class.java)
+        startActivity(moveToRegister)
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun loginButton() {
-        loginBinding.loginButton.setOnClickListener {
-            val email = loginBinding.edLoginEmail.text.toString()
-            val password = loginBinding.edLoginPassword.text.toString()
-            when {
-                email.isEmpty() && password.isEmpty() -> {
-                    insertEmail()
-                    insertPass()
-                }
-                email.isEmpty() -> {
-                    insertEmail()
-                }
-                password.isEmpty() -> {
-                    insertPass()
-                }
-                else -> {
-                    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-                        if (passwordValidation(password) && emailValidation(email)) {
-                            val moveToMain = Intent(this, MainActivity::class.java)
-                            startActivity(moveToMain)
-                            overridePendingTransition(
-                                R.anim.slide_out_bottom,
-                                R.anim.slide_in_bottom
-                            )
-                        } else {
-                            showAlert(
-                                getString(R.string.login_fail),
-                                getString(R.string.login_fail_cause1)
-                            )
-                            { }
-                        }
+        val repeatMessage = getString(R.string.alarm_message)
+        alarmReceiver.firstRepeatingAlarm(this, repeatMessage)
+        val email = loginBinding.edLoginEmail.text.toString()
+        val password = loginBinding.edLoginPassword.text.toString()
+        when {
+            email.isEmpty() && password.isEmpty() -> {
+                insertEmail()
+                insertPass()
+            }
+            email.isEmpty() -> {
+                insertEmail()
+            }
+            password.isEmpty() -> {
+                insertPass()
+            }
+            else -> {
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    if (passwordValidation(password) && emailValidation(email)) {
+                        val moveToMain = Intent(this, MainActivity::class.java)
+                        startActivity(moveToMain)
+                        overridePendingTransition(
+                            R.anim.slide_out_bottom,
+                            R.anim.slide_in_bottom
+                        )
                     } else {
                         showAlert(
                             getString(R.string.login_fail),
-                            getString(R.string.login_fail_cause2)
+                            getString(R.string.login_fail_cause1)
                         )
-                        { finish() }
+                        { }
                     }
+                } else {
+                    showAlert(
+                        getString(R.string.login_fail),
+                        getString(R.string.login_fail_cause2)
+                    )
+                    { finish() }
                 }
             }
         }

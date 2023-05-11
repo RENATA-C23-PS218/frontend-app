@@ -4,30 +4,41 @@
     <string name="app_name">Renata</string>
     <string name="copyright">© 2023 RENATA</string>
     <!-- BUTTON TEXT -->
+    <string name="send_otp_button">Send OTP</string>
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
     <string name="verify_button">Verify</string>
     <string name="camera_button">Camera</string>
     <string name="gallery_button">Gallery</string>
     <string name="detect_button">Detect</string>
+    <string name="logout_button">Logout</string>
+    <string name="setting_button">Setting</string>
     <string name="notification_enabled_button">Notification Enabled</string>
     <string name="notification_disabled_button">Notification Disabled</string>
+    <string name="change_language_button">Change Language</string>
+    <string name="save_changes_button">Save Changes</string>
+    <string name="dark_mode">Dark</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Character count should be at least 8</string>
+    <string name="error_confirm_password">"Password and Confirm Password must match</string>
     <!-- TOOLBAR TEXT -->
     <string name="account_toolbar">Account</string>
     <string name="history_toolbar">History</string>
     <string name="scanner_toolbar">Scanner</string>
+    <string name="setting_toolbar">Setting</string>
     <!-- INTENT TEXT -->
-    <string name="want_register">Don\'t have an account? </string>
+    <string name="want_register">Don\'t have an account?</string>
     <string name="register_intent">Register here</string>
-    <string name="want_login">Already have an account? </string>
+    <string name="want_login">Already have an account?</string>
     <string name="login_intent">Login here</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="want_resend">Did not receive OTP?</string>
+    <string name="resend_otp">Resend OTP</string>
     <!-- INPUT TEXT TITLE -->
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
     <!-- TITLE -->
     <string name="login_page">Login</string>
     <string name="login_req">Enter email and password</string>
@@ -36,6 +47,28 @@
     <string name="otp_verification_page">OTP Verification</string>
     <string name="otp_sent">The 4 digit code has been sent to</string>
     <string name="otp_req">Enter the code to verification</string>
-    <string name="holder_name">Nama User</string>
-    <string name="holder_email">Email User</string>
+    <string name="forgot_pass_page">Forgot Password</string>
+    <string name="forgot_pass_req">Enter your Email</string>
+    <!-- PLACEHOLDER -->
+    <string name="holder_name">Username</string>
+    <string name="holder_email">User Email</string>
+    <!-- MESSAGE -->
+    <string name="insert_email">Please insert your Email</string>
+    <string name="insert_pass">Please insert your Password</string>
+    <string name="insert_name">Please insert your Name</string>
+    <string name="login_fail">Login Failed</string>
+    <string name="login_fail_cause1">Invalid Email/Password</string>
+    <string name="login_fail_cause2">Make sure Email and Password are filled in correctly</string>
+    <string name="regis_fail">Registration Failed</string>
+    <string name="regis_success">Registration Success</string>
+    <string name="regis_fail_cause1">Sorry, there was an error creating your account. Please try again later</string>
+    <string name="regis_fail_cause2">Sorry, your registration failed. Make sure all the information entered is correct and complete</string>
+    <string name="regis_fail_cause3">Sorry, your registration failed. Please ensure that your password and confirmation password are the same</string>
+    <string name="regis_to_auth">Congratulations! Your account has been successfully created. Please authentication your account first to get started</string>
+    <string name="auth_success">Authentication Success</string>
+    <string name="auth_to_login">Congratulations! Your account has been successfully created. Please login to get started</string>
+    <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now</string>
+    <string name="permission_denied">Permission Denied</string>
+    <string name="resend_otp_req">Resend OTP Request</string>
+    <string name="resend_otp_res">The OTP has been sent again, please check your email</string>
 </resources>

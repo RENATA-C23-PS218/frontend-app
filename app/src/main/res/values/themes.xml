@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Renata" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Renata" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:background">#00FFFFFF</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green1</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -14,7 +15,8 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="SplashScreen" parent="Theme.Renata">
+    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

@@ -65,8 +65,6 @@ fun reduceFileImage(file: File): File {
 fun rotateFile(file: File, isBackCamera: Boolean = false) {
     val matrix = Matrix()
     val bitmap = BitmapFactory.decodeFile(file.path)
-
-    // Read orientation from EXIF metadata
     val exif = ExifInterface(file.path)
     val orientation =
         exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
@@ -76,8 +74,6 @@ fun rotateFile(file: File, isBackCamera: Boolean = false) {
         ExifInterface.ORIENTATION_ROTATE_270 -> 270
         else -> 0
     }
-
-    // Rotate the bitmap
     matrix.postRotate(rotationDegrees.toFloat())
     if (!isBackCamera) {
         matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)

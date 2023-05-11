@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -15,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.renata.R
 import com.renata.databinding.ActivityMainBinding
 import com.renata.utils.ViewModelFactory
-import com.renata.view.activity.setting.SettingPreferences
-import com.renata.view.activity.setting.SettingViewModel
 import com.renata.view.fragment.account.AccountFragment
 import com.renata.view.fragment.history.HistoryFragment
 import com.renata.view.fragment.scan.ScanFragment
@@ -26,13 +23,14 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var mainViewModel: MainViewModel
     private var activeNavItem: Int = R.id.History
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-        darkMode()
+        mainViewModel = obtainViewModel(this as AppCompatActivity)
 
         val colorPrimary = TypedValue()
         theme.resolveAttribute(android.R.attr.colorPrimary, colorPrimary, true)
@@ -67,20 +65,13 @@ class MainActivity : AppCompatActivity() {
         }
         replaceFragment(HistoryFragment())
         mainBinding.bottomNavigationView.selectedItemId = R.id.History
-        scannerButton()
+
+        mainBinding.scanFab.setOnClickListener { scannerButton() }
     }
 
-    private fun darkMode() {
-        val pref = SettingPreferences.getInstance(dataStore)
-        val settingViewModel =
-            ViewModelProvider(this, ViewModelFactory(pref)).get(SettingViewModel::class.java)
-        settingViewModel.getThemeSetting().observe(this) { isDarkModeActive: Boolean ->
-            if (isDarkModeActive) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
+    private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[MainViewModel::class.java]
     }
 
     override fun onBackPressed() {
@@ -110,10 +101,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun scannerButton() {
-        mainBinding.scanFab.setOnClickListener {
-            replaceFragment(ScanFragment())
-            mainBinding.bottomNavigationView.selectedItemId = R.id.placeholder
-        }
+        replaceFragment(ScanFragment())
+        mainBinding.bottomNavigationView.selectedItemId = R.id.placeholder
     }
 
 }

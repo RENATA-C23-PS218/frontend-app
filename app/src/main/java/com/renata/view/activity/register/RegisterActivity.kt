@@ -36,8 +36,9 @@ class RegisterActivity : AppCompatActivity() {
         emailET()
         passwordET()
         confirmPasswordET()
-        loginET()
-        registerButton()
+        registerBinding.loginAccount.setOnClickListener { loginET() }
+        registerBinding.registerButton.setOnClickListener { registerButton() }
+
     }
 
     private fun confirmPasswordET() {
@@ -95,70 +96,6 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun registerButton() {
-        registerBinding.registerButton.setOnClickListener {
-            showLoading(true)
-            val confirmPass = registerBinding.edRegisterConfirmPassword.text.toString()
-            val email = registerBinding.edRegisterEmail.text.toString()
-            val password = registerBinding.edRegisterPassword.text.toString()
-            when {
-                confirmPass.isEmpty() && email.isEmpty() && password.isEmpty() -> {
-                    showLoading(false)
-                    insertEmail()
-                    insertPass()
-                    insertConfirmPAss()
-                }
-                confirmPass.isEmpty() -> {
-                    showLoading(false)
-                    insertConfirmPAss()
-                }
-                email.isEmpty() -> {
-                    showLoading(false)
-                    insertEmail()
-                }
-                password.isEmpty() -> {
-                    showLoading(false)
-                    insertPass()
-                }
-                else -> {
-                    if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(
-                            confirmPass
-                        )
-                    ) {
-                        if (passwordValidation(password) && emailValidation(email)) {
-                            if (confirmPass == password) {
-                                showLoading(false)
-                                showAlert(
-                                    getString(R.string.regis_success),
-                                    getString(R.string.regis_to_auth)
-                                ) { login() }
-                            } else {
-                                showLoading(false)
-                                showAlert(
-                                    getString(R.string.regis_fail),
-                                    getString(R.string.regis_fail_cause3)
-                                ) { }
-                            }
-                        } else {
-                            showLoading(false)
-                            showAlert(
-                                getString(R.string.regis_fail),
-                                getString(R.string.regis_fail_cause2)
-                            ) { }
-                        }
-                    } else {
-                        showLoading(false)
-                        showAlert(
-                            getString(R.string.regis_fail),
-                            getString(R.string.regis_fail_cause1)
-                        ) { finish() }
-                    }
-                }
-            }
-        }
-    }
-
-
     private fun passwordET() {
         val myRegisterPasswordET = registerBinding.edRegisterPassword
         myRegisterPasswordET.addTextChangedListener(object : TextWatcher {
@@ -183,6 +120,67 @@ class RegisterActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    private fun registerButton() {
+        showLoading(true)
+        val confirmPass = registerBinding.edRegisterConfirmPassword.text.toString()
+        val email = registerBinding.edRegisterEmail.text.toString()
+        val password = registerBinding.edRegisterPassword.text.toString()
+        when {
+            confirmPass.isEmpty() && email.isEmpty() && password.isEmpty() -> {
+                showLoading(false)
+                insertEmail()
+                insertPass()
+                insertConfirmPAss()
+            }
+            confirmPass.isEmpty() -> {
+                showLoading(false)
+                insertConfirmPAss()
+            }
+            email.isEmpty() -> {
+                showLoading(false)
+                insertEmail()
+            }
+            password.isEmpty() -> {
+                showLoading(false)
+                insertPass()
+            }
+            else -> {
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(
+                        confirmPass
+                    )
+                ) {
+                    if (passwordValidation(password) && emailValidation(email)) {
+                        if (confirmPass == password) {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_success),
+                                getString(R.string.regis_to_auth)
+                            ) { auth() }
+                        } else {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_fail),
+                                getString(R.string.regis_fail_cause3)
+                            ) { }
+                        }
+                    } else {
+                        showLoading(false)
+                        showAlert(
+                            getString(R.string.regis_fail),
+                            getString(R.string.regis_fail_cause2)
+                        ) { }
+                    }
+                } else {
+                    showLoading(false)
+                    showAlert(
+                        getString(R.string.regis_fail),
+                        getString(R.string.regis_fail_cause1)
+                    ) { finish() }
+                }
+            }
+        }
     }
 
     private fun setupView() {
@@ -276,19 +274,17 @@ class RegisterActivity : AppCompatActivity() {
         registerBinding.errorConfirmPass.text = "Please insert your Password"
     }
 
-    private fun login() {
+    private fun auth() {
         val moveToAuth = Intent(this@RegisterActivity, AuthenticationActivity::class.java)
         startActivity(moveToAuth)
         finish()
     }
 
     private fun loginET() {
-        registerBinding.loginAccount.setOnClickListener {
-            val moveToLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(moveToLogin)
-            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
-            finishAffinity()
-        }
+        val moveToLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
+        startActivity(moveToLogin)
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        finishAffinity()
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -20,17 +20,19 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val message = intent.getStringExtra(EXTRA_MESSAGE)
+        val title = TYPE_REPEATING
+        val notifId = ID_REPEATING
         if (message != null) {
-            showAlarmNotification(context, message)
+            showAlarmNotification(context, title, message, notifId)
         }
     }
 
     private fun showAlarmNotification(
         context: Context,
-        message: String
+        title: String,
+        message: String,
+        notifId: Int
     ) {
-        val title = TYPE_REPEATING
-        val notifId = ID_REPEATING
         val channelId = "Channel_1"
         val channelName = "AlarmManager channel"
         val notificationManagerCompat =
@@ -72,6 +74,31 @@ class AlarmReceiver : BroadcastReceiver() {
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 19)
             set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            if (timeInMillis < System.currentTimeMillis()) add(Calendar.DAY_OF_YEAR, 1)
+        }
+        val pendingIntent =
+            PendingIntent.getBroadcast(context, ID_REPEATING, intent, PendingIntent.FLAG_IMMUTABLE)
+        alarmManager.setInexactRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+        Toast.makeText(
+            context,
+            context.getString(R.string.notification_enabled_button),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    fun firstRepeatingAlarm(context: Context, message: String) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra(EXTRA_MESSAGE, message)
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 12)
             set(Calendar.SECOND, 0)
             if (timeInMillis < System.currentTimeMillis()) add(Calendar.DAY_OF_YEAR, 1)
         }
