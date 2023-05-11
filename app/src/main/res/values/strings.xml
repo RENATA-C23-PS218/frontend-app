@@ -16,6 +16,7 @@
     <string name="notification_disabled_button">Notification Disabled</string>
     <string name="change_language_button">Change Language</string>
     <string name="save_changes_button">Save Changes</string>
+    <string name="dark_mode">Dark</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Character count should be at least 8</string>
@@ -69,5 +70,4 @@
     <string name="permission_denied">Permission Denied</string>
     <string name="resend_otp_req">Resend OTP Request</string>
     <string name="resend_otp_res">The OTP has been sent again, please check your email</string>
-    <string name="dark_mode">Dark</string>
 </resources>

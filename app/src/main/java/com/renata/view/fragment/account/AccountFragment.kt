@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.renata.R
 import com.renata.databinding.FragmentAccountBinding
+import com.renata.view.activity.setting.SettingActivity
 import com.renata.view.activity.splash.SplashScreenActivity
 import com.renata.view.fragment.profile.ProfileFragment
-import com.renata.view.fragment.settings.SettingFragment
 
 class AccountFragment : Fragment() {
 
@@ -41,8 +41,8 @@ class AccountFragment : Fragment() {
 
     private fun goToSetting() {
         accountBinding.settingButton.setOnClickListener {
-            val settingFragment = SettingFragment()
-            replaceFragment(settingFragment)
+            val intentToSetting = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intentToSetting)
         }
     }
 

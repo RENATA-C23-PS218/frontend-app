@@ -1,4 +1,4 @@
-package com.renata.view.fragment.settings
+package com.renata.view.activity.setting
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

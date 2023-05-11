@@ -31,12 +31,17 @@
         android:theme="@style/Theme.Renata"
         tools:targetApi="31">
         <activity
+            android:name=".view.activity.setting.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.forgotpass.ForgotPassActivity"
             android:exported="false" />
+
         <receiver
             android:name=".utils.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+
         <activity
             android:name=".view.activity.main.MainActivity"
             android:exported="false" />

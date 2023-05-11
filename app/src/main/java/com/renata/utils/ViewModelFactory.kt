@@ -2,8 +2,8 @@ package com.renata.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.renata.view.fragment.settings.SettingPreferences
-import com.renata.view.fragment.settings.SettingViewModel
+import com.renata.view.activity.setting.SettingPreferences
+import com.renata.view.activity.setting.SettingViewModel
 
 class ViewModelFactory(private val pref: SettingPreferences) :
     ViewModelProvider.NewInstanceFactory() {

@@ -1,4 +1,4 @@
-package com.renata.view.fragment.settings
+package com.renata.view.activity.setting
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.settings.SettingFragment">
+    tools:context=".view.activity.setting.SettingActivity">
 
     <View
         android:id="@+id/guideline_top_margin"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/setting_toolbar"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="@color/green2"
             android:textSize="24sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -56,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_theme"
         app:layout_constraintStart_toEndOf="@+id/tv_theme"
         app:layout_constraintTop_toTopOf="@+id/tv_theme">
 
@@ -69,6 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
 
     <Button
@@ -78,10 +80,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:contentDescription="@string/notification_enabled_button"
         android:text="@string/notification_enabled_button"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/theme_switch" />
@@ -93,10 +92,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:contentDescription="@string/notification_disabled_button"
         android:text="@string/notification_disabled_button"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/onNotifButton" />
@@ -108,10 +104,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
-        android:contentDescription="@string/change_language_button"
         android:text="@string/change_language_button"
-        android:textAllCaps="false"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
