@@ -14,10 +14,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.renata.R
 import com.renata.databinding.FragmentScanBinding
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
+import com.renata.view.activity.main.MainActivity
+import com.renata.view.fragment.account.AccountFragment
+import com.renata.view.fragment.history.HistoryFragment
 import java.io.File
 
 class ScanFragment : Fragment() {
@@ -106,4 +110,9 @@ class ScanFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         scanBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
+
+//    private fun backToHistory() {
+//        val moveToMain = Intent(activity, MainActivity::class.java)
+//        startActivity(moveToMain)
+//    }
 }

@@ -68,15 +68,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val currentFragment =
-            supportFragmentManager.findFragmentById(mainBinding.layoutContainer.id)
+        val currentFragment = supportFragmentManager.findFragmentById(mainBinding.layoutContainer.id)
         when (currentFragment) {
             is HistoryFragment -> {
                 finishAffinity()
             }
             else -> {
-                replaceFragment(HistoryFragment())
-                mainBinding.bottomNavigationView.selectedItemId = R.id.History
+                supportFragmentManager.popBackStack()
             }
         }
     }
