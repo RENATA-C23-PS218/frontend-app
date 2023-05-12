@@ -9,6 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -57,8 +59,12 @@ class AlarmReceiver : BroadcastReceiver() {
         }
         val intent = Intent(context, SplashScreenActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            101,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         builder.setContentIntent(pendingIntent)
         builder.setAutoCancel(true)
         val notification = builder.build()
@@ -68,13 +74,16 @@ class AlarmReceiver : BroadcastReceiver() {
     fun setRepeatingAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            101,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         val calendar = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 19)
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
-            if (timeInMillis < System.currentTimeMillis()) add(Calendar.DAY_OF_YEAR, 1)
         }
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -82,23 +91,34 @@ class AlarmReceiver : BroadcastReceiver() {
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
-        Toast.makeText(
+        val toast = Toast.makeText(
             context,
             context.getString(R.string.notification_enabled_button),
             Toast.LENGTH_SHORT
-        ).show()
+        )
+        val toastLayout = toast.view as? LinearLayout
+        toastLayout?.let {
+            val toastImageView = ImageView(context)
+            toastImageView.setImageResource(R.drawable.ic_renata_notif)
+            toastImageView.setPadding(16, 16, 16, 16)
+            it.addView(toastImageView, 0)
+        }
+        toast.show()
     }
 
     fun firstRepeatingAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            101,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 19)
-            set(Calendar.MINUTE, 0)
+            set(Calendar.HOUR_OF_DAY, 14)
+            set(Calendar.MINUTE, 40)
             set(Calendar.SECOND, 0)
-            if (timeInMillis < System.currentTimeMillis()) add(Calendar.DAY_OF_YEAR, 1)
         }
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -106,20 +126,47 @@ class AlarmReceiver : BroadcastReceiver() {
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
+        val toast = Toast.makeText(
+            context,
+            context.getString(R.string.notification_enabled_button),
+            Toast.LENGTH_SHORT
+        )
+        val toastLayout = toast.view as? LinearLayout
+        toastLayout?.let {
+            val toastImageView = ImageView(context)
+            toastImageView.setImageResource(R.drawable.ic_renata_notif)
+            toastImageView.setPadding(16, 16, 16, 16)
+            val layoutParams = LinearLayout.LayoutParams(96, 96)
+            toastImageView.layoutParams = layoutParams
+            it.addView(toastImageView, 0)
+        }
+        toast.show()
     }
 
     fun cancelAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        val pendingIntent =
-            PendingIntent.getBroadcast(context, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            101,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         alarmManager.cancel(pendingIntent)
         pendingIntent.cancel()
-        Toast.makeText(
+        val toast = Toast.makeText(
             context,
-            context.getString(R.string.notification_disabled_button),
+            context.getString(R.string.notification_enabled_button),
             Toast.LENGTH_SHORT
-        ).show()
+        )
+        val toastLayout = toast.view as? LinearLayout
+        toastLayout?.let {
+            val toastImageView = ImageView(context)
+            toastImageView.setImageResource(R.drawable.ic_renata_notif)
+            toastImageView.setPadding(16, 16, 16, 16)
+            it.addView(toastImageView, 0)
+        }
+        toast.show()
     }
 
 }

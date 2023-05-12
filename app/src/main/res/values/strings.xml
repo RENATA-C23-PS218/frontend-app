@@ -71,4 +71,6 @@
     <string name="permission_denied">Permission Denied</string>
     <string name="resend_otp_req">Resend OTP Request</string>
     <string name="resend_otp_res">The OTP has been sent again, please check your email</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="save_changes_cause">The changes you made have been saved</string>
 </resources>

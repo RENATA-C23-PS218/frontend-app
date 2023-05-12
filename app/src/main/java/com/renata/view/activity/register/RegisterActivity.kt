@@ -38,7 +38,6 @@ class RegisterActivity : AppCompatActivity() {
         confirmPasswordET()
         registerBinding.loginAccount.setOnClickListener { loginET() }
         registerBinding.registerButton.setOnClickListener { registerButton() }
-
     }
 
     private fun confirmPasswordET() {

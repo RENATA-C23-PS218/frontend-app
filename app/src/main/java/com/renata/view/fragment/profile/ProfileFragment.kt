@@ -34,8 +34,8 @@ class ProfileFragment : Fragment() {
     private fun saveChanges() {
         profileBinding.saveButton.setOnClickListener {
             showAlert(
-                "Save Changes",
-                "The changes you made have been saved"
+                getString(R.string.save_changes),
+                getString(R.string.save_changes_cause)
             )
             { goToAccount() }
         }

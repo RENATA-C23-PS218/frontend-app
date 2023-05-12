@@ -1,14 +1,10 @@
 package com.renata.view.activity.main
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.renata.R
@@ -17,8 +13,6 @@ import com.renata.utils.ViewModelFactory
 import com.renata.view.fragment.account.AccountFragment
 import com.renata.view.fragment.history.HistoryFragment
 import com.renata.view.fragment.scan.ScanFragment
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class MainActivity : AppCompatActivity() {
 
@@ -65,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
         replaceFragment(HistoryFragment())
         mainBinding.bottomNavigationView.selectedItemId = R.id.History
-
         mainBinding.scanFab.setOnClickListener { scannerButton() }
     }
 

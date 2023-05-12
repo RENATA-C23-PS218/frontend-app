@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.renata.R
 import com.renata.databinding.FragmentSettingBinding
 import com.renata.utils.AlarmReceiver
+import com.renata.view.fragment.account.AccountFragment
 
 class SettingFragment : Fragment(), View.OnClickListener {
 
@@ -28,7 +29,6 @@ class SettingFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         retainInstance = true
-        backToAccount()
         alarmReceiver = AlarmReceiver()
         settingBinding.backButton.setOnClickListener { backToAccount() }
         settingBinding.onNotifButton.setOnClickListener(this)
@@ -37,7 +37,12 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun backToAccount() {
-
+        val accountFragment = AccountFragment()
+        parentFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
+            .replace(R.id.layout_container, accountFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun setLanguage() {
