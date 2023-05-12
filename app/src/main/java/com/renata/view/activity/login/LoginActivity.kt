@@ -45,7 +45,10 @@ class LoginActivity : AppCompatActivity() {
         passwordET()
         loginBinding.forgotPassword.setOnClickListener { forgotPassET() }
         loginBinding.createAccount.setOnClickListener { registerET() }
-        loginBinding.loginButton.setOnClickListener { loginButton() }
+        loginBinding.loginButton.setOnClickListener {
+            alarmReceiver.firstRepeatingAlarm(this)
+            loginButton()
+        }
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): LoginViewModel {
@@ -172,8 +175,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginButton() {
-        val repeatMessage = getString(R.string.alarm_message)
-        alarmReceiver.firstRepeatingAlarm(this, repeatMessage)
         val email = loginBinding.edLoginEmail.text.toString()
         val password = loginBinding.edLoginPassword.text.toString()
         when {

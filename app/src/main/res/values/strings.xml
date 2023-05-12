@@ -66,10 +66,9 @@
     <string name="regis_to_auth">Congratulations! Your account has been successfully created. Please authentication your account first to get started</string>
     <string name="auth_success">Authentication Success</string>
     <string name="auth_to_login">Congratulations! Your account has been successfully created. Please login to get started</string>
-    <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now</string>
+    <string name="alarm_message1">Have you checked the type of soil around you?</string>
+    <string name="alarm_message2">Let\'s scan it now</string>
     <string name="permission_denied">Permission Denied</string>
     <string name="resend_otp_req">Resend OTP Request</string>
     <string name="resend_otp_res">The OTP has been sent again, please check your email</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

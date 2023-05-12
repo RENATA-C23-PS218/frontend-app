@@ -45,10 +45,8 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        val repeatMessage = getString(R.string.alarm_message)
-
         when (v.id) {
-            R.id.onNotifButton -> alarmReceiver.setRepeatingAlarm(requireContext(), repeatMessage)
+            R.id.onNotifButton -> alarmReceiver.setRepeatingAlarm(requireContext())
             R.id.offNotifButton -> alarmReceiver.cancelAlarm(requireContext())
         }
     }
