@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.renata.R
 import com.renata.utils.ViewModelFactory
-import com.renata.view.activity.login.LoginActivity
+import com.renata.view.activity.main.NavigationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
         lifecycleScope.launch {
             delay(splashTime)
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, NavigationActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
                 finish()

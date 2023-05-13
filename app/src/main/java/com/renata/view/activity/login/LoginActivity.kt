@@ -22,7 +22,7 @@ import com.renata.utils.ViewModelFactory
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
 import com.renata.view.activity.forgotpass.ForgotPassActivity
-import com.renata.view.activity.main.MainActivity
+import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -191,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
             else -> {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     if (passwordValidation(password) && emailValidation(email)) {
-                        val moveToMain = Intent(this, MainActivity::class.java)
+                        val moveToMain = Intent(this, NavigationActivity::class.java)
                         startActivity(moveToMain)
                         overridePendingTransition(
                             R.anim.slide_out_bottom,

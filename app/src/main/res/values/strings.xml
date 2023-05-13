@@ -73,5 +73,9 @@
     <string name="alarm_message1">alarm_message1</string>
     <string name="alarm_message2">alarm_message2</string>
     <string name="save_changes">save changes</string>
-    <string name="save_changes_cause">save changes cause</string>
+    <string name="save_changes_cause">Your profile changes will be saved</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.renata.R
 import com.renata.databinding.FragmentAccountBinding
+import com.renata.view.activity.profile.ProfileActivity
+import com.renata.view.activity.setting.SettingActivity
 import com.renata.view.activity.splash.SplashScreenActivity
-import com.renata.view.fragment.profile.ProfileFragment
-import com.renata.view.fragment.setting.SettingFragment
 
 class AccountFragment : Fragment() {
 
@@ -34,26 +34,22 @@ class AccountFragment : Fragment() {
 
     private fun changeProfile() {
         accountBinding.editProfile.setOnClickListener {
-            val profileFragment = ProfileFragment()
-            replaceFragment(profileFragment)
+            val intent = Intent(requireContext(), ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun goToSetting() {
         accountBinding.settingButton.setOnClickListener {
-            val settingFragment = SettingFragment()
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
-                .replace(R.id.layout_container, settingFragment)
-                .addToBackStack(null)
-                .commit()
+            val intent = Intent(requireContext(), SettingActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun replaceFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
-            .replace(R.id.layout_container, fragment)
+            .replace(R.id.nav_host_fragment_activity_navigation, fragment)
             .addToBackStack(null)
             .commit()
     }

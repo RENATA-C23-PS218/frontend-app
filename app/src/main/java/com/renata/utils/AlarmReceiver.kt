@@ -116,8 +116,8 @@ class AlarmReceiver : BroadcastReceiver() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 14)
-            set(Calendar.MINUTE, 40)
+            set(Calendar.HOUR_OF_DAY, 19)
+            set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
         alarmManager.setRepeating(
@@ -131,16 +131,6 @@ class AlarmReceiver : BroadcastReceiver() {
             context.getString(R.string.notification_enabled_button),
             Toast.LENGTH_SHORT
         )
-        val toastLayout = toast.view as? LinearLayout
-        toastLayout?.let {
-            val toastImageView = ImageView(context)
-            toastImageView.setImageResource(R.drawable.ic_renata_notif)
-            toastImageView.setPadding(16, 16, 16, 16)
-            val layoutParams = LinearLayout.LayoutParams(96, 96)
-            toastImageView.layoutParams = layoutParams
-            it.addView(toastImageView, 0)
-        }
-        toast.show()
     }
 
     fun cancelAlarm(context: Context) {

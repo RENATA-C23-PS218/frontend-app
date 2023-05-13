@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragment.setting.SettingFragment">
-
-<!--    <View-->
-<!--        android:id="@+id/guideline_top_margin"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:layout_editor_absoluteY="88dp" />-->
+    tools:context=".view.activity.setting.SettingActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -42,45 +33,12 @@
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <TextView-->
-<!--        android:id="@+id/tv_theme"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:text="Theme:"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/guideline_top_margin" />-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@id/theme_switch"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="10dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/tv_theme"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/tv_theme"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/tv_theme">-->
-
-<!--        <com.google.android.material.switchmaterial.SwitchMaterial-->
-<!--            android:id="@+id/switch_theme"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="18dp"-->
-<!--            android:text="@string/dark_mode"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    </LinearLayout>-->
-
     <Button
         android:id="@+id/onNotifButton"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/notification_enabled_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:text="@string/notification_disabled_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,12 +65,11 @@
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/change_language_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/offNotifButton" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
