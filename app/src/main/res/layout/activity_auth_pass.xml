@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.authentication.AuthenticationActivity">
+    tools:context=".view.activity.authpass.AuthPassActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressBar"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/titleTextView2" />
 
         <EditText
-            android:id="@+id/auth_otp_1"
+            android:id="@+id/res_otp_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -90,13 +90,13 @@
             android:maxLength="1"
             android:maxLines="1"
             android:padding="20dp"
-            app:layout_constraintEnd_toStartOf="@id/auth_otp_2"
+            app:layout_constraintEnd_toStartOf="@id/res_otp_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView3"
             tools:ignore="Autofill,LabelFor" />
 
         <EditText
-            android:id="@+id/auth_otp_2"
+            android:id="@+id/res_otp_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -106,13 +106,13 @@
             android:maxLength="1"
             android:maxLines="1"
             android:padding="20dp"
-            app:layout_constraintEnd_toStartOf="@id/auth_otp_3"
-            app:layout_constraintStart_toEndOf="@id/auth_otp_1"
+            app:layout_constraintEnd_toStartOf="@id/res_otp_3"
+            app:layout_constraintStart_toEndOf="@id/res_otp_1"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView3"
             tools:ignore="Autofill,LabelFor" />
 
         <EditText
-            android:id="@+id/auth_otp_3"
+            android:id="@+id/res_otp_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -122,13 +122,13 @@
             android:maxLength="1"
             android:maxLines="1"
             android:padding="20dp"
-            app:layout_constraintEnd_toStartOf="@id/auth_otp_4"
-            app:layout_constraintStart_toEndOf="@id/auth_otp_2"
+            app:layout_constraintEnd_toStartOf="@id/res_otp_4"
+            app:layout_constraintStart_toEndOf="@id/res_otp_2"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView3"
             tools:ignore="Autofill,LabelFor" />
 
         <EditText
-            android:id="@+id/auth_otp_4"
+            android:id="@+id/res_otp_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
@@ -139,7 +139,7 @@
             android:maxLines="1"
             android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/auth_otp_3"
+            app:layout_constraintStart_toEndOf="@id/res_otp_3"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView3"
             tools:ignore="Autofill,LabelFor" />
 
@@ -157,7 +157,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth_otp_1" />
+            app:layout_constraintTop_toBottomOf="@+id/res_otp_1" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/notReceiveOTP"
@@ -202,6 +202,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Update Profile"
+            android:text="@string/update_profile_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="24sp"
             android:textStyle="bold" />

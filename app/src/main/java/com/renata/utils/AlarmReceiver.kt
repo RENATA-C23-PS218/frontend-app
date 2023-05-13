@@ -126,11 +126,6 @@ class AlarmReceiver : BroadcastReceiver() {
             AlarmManager.INTERVAL_DAY,
             pendingIntent
         )
-        val toast = Toast.makeText(
-            context,
-            context.getString(R.string.notification_enabled_button),
-            Toast.LENGTH_SHORT
-        )
     }
 
     fun cancelAlarm(context: Context) {
@@ -146,7 +141,7 @@ class AlarmReceiver : BroadcastReceiver() {
         pendingIntent.cancel()
         val toast = Toast.makeText(
             context,
-            context.getString(R.string.notification_enabled_button),
+            context.getString(R.string.notification_disabled_button),
             Toast.LENGTH_SHORT
         )
         val toastLayout = toast.view as? LinearLayout

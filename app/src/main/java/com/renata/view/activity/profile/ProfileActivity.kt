@@ -1,11 +1,13 @@
 package com.renata.view.activity.profile
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
 import com.renata.databinding.ActivityProfileBinding
+import com.renata.view.activity.setavatar.AvatarActivity
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -16,17 +18,22 @@ class ProfileActivity : AppCompatActivity() {
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(profileBinding.root)
 
-        saveChanges()
+        profileBinding.saveButton.setOnClickListener { saveChanges() }
+        profileBinding.changeAvatarButton.setOnClickListener { goToChangeAvatar() }
+    }
+
+    private fun goToChangeAvatar() {
+        val moveToChangeAvatar = Intent(this, AvatarActivity::class.java)
+        startActivity(moveToChangeAvatar)
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun saveChanges() {
-        profileBinding.saveButton.setOnClickListener {
-            showAlert(
-                getString(R.string.save_changes),
-                getString(R.string.save_changes_cause)
-            )
-            { goToAccount() }
-        }
+        showAlert(
+            getString(R.string.save_changes),
+            getString(R.string.save_changes_cause)
+        )
+        { goToAccount() }
     }
 
     private fun showAlert(

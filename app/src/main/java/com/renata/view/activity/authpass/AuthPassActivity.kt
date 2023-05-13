@@ -1,4 +1,4 @@
-package com.renata.view.activity.authentication
+package com.renata.view.activity.authpass
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -12,32 +12,32 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
-import com.renata.databinding.ActivityAuthenticationBinding
-import com.renata.view.activity.login.LoginActivity
+import com.renata.databinding.ActivityAuthPassBinding
+import com.renata.view.activity.reset.ResetPassActivity
 
-class AuthenticationActivity : AppCompatActivity() {
+class AuthPassActivity : AppCompatActivity() {
 
-    private lateinit var authenticationBinding: ActivityAuthenticationBinding
+    private lateinit var authPassBinding: ActivityAuthPassBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authenticationBinding = ActivityAuthenticationBinding.inflate(layoutInflater)
-        setContentView(authenticationBinding.root)
+        authPassBinding = ActivityAuthPassBinding.inflate(layoutInflater)
+        setContentView(authPassBinding.root)
 
         showLoading(false)
         setupView()
         setupAnimation()
-        authenticationBinding.resendOTP.setOnClickListener {
+        authPassBinding.resendOTP.setOnClickListener {
             showAlert(
                 getString(R.string.resend_otp_req),
                 getString(R.string.resend_otp_res)
             ) {}
         }
-        authenticationBinding.verifyButton.setOnClickListener {
+        authPassBinding.verifyButton.setOnClickListener {
             showAlert(
                 getString(R.string.auth_success),
-                getString(R.string.auth_to_login)
-            ) { moveToLogin() }
+                getString(R.string.auth_to_reset)
+            ) { moveToReset() }
         }
     }
 
@@ -56,29 +56,29 @@ class AuthenticationActivity : AppCompatActivity() {
 
     private fun setupAnimation() {
         val title =
-            ObjectAnimator.ofFloat(authenticationBinding.titleTextView, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.titleTextView, View.ALPHA, 1f)
                 .setDuration(500)
         val title2 =
-            ObjectAnimator.ofFloat(authenticationBinding.titleTextView2, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.titleTextView2, View.ALPHA, 1f)
                 .setDuration(500)
         val email =
-            ObjectAnimator.ofFloat(authenticationBinding.email, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(authPassBinding.email, View.ALPHA, 1f).setDuration(500)
         val title3 =
-            ObjectAnimator.ofFloat(authenticationBinding.titleTextView3, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.titleTextView3, View.ALPHA, 1f)
                 .setDuration(500)
         val otp1 =
-            ObjectAnimator.ofFloat(authenticationBinding.authOtp1, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(authPassBinding.resOtp1, View.ALPHA, 1f).setDuration(500)
         val otp2 =
-            ObjectAnimator.ofFloat(authenticationBinding.authOtp2, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(authPassBinding.resOtp2, View.ALPHA, 1f).setDuration(500)
         val otp3 =
-            ObjectAnimator.ofFloat(authenticationBinding.authOtp3, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(authPassBinding.resOtp3, View.ALPHA, 1f).setDuration(500)
         val otp4 =
-            ObjectAnimator.ofFloat(authenticationBinding.authOtp4, View.ALPHA, 1f).setDuration(500)
+            ObjectAnimator.ofFloat(authPassBinding.resOtp4, View.ALPHA, 1f).setDuration(500)
         val verifyButton =
-            ObjectAnimator.ofFloat(authenticationBinding.verifyButton, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.verifyButton, View.ALPHA, 1f)
                 .setDuration(500)
         val didnReceive =
-            ObjectAnimator.ofFloat(authenticationBinding.notReceiveOTP, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.notReceiveOTP, View.ALPHA, 1f)
                 .setDuration(500)
 
         AnimatorSet().apply {
@@ -98,8 +98,8 @@ class AuthenticationActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
+    private fun moveToReset() {
+        startActivity(Intent(this, ResetPassActivity::class.java))
     }
 
     private fun showAlert(
@@ -120,6 +120,6 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        authenticationBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        authPassBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

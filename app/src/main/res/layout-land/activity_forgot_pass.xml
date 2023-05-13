@@ -39,10 +39,12 @@
         android:id="@+id/titleTextView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:alpha="0"
         android:text="@string/forgot_pass_req"
         android:textAlignment="center"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/errorEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
@@ -51,12 +53,10 @@
         android:id="@+id/errorEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:textAlignment="center"
         android:textColor="@color/red"
         app:layout_constraintBottom_toTopOf="@+id/emailEditTextLayout"
-        app:layout_constraintStart_toStartOf="@+id/titleTextView2"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView2" />
+        app:layout_constraintStart_toStartOf="@id/emailEditTextLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailEditTextLayout"
@@ -64,7 +64,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="32dp"
         android:alpha="0"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/errorEmail">
 
         <com.renata.customview.MyEmailEditText
-            android:id="@+id/ed_email"
+            android:id="@+id/ed_email_forgot"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/tv_border_black"
