@@ -16,6 +16,7 @@
 
     <style name="SplashScreen" parent="Theme.Renata">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

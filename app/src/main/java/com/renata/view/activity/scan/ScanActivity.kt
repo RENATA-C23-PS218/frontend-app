@@ -9,10 +9,12 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.renata.R
 import com.renata.databinding.ActivityScanBinding
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
+import com.renata.view.activity.result.ResultActivity
 import java.io.File
 
 class ScanActivity : AppCompatActivity() {
@@ -29,10 +31,16 @@ class ScanActivity : AppCompatActivity() {
         showLoading(false)
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
-        scanBinding.detectButton.setOnClickListener {}
+        scanBinding.detectButton.setOnClickListener { detectPhoto() }
         scanBinding.backButton.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun detectPhoto() {
+        val moveToResult = Intent(this@ScanActivity, ResultActivity::class.java)
+        startActivity(moveToResult)
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun cameraPhoto() {

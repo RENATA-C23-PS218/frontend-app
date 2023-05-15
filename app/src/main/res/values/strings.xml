@@ -29,6 +29,7 @@
     <string name="history_toolbar">History</string>
     <string name="scanner_toolbar">Scanner</string>
     <string name="setting_toolbar">Setting</string>
+    <string name="result_toolbar">Result</string>
     <string name="change_avatar_toolbar">Change Avatar</string>
     <string name="update_profile_toolbar">Update Profile</string>
     <!-- INTENT TEXT -->
@@ -55,9 +56,12 @@
     <string name="forgot_pass_req">Enter your Email</string>
     <string name="reset_password_page">Reset Password</string>
     <string name="reset_password_req">Enter your new password</string>
+    <string name="soil_type_title">Soil Type</string>
+    <string name="plant_recommendations_title">Plant Recommendations</string>
     <!-- PLACEHOLDER -->
     <string name="holder_name">Username</string>
     <string name="holder_email">User Email</string>
+    <string name="lorem_ipsum">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <!-- MESSAGE -->
     <string name="insert_email">Please insert your Email</string>
     <string name="insert_pass">Please insert your Password</string>
