@@ -30,6 +30,9 @@ class ScanActivity : AppCompatActivity() {
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
         scanBinding.detectButton.setOnClickListener {}
+        scanBinding.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun cameraPhoto() {

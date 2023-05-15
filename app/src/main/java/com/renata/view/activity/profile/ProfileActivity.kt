@@ -20,6 +20,9 @@ class ProfileActivity : AppCompatActivity() {
 
         profileBinding.saveButton.setOnClickListener { saveChanges() }
         profileBinding.changeAvatarButton.setOnClickListener { goToChangeAvatar() }
+        profileBinding.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun goToChangeAvatar() {
@@ -33,7 +36,7 @@ class ProfileActivity : AppCompatActivity() {
             getString(R.string.save_changes),
             getString(R.string.save_changes_cause)
         )
-        { goToAccount() }
+        { onBackPressed() }
     }
 
     private fun showAlert(
@@ -53,7 +56,4 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToAccount() {
-
-    }
 }

@@ -26,6 +26,13 @@
         android:background="?attr/colorPrimaryVariant"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_back" />
+
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"

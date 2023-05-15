@@ -24,6 +24,9 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
         settingBinding.onNotifButton.setOnClickListener(this)
         settingBinding.offNotifButton.setOnClickListener(this)
         settingBinding.changeLangButton.setOnClickListener { setLanguage() }
+        settingBinding.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setLanguage() {

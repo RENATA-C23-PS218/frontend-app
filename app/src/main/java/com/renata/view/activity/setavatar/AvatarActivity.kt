@@ -29,6 +29,9 @@ class AvatarActivity : AppCompatActivity() {
         avatarBinding.cameraButton.setOnClickListener { cameraPhoto() }
         avatarBinding.galleryButton.setOnClickListener { galleryPhoto() }
         avatarBinding.changeButton.setOnClickListener {}
+        avatarBinding.backButton.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun cameraPhoto() {
