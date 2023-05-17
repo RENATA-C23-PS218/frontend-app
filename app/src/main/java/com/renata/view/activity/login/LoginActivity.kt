@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
         loginBinding.createAccount.setOnClickListener { registerET() }
         loginBinding.loginButton.setOnClickListener {
             alarmReceiver.firstRepeatingAlarm(this)
+            showLoading(true)
             loginButton()
         }
     }
@@ -179,18 +180,22 @@ class LoginActivity : AppCompatActivity() {
         val password = loginBinding.edLoginPassword.text.toString()
         when {
             email.isEmpty() && password.isEmpty() -> {
+                showLoading(false)
                 insertEmail()
                 insertPass()
             }
             email.isEmpty() -> {
+                showLoading(false)
                 insertEmail()
             }
             password.isEmpty() -> {
+                showLoading(false)
                 insertPass()
             }
             else -> {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     if (passwordValidation(password) && emailValidation(email)) {
+                        showLoading(false)
                         val moveToMain = Intent(this, NavigationActivity::class.java)
                         startActivity(moveToMain)
                         overridePendingTransition(
@@ -198,6 +203,7 @@ class LoginActivity : AppCompatActivity() {
                             R.anim.slide_in_bottom
                         )
                     } else {
+                        showLoading(false)
                         showAlert(
                             getString(R.string.login_fail),
                             getString(R.string.login_fail_cause1)
@@ -205,6 +211,7 @@ class LoginActivity : AppCompatActivity() {
                         { }
                     }
                 } else {
+                    showLoading(false)
                     showAlert(
                         getString(R.string.login_fail),
                         getString(R.string.login_fail_cause2)

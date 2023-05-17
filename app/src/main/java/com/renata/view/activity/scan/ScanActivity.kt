@@ -6,16 +6,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.renata.R
 import com.renata.databinding.ActivityScanBinding
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
 import com.renata.view.activity.result.ResultActivity
 import java.io.File
+
 
 class ScanActivity : AppCompatActivity() {
 
@@ -38,9 +40,43 @@ class ScanActivity : AppCompatActivity() {
     }
 
     private fun detectPhoto() {
+        alertSuccess()
+    }
+
+    private fun alertSuccess() {
+        val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
+            .create()
+        val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
+        val button = view.findViewById<Button>(com.renata.R.id.dialogDismiss_button)
+        builder.setView(view)
+        button.setOnClickListener {
+            builder.dismiss()
+            goToResult()
+        }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
+
+    private fun alertFail() {
+        val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
+            .create()
+        val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_fail, null)
+        val button = view.findViewById<Button>(com.renata.R.id.dialogFailDismiss_button)
+        builder.setView(view)
+        button.setOnClickListener {
+            builder.dismiss()
+        }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
+
+    private fun goToResult() {
         val moveToResult = Intent(this@ScanActivity, ResultActivity::class.java)
         startActivity(moveToResult)
-        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        overridePendingTransition(
+            com.renata.R.anim.slide_out_bottom,
+            com.renata.R.anim.slide_in_bottom
+        )
     }
 
     private fun cameraPhoto() {
