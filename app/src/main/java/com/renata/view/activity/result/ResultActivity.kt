@@ -1,5 +1,6 @@
 package com.renata.view.activity.result
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,12 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         resultBinding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(resultBinding.root)
-
+        val detectedClass = intent.getStringExtra("detected_class")
+        resultBinding.soilType.text = detectedClass
         showLoading(false)
         resultBinding.backButton.setOnClickListener {
+            resultBinding.soilType.text = ""
+            finish()
             onBackPressed()
         }
     }

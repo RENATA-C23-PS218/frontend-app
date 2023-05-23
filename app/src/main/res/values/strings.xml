@@ -20,6 +20,8 @@
     <string name="dark_mode">Dark</string>
     <string name="confirm_password_button">Confirm Password</string>
     <string name="change_button">Change</string>
+    <string name="try_again_button">Try Again</string>
+    <string name="result_button">Result</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Character count should be at least 8</string>
@@ -97,8 +99,6 @@
     <string name="send_otp_fail_cause1">Invalid Email</string>
     <string name="send_otp_fail_cause2">Make sure Email are filled in correctly</string>
     <string name="history_not_found">History Not Found</string>
-    <string name="try_again_button">Try Again</string>
     <string name="scan_failed">Scan Failed</string>
     <string name="scan_success">Scan Success</string>
-    <string name="result_button">Result</string>
 </resources>
