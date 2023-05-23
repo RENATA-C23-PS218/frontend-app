@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scan Success"
+            android:text="@string/scan_success"
             android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -34,7 +34,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Result"
+            android:text="@string/result_button"
+            android:backgroundTint="@color/brown"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp" />

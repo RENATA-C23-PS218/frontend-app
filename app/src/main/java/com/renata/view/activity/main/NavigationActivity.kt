@@ -2,6 +2,7 @@ package com.renata.view.activity.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,13 +14,14 @@ import com.renata.view.activity.scan.ScanActivity
 
 class NavigationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityNavigationBinding
+    private lateinit var navigationBinding: ActivityNavigationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNavigationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val navView: BottomNavigationView = binding.navView
+        navigationBinding = ActivityNavigationBinding.inflate(layoutInflater)
+        setContentView(navigationBinding.root)
+        showLoading(false)
+        val navView: BottomNavigationView = navigationBinding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -27,7 +29,7 @@ class NavigationActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
-        binding.scanFab.setOnClickListener {
+        navigationBinding.scanFab.setOnClickListener {
             val intent = Intent(this, ScanActivity::class.java)
             startActivity(intent)
         }
@@ -44,6 +46,10 @@ class NavigationActivity : AppCompatActivity() {
                 navController.popBackStack(historyFragment!!.id, false)
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        navigationBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
 }

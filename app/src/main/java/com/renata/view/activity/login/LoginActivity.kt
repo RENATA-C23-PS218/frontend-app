@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
         loginBinding.createAccount.setOnClickListener { registerET() }
         loginBinding.loginButton.setOnClickListener {
             alarmReceiver.firstRepeatingAlarm(this)
-            showLoading(true)
             loginButton()
         }
     }
@@ -195,7 +194,7 @@ class LoginActivity : AppCompatActivity() {
             else -> {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     if (passwordValidation(password) && emailValidation(email)) {
-                        showLoading(false)
+                        showLoading(true)
                         val moveToMain = Intent(this, NavigationActivity::class.java)
                         startActivity(moveToMain)
                         overridePendingTransition(

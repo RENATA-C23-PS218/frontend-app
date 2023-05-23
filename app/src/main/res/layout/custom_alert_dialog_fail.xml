@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Scan Failed"
+            android:text="@string/scan_failed"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -34,7 +34,8 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="Try Again"
+            android:backgroundTint="@color/brown"
+            android:text="@string/try_again_button"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp" />
