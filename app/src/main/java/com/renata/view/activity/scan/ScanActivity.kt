@@ -23,6 +23,7 @@ import com.renata.utils.uriToFile
 import com.renata.view.activity.result.ResultActivity
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
@@ -106,13 +107,13 @@ class ScanActivity : AppCompatActivity() {
             )
             val detectedClass = classes[maxPos]
             model.close()
-            showResultDialog(detectedClass)
+            showResultDialog(detectedClass, image)
         } catch (e: IOException) {
             // TODO Handle the exception
         }
     }
 
-    private fun showResultDialog(detectedClass: String) {
+    private fun showResultDialog(detectedClass: String, image: Bitmap) {
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
             .create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
@@ -121,6 +122,11 @@ class ScanActivity : AppCompatActivity() {
         button.setOnClickListener {
             builder.dismiss()
             val intent = Intent(this@ScanActivity, ResultActivity::class.java)
+            // convert to ByteArray
+            var bStream  =  ByteArrayOutputStream()
+            image.compress(Bitmap.CompressFormat.PNG, 50, bStream)
+            val byteArray = bStream.toByteArray()
+            intent.putExtra("image", byteArray )
             intent.putExtra("detected_class", detectedClass)
             startActivity(intent)
             overridePendingTransition(
