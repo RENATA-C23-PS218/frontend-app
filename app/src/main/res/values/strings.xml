@@ -61,9 +61,10 @@
     <string name="soil_type_title">Soil Type</string>
     <string name="plant_recommendations_title">Plant Recommendations</string>
     <!-- PLACEHOLDER -->
+    <string name="soil_placeholder">soil</string>
+    <string name="plant_placeholder">plant</string>
     <string name="holder_name">Username</string>
     <string name="holder_email">User Email</string>
-    <string name="lorem_ipsum">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <!-- MESSAGE -->
     <string name="insert_email">Please insert your Email</string>
     <string name="insert_pass">Please insert your Password</string>
@@ -101,4 +102,6 @@
     <string name="history_not_found">History Not Found</string>
     <string name="scan_failed">Scan Failed</string>
     <string name="scan_success">Scan Success</string>
+    <string name="alert_no_image">No Image Detected</string>
+    <string name="image_req">Please Choose The Image First</string>
 </resources>

@@ -15,8 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.ViewModelProvider
 import com.renata.databinding.ActivityScanBinding
 import com.renata.ml.Model
+import com.renata.utils.ViewModelFactory
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
@@ -33,6 +35,7 @@ import kotlin.math.min
 class ScanActivity : AppCompatActivity() {
 
     private lateinit var scanBinding: ActivityScanBinding
+    private lateinit var scanViewModel: ScanViewModel
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
     private var imageSize: Int = 224
@@ -41,6 +44,7 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
+        scanViewModel = obtainViewModel(this as AppCompatActivity)
         showLoading(false)
         scanBinding.previewImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
@@ -49,7 +53,13 @@ class ScanActivity : AppCompatActivity() {
         scanBinding.backButton.setOnClickListener { onBackPressed() }
     }
 
+    private fun obtainViewModel(activity: AppCompatActivity): ScanViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[ScanViewModel::class.java]
+    }
+
     private fun detectPhoto() {
+        showLoading(true)
         val drawable = scanBinding.previewImageView.drawable
         if (drawable != null) {
             val image = drawable.toBitmap()
@@ -59,7 +69,8 @@ class ScanActivity : AppCompatActivity() {
             val scaledImage = Bitmap.createScaledBitmap(thumbnail, imageSize, imageSize, false)
             classifyImage(scaledImage)
         } else {
-            alertFail()
+            showLoading(false)
+            alertNull()
         }
     }
 
@@ -85,7 +96,7 @@ class ScanActivity : AppCompatActivity() {
             }
             inputFeature0.loadBuffer(byteBuffer)
             val outputs: Model.Outputs = model.process(inputFeature0)
-            val outputFeature0: TensorBuffer = outputs.getOutputFeature0AsTensorBuffer()
+            val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
             val confidences: FloatArray = outputFeature0.floatArray
             var maxPos = 0
             var maxConfidence = 0f
@@ -109,11 +120,12 @@ class ScanActivity : AppCompatActivity() {
             model.close()
             showResultDialog(detectedClass, image)
         } catch (e: IOException) {
-            // TODO Handle the exception
+            alertFail()
         }
     }
 
     private fun showResultDialog(detectedClass: String, image: Bitmap) {
+        showLoading(false)
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
             .create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
@@ -122,17 +134,17 @@ class ScanActivity : AppCompatActivity() {
         button.setOnClickListener {
             builder.dismiss()
             val intent = Intent(this@ScanActivity, ResultActivity::class.java)
-            // convert to ByteArray
-            var bStream  =  ByteArrayOutputStream()
+            var bStream = ByteArrayOutputStream()
             image.compress(Bitmap.CompressFormat.PNG, 50, bStream)
             val byteArray = bStream.toByteArray()
-            intent.putExtra("image", byteArray )
+            intent.putExtra("image", byteArray)
             intent.putExtra("detected_class", detectedClass)
             startActivity(intent)
             overridePendingTransition(
                 com.renata.R.anim.slide_out_bottom,
                 com.renata.R.anim.slide_in_bottom
             )
+            finish()
         }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
@@ -143,6 +155,19 @@ class ScanActivity : AppCompatActivity() {
             .create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_fail, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogFailDismiss_button)
+        builder.setView(view)
+        button.setOnClickListener {
+            builder.dismiss()
+        }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
+
+    private fun alertNull() {
+        val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
+            .create()
+        val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_image_null, null)
+        val button = view.findViewById<Button>(com.renata.R.id.dialogTry_button)
         builder.setView(view)
         button.setOnClickListener {
             builder.dismiss()
@@ -169,7 +194,6 @@ class ScanActivity : AppCompatActivity() {
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        showLoading(false)
         if (result.resultCode == RESULT_OK) {
             val myFile = File(currentPhotoPath)
             myFile.let { file ->
@@ -178,6 +202,8 @@ class ScanActivity : AppCompatActivity() {
                 scanBinding.imageLoading.visibility = View.GONE
                 scanBinding.previewImageView.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
+        } else {
+            showLoading(false)
         }
     }
 
@@ -205,4 +231,5 @@ class ScanActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         scanBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
+
 }

@@ -24,13 +24,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/scan_failed"
+            android:text="@string/alert_no_image"
+            android:fontFamily="@font/rajdhani600"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/image_req"
             android:fontFamily="@font/rajdhani600"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/dialogFailDismiss_button"
+            android:id="@+id/dialogTry_button"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

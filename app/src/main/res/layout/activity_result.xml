@@ -40,8 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/result_toolbar"
+            android:fontFamily="@font/rajdhani700"
             android:textColor="?attr/colorPrimary"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -55,16 +56,22 @@
             android:layout_height="match_parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="30dp" />
+
             <ImageView
                 android:id="@+id/previewImageView"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/guideline_top_margin" />
 
             <TextView
                 android:id="@+id/title1"
@@ -100,11 +107,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
-                android:text="@string/lorem_ipsum"
-                android:textSize="20sp"
+                android:text="@string/soil_placeholder"
+                android:textAlignment="center"
+                android:textColor="@color/brown"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier1" />
 
             <TextView
@@ -141,11 +150,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
-                android:text="@string/lorem_ipsum"
-                android:textSize="20sp"
+                android:text="@string/plant_placeholder"
+                android:textColor="@color/brown"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

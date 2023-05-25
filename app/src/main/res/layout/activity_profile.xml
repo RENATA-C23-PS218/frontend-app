@@ -26,9 +26,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/rajdhani700"
             android:text="@string/update_profile_toolbar"
             android:textColor="?attr/colorPrimary"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -57,8 +58,9 @@
             android:layout_marginEnd="20dp"
             android:contentDescription="Change Avatar"
             android:text="Change Avatar"
+            android:fontFamily="@font/rajdhani700"
             android:textAllCaps="false"
-            android:textSize="16sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
@@ -196,8 +198,9 @@
             android:layout_marginEnd="32dp"
             android:contentDescription="@string/save_changes_button"
             android:text="@string/save_changes_button"
+            android:fontFamily="@font/rajdhani700"
+            android:textSize="20sp"
             android:textAllCaps="false"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressEditTextLayout" />

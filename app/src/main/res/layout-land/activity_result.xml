@@ -40,8 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/result_toolbar"
+            android:fontFamily="@font/rajdhani700"
             android:textColor="?attr/colorPrimary"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -100,11 +101,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
-                android:text="@string/lorem_ipsum"
-                android:textSize="20sp"
+                android:text="@string/soil_placeholder"
+                android:textAlignment="center"
+                android:textColor="@color/brown"
+                android:textSize="24sp"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier1" />
 
             <TextView
@@ -141,10 +144,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:justificationMode="inter_word"
-                android:text="@string/lorem_ipsum"
+                android:text="@string/plant_placeholder"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@+id/barrier2" />
 

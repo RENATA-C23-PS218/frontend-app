@@ -23,8 +23,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/scan_success"
             android:layout_gravity="center"
+            android:text="@string/scan_success"
+            android:fontFamily="@font/rajdhani600"
             android:textColor="@color/black"
             android:textSize="24sp" />
 
@@ -32,10 +33,10 @@
             android:id="@+id/dialogDismiss_button"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="@string/result_button"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/brown"
+            android:text="@string/result_button"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp" />

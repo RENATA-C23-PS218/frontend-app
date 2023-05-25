@@ -24,7 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
         lifecycleScope.launch {
             delay(splashTime)
             withContext(Dispatchers.Main) {
-                val intent = Intent(this@SplashScreenActivity, NavigationActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
                 startActivity(intent)
                 overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
                 finish()

@@ -27,8 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Update Profile"
+            android:fontFamily="@font/rajdhani700"
             android:textColor="?attr/colorPrimary"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
