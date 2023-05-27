@@ -1,3 +1,7 @@
 package com.renata.data
 
-interface RenataInterface {}
+import android.graphics.Bitmap
+
+interface RenataInterface {
+    suspend fun classifyImage(image: Bitmap): String
+}

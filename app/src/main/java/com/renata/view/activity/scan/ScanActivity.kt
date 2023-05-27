@@ -45,6 +45,7 @@ class ScanActivity : AppCompatActivity() {
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
         scanViewModel = obtainViewModel(this as AppCompatActivity)
+//        scanBinding.layoutAfter?.visibility = View.GONE
         showLoading(false)
         scanBinding.previewImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
@@ -67,7 +68,15 @@ class ScanActivity : AppCompatActivity() {
             val thumbnail = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
             scanBinding.previewImageView.setImageBitmap(thumbnail)
             val scaledImage = Bitmap.createScaledBitmap(thumbnail, imageSize, imageSize, false)
-            classifyImage(scaledImage)
+            //classifyImage(scaledImage)
+            scanViewModel.classifyImage(scaledImage).observe(this, { detectedClass ->
+                if (detectedClass != null) {
+                    showResultDialog(detectedClass, image)
+                } else {
+                    alertFail()
+                }
+                showLoading(false)
+            })
         } else {
             showLoading(false)
             alertNull()
@@ -107,6 +116,7 @@ class ScanActivity : AppCompatActivity() {
                 }
             }
             val classes = arrayOf(
+                "Unknown",
                 "Aluvial",
                 "Andosol",
                 "Entisol",
@@ -114,7 +124,7 @@ class ScanActivity : AppCompatActivity() {
                 "Inceptisol",
                 "Kapur",
                 "Laterit",
-                "Pasir"
+                "pasir"
             )
             val detectedClass = classes[maxPos]
             model.close()
@@ -126,16 +136,19 @@ class ScanActivity : AppCompatActivity() {
 
     private fun showResultDialog(detectedClass: String, image: Bitmap) {
         showLoading(false)
-        val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
-            .create()
+        val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog).create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogDismiss_button)
         builder.setView(view)
         button.setOnClickListener {
             builder.dismiss()
+//            scanBinding.layoutBefore?.visibility = View.GONE
+//            scanBinding.layoutAfter?.visibility = View.VISIBLE
+//            scanBinding.soilType?.text = detectedClass
+            val compressedImage = compressBitmap(image) // Kompres ukuran bitmap
             val intent = Intent(this@ScanActivity, ResultActivity::class.java)
-            var bStream = ByteArrayOutputStream()
-            image.compress(Bitmap.CompressFormat.PNG, 50, bStream)
+            val bStream = ByteArrayOutputStream()
+            image.compress(Bitmap.CompressFormat.PNG, 100, bStream)
             val byteArray = bStream.toByteArray()
             intent.putExtra("image", byteArray)
             intent.putExtra("detected_class", detectedClass)
@@ -148,6 +161,31 @@ class ScanActivity : AppCompatActivity() {
         }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
+    }
+
+    fun restartActivity(view: View) {
+        val intent = intent
+        finish()
+        startActivity(intent)
+    }
+
+    private fun compressBitmap(bitmap: Bitmap): Bitmap {
+        val maxFileSize = 1024 * 1024
+        var compression = 90
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, compression, outputStream)
+        while (outputStream.toByteArray().size > maxFileSize && compression > 10) {
+            compression -= 10
+            outputStream.reset()
+            bitmap.compress(Bitmap.CompressFormat.PNG, compression, outputStream)
+        }
+        val compressedBitmap = BitmapFactory.decodeByteArray(
+            outputStream.toByteArray(),
+            0,
+            outputStream.toByteArray().size
+        )
+        outputStream.close()
+        return compressedBitmap
     }
 
     private fun alertFail() {

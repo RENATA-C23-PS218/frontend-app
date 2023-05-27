@@ -33,7 +33,7 @@ class AuthPassActivity : AppCompatActivity() {
                 getString(R.string.resend_otp_res)
             ) {}
         }
-        authPassBinding.verifyButton.setOnClickListener {
+        authPassBinding.verifyResetButton?.setOnClickListener {
             showAlert(
                 getString(R.string.auth_success),
                 getString(R.string.auth_to_reset)
@@ -75,7 +75,7 @@ class AuthPassActivity : AppCompatActivity() {
         val otp4 =
             ObjectAnimator.ofFloat(authPassBinding.resOtp4, View.ALPHA, 1f).setDuration(500)
         val verifyButton =
-            ObjectAnimator.ofFloat(authPassBinding.verifyButton, View.ALPHA, 1f)
+            ObjectAnimator.ofFloat(authPassBinding.verifyResetButton, View.ALPHA, 1f)
                 .setDuration(500)
         val didnReceive =
             ObjectAnimator.ofFloat(authPassBinding.notReceiveOTP, View.ALPHA, 1f)

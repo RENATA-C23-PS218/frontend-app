@@ -59,10 +59,6 @@ class AccountFragment : Fragment() {
         accountBinding.logoutButton.setOnClickListener {
             val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
             startActivity(intentToSplash)
-            requireActivity().overridePendingTransition(
-                R.anim.slide_out_bottom,
-                R.anim.slide_in_bottom
-            )
             activity?.finishAffinity()
         }
     }
