@@ -18,12 +18,14 @@ import com.renata.view.activity.login.LoginActivity
 class AuthenticationActivity : AppCompatActivity() {
 
     private lateinit var authenticationBinding: ActivityAuthenticationBinding
+    private lateinit var email: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authenticationBinding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(authenticationBinding.root)
-
+        email = intent.getStringExtra("email").toString()
+        authenticationBinding.email.text = email
         showLoading(false)
         setupView()
         setupAnimation()

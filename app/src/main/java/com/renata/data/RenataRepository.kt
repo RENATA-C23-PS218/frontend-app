@@ -2,6 +2,11 @@ package com.renata.data
 
 import android.app.Application
 import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import com.renata.data.retrofit.ApiConfig
+import com.renata.data.retrofit.ApiService
+import com.renata.data.user.register.RegisterResponse
 import com.renata.ml.Model
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -11,7 +16,9 @@ import java.nio.ByteOrder
 
 
 class RenataRepository(private val application: Application) : RenataInterface {
+
     private var imageSize: Int = 224
+    private val apiService: ApiService = ApiConfig.getApiService()
 
     override suspend fun classifyImage(image: Bitmap): String {
         try {
@@ -63,4 +70,27 @@ class RenataRepository(private val application: Application) : RenataInterface {
             throw Exception("Failed to classify image")
         }
     }
+
+    fun register(
+        email: String,
+        password: String,
+        confirmPass: String
+    ): LiveData<Result<RegisterResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.register(
+                email,
+                password,
+                confirmPass
+            )
+            if (response.success) {
+                emit(Result.Error(response.message))
+            } else {
+                emit(Result.Success(response))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
 }

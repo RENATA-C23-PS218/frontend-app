@@ -12,10 +12,14 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.renata.R
+import com.renata.data.Result
 import com.renata.databinding.ActivityRegisterBinding
+import com.renata.utils.ViewModelFactory
 import com.renata.utils.emailValidation
 import com.renata.utils.passwordValidation
 import com.renata.view.activity.authentication.AuthenticationActivity
@@ -24,12 +28,13 @@ import com.renata.view.activity.login.LoginActivity
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var registerBinding: ActivityRegisterBinding
+    private lateinit var registerViewModel: RegisterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(registerBinding.root)
-
+        registerViewModel = obtainViewModel(this as AppCompatActivity)
         showLoading(false)
         setupView()
         setupAnimation()
@@ -38,6 +43,11 @@ class RegisterActivity : AppCompatActivity() {
         confirmPasswordET()
         registerBinding.loginAccount.setOnClickListener { loginET() }
         registerBinding.registerButton.setOnClickListener { registerButton() }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): RegisterViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[RegisterViewModel::class.java]
     }
 
     private fun confirmPasswordET() {
@@ -153,10 +163,19 @@ class RegisterActivity : AppCompatActivity() {
                     if (passwordValidation(password) && emailValidation(email)) {
                         if (confirmPass == password) {
                             showLoading(false)
-                            showAlert(
-                                getString(R.string.regis_success),
-                                getString(R.string.regis_to_auth)
-                            ) { auth() }
+                            register(email, password, confirmPass)
+//                            showAlert(
+//                                getString(R.string.regis_success),
+//                                getString(R.string.regis_to_auth)
+//                            ) {
+//                                val moveToAuth = Intent(
+//                                    this@RegisterActivity,
+//                                    AuthenticationActivity::class.java
+//                                )
+//                                moveToAuth.putExtra("email", email)
+//                                startActivity(moveToAuth)
+//                                finish()
+//                            }
                         } else {
                             showLoading(false)
                             showAlert(
@@ -180,6 +199,47 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun register(email: String, password: String, confirmPassword: String) {
+        registerViewModel.userRegister(email, password, confirmPassword)
+            .observe(this@RegisterActivity) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            showLoading(true)
+                        }
+
+                        is Result.Error -> {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_fail),
+                                getString(R.string.regis_fail_cause2)
+                            ) { }
+                        }
+
+                        is Result.Success -> {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.regis_success),
+                                getString(R.string.regis_to_auth)
+                            ) {
+                                val moveToAuth = Intent(
+                                    this@RegisterActivity,
+                                    AuthenticationActivity::class.java
+                                )
+                                moveToAuth.putExtra("email", email)
+                                startActivity(moveToAuth)
+                                finish()
+                            }
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupView() {

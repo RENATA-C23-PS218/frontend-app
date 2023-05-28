@@ -148,7 +148,7 @@ class ScanActivity : AppCompatActivity() {
             val compressedImage = compressBitmap(image) // Kompres ukuran bitmap
             val intent = Intent(this@ScanActivity, ResultActivity::class.java)
             val bStream = ByteArrayOutputStream()
-            image.compress(Bitmap.CompressFormat.PNG, 100, bStream)
+            compressedImage.compress(Bitmap.CompressFormat.PNG, 50, bStream)
             val byteArray = bStream.toByteArray()
             intent.putExtra("image", byteArray)
             intent.putExtra("detected_class", detectedClass)
@@ -170,14 +170,14 @@ class ScanActivity : AppCompatActivity() {
     }
 
     private fun compressBitmap(bitmap: Bitmap): Bitmap {
-        val maxFileSize = 1024 * 1024
+        val maxFileSize = 1024 * 1024 // 1 MB
         var compression = 90
         val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, compression, outputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compression, outputStream)
         while (outputStream.toByteArray().size > maxFileSize && compression > 10) {
             compression -= 10
             outputStream.reset()
-            bitmap.compress(Bitmap.CompressFormat.PNG, compression, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compression, outputStream)
         }
         val compressedBitmap = BitmapFactory.decodeByteArray(
             outputStream.toByteArray(),
