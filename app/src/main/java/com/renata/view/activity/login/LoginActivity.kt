@@ -12,11 +12,11 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.renata.R
+import com.renata.data.Result
 import com.renata.databinding.ActivityLoginBinding
 import com.renata.utils.AlarmReceiver
 import com.renata.utils.ViewModelFactory
@@ -25,7 +25,6 @@ import com.renata.utils.passwordValidation
 import com.renata.view.activity.forgotpass.ForgotPassActivity
 import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.register.RegisterActivity
-import com.renata.data.Result
 
 class LoginActivity : AppCompatActivity() {
 
@@ -62,6 +61,8 @@ class LoginActivity : AppCompatActivity() {
         val moveToForgotPass = Intent(this, ForgotPassActivity::class.java)
         startActivity(moveToForgotPass)
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        loginBinding.edLoginEmail.text = null
+        loginBinding.edLoginPassword.text = null
     }
 
     private fun emailET() {
@@ -69,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
         myLoginEmailET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = loginBinding.edLoginEmail.text.toString()
                 if (email.isEmpty()) {
@@ -82,6 +84,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -93,6 +96,7 @@ class LoginActivity : AppCompatActivity() {
         myLoginPasswordET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = loginBinding.edLoginPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -106,6 +110,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -169,6 +174,8 @@ class LoginActivity : AppCompatActivity() {
         val moveToRegister = Intent(this, RegisterActivity::class.java)
         startActivity(moveToRegister)
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        loginBinding.edLoginEmail.text = null
+        loginBinding.edLoginPassword.text = null
     }
 
     private fun loginButton() {
@@ -192,13 +199,13 @@ class LoginActivity : AppCompatActivity() {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     if (passwordValidation(password) && emailValidation(email)) {
                         showLoading(true)
-//                        login(email, password)
-                        val moveToMain = Intent(this, NavigationActivity::class.java)
-                        startActivity(moveToMain)
-                        overridePendingTransition(
-                            R.anim.slide_out_bottom,
-                            R.anim.slide_in_bottom
-                        )
+                        login(email, password)
+//                        val moveToMain = Intent(this, NavigationActivity::class.java)
+//                        startActivity(moveToMain)
+//                        overridePendingTransition(
+//                            R.anim.slide_out_bottom,
+//                            R.anim.slide_in_bottom
+//                        )
                     } else {
                         showLoading(false)
                         showAlert(
@@ -228,7 +235,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         showLoading(false)
-                        showToast("login Method")
                         showAlert(
                             getString(R.string.login_fail),
                             getString(R.string.login_fail_cause2)
@@ -248,10 +254,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun insertEmail() {

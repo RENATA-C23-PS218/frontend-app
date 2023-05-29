@@ -12,7 +12,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -55,6 +54,7 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterConPassET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val password = registerBinding.edRegisterPassword.text.toString()
                 val conPass = registerBinding.edRegisterConfirmPassword.text.toString()
@@ -70,6 +70,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -81,6 +82,7 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterEmailET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = registerBinding.edRegisterEmail.text.toString()
                 if (email.isEmpty()) {
@@ -94,6 +96,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -105,6 +108,7 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterPasswordET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
+
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = registerBinding.edRegisterPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -118,6 +122,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -317,19 +322,16 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun insertConfirmPAss() {
         registerBinding.errorConfirmPass.visibility = View.VISIBLE
-        registerBinding.errorConfirmPass.text = "Please insert your Password"
-    }
-
-    private fun auth() {
-        val moveToAuth = Intent(this@RegisterActivity, AuthenticationActivity::class.java)
-        startActivity(moveToAuth)
-        finish()
+        registerBinding.errorConfirmPass.text = getString(R.string.insert_pass)
     }
 
     private fun loginET() {
         val moveToLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
         startActivity(moveToLogin)
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        registerBinding.edRegisterEmail.text = null
+        registerBinding.edRegisterPassword.text = null
+        registerBinding.edRegisterConfirmPassword.text = null
         finishAffinity()
     }
 

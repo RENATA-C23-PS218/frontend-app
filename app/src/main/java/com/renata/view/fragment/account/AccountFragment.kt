@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.renata.R
 import com.renata.databinding.FragmentAccountBinding
 import com.renata.view.activity.profile.ProfileActivity
 import com.renata.view.activity.setting.SettingActivity
@@ -45,15 +44,6 @@ class AccountFragment : Fragment() {
             startActivity(intent)
         }
     }
-
-    private fun replaceFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
-            .setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
-            .replace(R.id.nav_host_fragment_activity_navigation, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
 
     private fun logout() {
         accountBinding.logoutButton.setOnClickListener {

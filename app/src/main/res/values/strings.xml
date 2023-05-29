@@ -24,7 +24,7 @@
     <string name="result_button">Result</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
-    <string name="error_password">Character count should be at least 8</string>
+    <string name="error_password">Your password must have at least 8 characters and include uppercase and lowercase letters, and at least one symbol</string>
     <string name="error_confirm_password">"Password and Confirm Password must match</string>
     <!-- TOOLBAR TEXT -->
     <string name="account_toolbar">Account</string>
@@ -93,7 +93,7 @@
     <string name="reset_to_login">Congratulations! Your password has been reset. Please login to get started</string>
     <string name="reset_fail">Reset Password Failed</string>
     <string name="reset_fail_cause3">Password and Confirm Password must match</string>
-    <string name="reset_fail_cause2">Character count should be at least 8</string>
+    <string name="reset_fail_cause2">Your password must have at least 8 characters and include uppercase and lowercase letters, and at least one symbol</string>
     <string name="reset_fail_cause1">Password and confirm password cannot be empty</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="send_otp_fail">Unable to send OTP</string>

@@ -8,7 +8,6 @@ import com.renata.view.activity.authpass.AuthPassViewModel
 import com.renata.view.activity.forgotpass.ForgotPassViewModel
 import com.renata.view.activity.login.LoginViewModel
 import com.renata.view.activity.main.NavigationViewModel
-import com.renata.view.activity.profile.ProfileViewModel
 import com.renata.view.activity.register.RegisterViewModel
 import com.renata.view.activity.reset.ResetPassViewModel
 import com.renata.view.activity.scan.ScanViewModel

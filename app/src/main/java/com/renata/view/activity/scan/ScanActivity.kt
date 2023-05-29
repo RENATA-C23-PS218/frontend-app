@@ -69,14 +69,14 @@ class ScanActivity : AppCompatActivity() {
             scanBinding.previewImageView.setImageBitmap(thumbnail)
             val scaledImage = Bitmap.createScaledBitmap(thumbnail, imageSize, imageSize, false)
             //classifyImage(scaledImage)
-            scanViewModel.classifyImage(scaledImage).observe(this, { detectedClass ->
+            scanViewModel.classifyImage(scaledImage).observe(this) { detectedClass ->
                 if (detectedClass != null) {
                     showResultDialog(detectedClass, image)
                 } else {
                     alertFail()
                 }
                 showLoading(false)
-            })
+            }
         } else {
             showLoading(false)
             alertNull()

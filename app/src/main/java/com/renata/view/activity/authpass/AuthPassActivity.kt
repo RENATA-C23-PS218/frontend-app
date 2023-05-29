@@ -15,9 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.renata.R
 import com.renata.databinding.ActivityAuthPassBinding
 import com.renata.utils.ViewModelFactory
-import com.renata.view.activity.forgotpass.ForgotPassViewModel
 import com.renata.view.activity.reset.ResetPassActivity
-import com.renata.view.activity.reset.ResetPassViewModel
 
 class AuthPassActivity : AppCompatActivity() {
 
@@ -41,17 +39,19 @@ class AuthPassActivity : AppCompatActivity() {
                 getString(R.string.resend_otp_res)
             ) {}
         }
-        authPassBinding.verifyResetButton?.setOnClickListener {
+        authPassBinding.verifyResetButton.setOnClickListener {
             showAlert(
                 getString(R.string.auth_success),
                 getString(R.string.auth_to_reset)
-            ) { val moveToReset = Intent(
-                this@AuthPassActivity,
-                ResetPassActivity::class.java
-            )
+            ) {
+                val moveToReset = Intent(
+                    this@AuthPassActivity,
+                    ResetPassActivity::class.java
+                )
                 moveToReset.putExtra("email", email)
                 startActivity(moveToReset)
-                finish() }
+                finish()
+            }
         }
     }
 
@@ -115,10 +115,6 @@ class AuthPassActivity : AppCompatActivity() {
             )
             start()
         }
-    }
-
-    private fun moveToReset() {
-        startActivity(Intent(this, ResetPassActivity::class.java))
     }
 
     private fun showAlert(

@@ -21,9 +21,7 @@ import com.renata.data.Result
 import com.renata.databinding.ActivityForgotPassBinding
 import com.renata.utils.ViewModelFactory
 import com.renata.utils.emailValidation
-import com.renata.view.activity.authentication.AuthenticationActivity
 import com.renata.view.activity.authpass.AuthPassActivity
-import com.renata.view.activity.main.NavigationActivity
 
 class ForgotPassActivity : AppCompatActivity() {
 
@@ -61,7 +59,7 @@ class ForgotPassActivity : AppCompatActivity() {
             else -> {
                 if (!TextUtils.isEmpty(email)) {
                     if (emailValidation(email)) {
-//                        sendEmail(email)
+                        sendEmail(email)
 //                        val moveToOtp = Intent(this, AuthPassActivity::class.java)
 //                        startActivity(moveToOtp)
 //                        overridePendingTransition(
@@ -74,7 +72,7 @@ class ForgotPassActivity : AppCompatActivity() {
                         )
                         moveToAuth.putExtra("email", email)
                         startActivity(moveToAuth)
-                        finish()
+                        forgotPassBinding.edEmailForgot.text = null
                     } else {
                         showAlert(
                             getString(R.string.send_otp_fail),

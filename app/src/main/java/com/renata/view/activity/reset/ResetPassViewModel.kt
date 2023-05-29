@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.renata.data.RenataRepository
 
-class ResetPassViewModel(application: Application) : ViewModel(){
+class ResetPassViewModel(application: Application) : ViewModel() {
     private val repository = RenataRepository(application)
 
     fun userResetPass(email: String, password: String, confirmPassword: String) =

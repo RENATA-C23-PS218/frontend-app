@@ -12,7 +12,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -183,10 +182,6 @@ class ResetPassActivity : AppCompatActivity() {
             }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
     private fun setupView() {
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -260,13 +255,15 @@ class ResetPassActivity : AppCompatActivity() {
 
     private fun insertConfirmPAss() {
         resetPassBinding.errorConfirmPass.visibility = View.VISIBLE
-        resetPassBinding.errorConfirmPass.text = "Please insert your Password"
+        resetPassBinding.errorConfirmPass.text = getString(R.string.insert_pass)
     }
 
     private fun login() {
         val moveToLogin = Intent(this@ResetPassActivity, LoginActivity::class.java)
         startActivity(moveToLogin)
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+        resetPassBinding.edResetPassword.text = null
+        resetPassBinding.edResetConfirmPassword.text = null
         finishAffinity()
     }
 

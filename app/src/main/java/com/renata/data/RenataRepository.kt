@@ -2,6 +2,7 @@ package com.renata.data
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.renata.data.retrofit.ApiConfig
@@ -22,6 +23,7 @@ class RenataRepository(private val application: Application) {
 
     private var imageSize: Int = 224
     private val apiService: ApiService = ApiConfig.getApiService()
+    private val TAG = "RenataRepository"
 
     fun classifyImage(image: Bitmap): String {
         try {
@@ -68,6 +70,8 @@ class RenataRepository(private val application: Application) {
             )
             val detectedClass = classes[maxPos]
             model.close()
+
+            Log.d(TAG, "Image classification result: $detectedClass")
             return detectedClass
         } catch (e: IOException) {
             throw Exception("Failed to classify image")
@@ -87,11 +91,14 @@ class RenataRepository(private val application: Application) {
                 confirmPass
             )
             if (response.success) {
+                Log.d(TAG, "Registration error: ${response.message}")
                 emit(Result.Error(response.message))
             } else {
+                Log.d(TAG, "Registration success: ${response.message}")
                 emit(Result.Success(response))
             }
         } catch (e: Exception) {
+            Log.e(TAG, "Registration exception: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -104,11 +111,14 @@ class RenataRepository(private val application: Application) {
         try {
             val response = apiService.login(email, password)
             if (response.success) {
+                Log.d(TAG, "Login error: ${response.message}")
                 emit(Result.Error(response.message))
             } else {
+                Log.d(TAG, "Login success: ${response.message}")
                 emit(Result.Success(response))
             }
         } catch (e: Exception) {
+            Log.e(TAG, "Login exception: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -122,11 +132,14 @@ class RenataRepository(private val application: Application) {
                 email
             )
             if (response.success) {
+                Log.d(TAG, "Forgot password error: ${response.message}")
                 emit(Result.Error(response.message))
             } else {
+                Log.d(TAG, "Forgot password success: ${response.message}")
                 emit(Result.Success(response))
             }
         } catch (e: Exception) {
+            Log.e(TAG, "Forgot password exception: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -144,13 +157,15 @@ class RenataRepository(private val application: Application) {
                 confirmPass
             )
             if (response.success) {
+                Log.d(TAG, "Reset password error: ${response.message}")
                 emit(Result.Error(response.message))
             } else {
+                Log.d(TAG, "Reset password success: ${response.message}")
                 emit(Result.Success(response))
             }
         } catch (e: Exception) {
+            Log.e(TAG, "Reset password exception: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
-
 }

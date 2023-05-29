@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class VerifyResetPassResponse (
+data class VerifyResetPassResponse(
     @field:SerializedName("success")
     val success: Boolean,
 

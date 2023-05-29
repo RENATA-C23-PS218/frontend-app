@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import com.renata.R
 import com.renata.utils.ViewModelFactory
 import com.renata.view.activity.login.LoginActivity
-import com.renata.view.activity.main.NavigationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
