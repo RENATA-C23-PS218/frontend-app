@@ -12,28 +12,40 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.renata.R
+import com.renata.data.Result
 import com.renata.databinding.ActivityResetPassBinding
+import com.renata.utils.ViewModelFactory
 import com.renata.utils.passwordValidation
 import com.renata.view.activity.login.LoginActivity
 
 class ResetPassActivity : AppCompatActivity() {
 
     private lateinit var resetPassBinding: ActivityResetPassBinding
+    private lateinit var resetPassViewModel: ResetPassViewModel
+    private lateinit var email: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resetPassBinding = ActivityResetPassBinding.inflate(layoutInflater)
         setContentView(resetPassBinding.root)
-
         showLoading(false)
+        email = intent.getStringExtra("email").toString()
+        resetPassViewModel = obtainViewModel(this as AppCompatActivity)
         setupView()
         setupAnimation()
         passwordET()
         confirmPasswordET()
         resetPassBinding.confirmButton.setOnClickListener { confirmPass() }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): ResetPassViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[ResetPassViewModel::class.java]
     }
 
     private fun confirmPasswordET() {
@@ -114,10 +126,11 @@ class ResetPassActivity : AppCompatActivity() {
                     if (passwordValidation(password) && passwordValidation(confirmPass)) {
                         if (confirmPass == password) {
                             showLoading(false)
-                            showAlert(
-                                getString(R.string.reset_success),
-                                getString(R.string.reset_to_login)
-                            ) { login() }
+                            resetPassword(email, password, confirmPass)
+//                            showAlert(
+//                                getString(R.string.reset_success),
+//                                getString(R.string.reset_to_login)
+//                            ) { login() }
                         } else {
                             showLoading(false)
                             showAlert(
@@ -141,6 +154,37 @@ class ResetPassActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun resetPassword(email: String, password: String, confirmPassword: String) {
+        resetPassViewModel.userResetPass(email, password, confirmPassword)
+            .observe(this@ResetPassActivity) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            showLoading(true)
+                        }
+                        is Result.Error -> {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.reset_fail),
+                                getString(R.string.reset_fail_cause3)
+                            ) { }
+                        }
+                        is Result.Success -> {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.reset_success),
+                                getString(R.string.reset_to_login)
+                            ) { login() }
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupView() {

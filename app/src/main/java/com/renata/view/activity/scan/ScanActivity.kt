@@ -116,7 +116,6 @@ class ScanActivity : AppCompatActivity() {
                 }
             }
             val classes = arrayOf(
-                "Unknown",
                 "Aluvial",
                 "Andosol",
                 "Entisol",

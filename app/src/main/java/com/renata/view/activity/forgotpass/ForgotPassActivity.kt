@@ -12,27 +12,39 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.renata.R
+import com.renata.data.Result
 import com.renata.databinding.ActivityForgotPassBinding
+import com.renata.utils.ViewModelFactory
 import com.renata.utils.emailValidation
+import com.renata.view.activity.authentication.AuthenticationActivity
 import com.renata.view.activity.authpass.AuthPassActivity
+import com.renata.view.activity.main.NavigationActivity
 
 class ForgotPassActivity : AppCompatActivity() {
 
     private lateinit var forgotPassBinding: ActivityForgotPassBinding
+    private lateinit var forgotPassViewModel: ForgotPassViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         forgotPassBinding = ActivityForgotPassBinding.inflate(layoutInflater)
         setContentView(forgotPassBinding.root)
-
         showLoading(false)
+        forgotPassViewModel = obtainViewModel(this as AppCompatActivity)
         setupView()
         setupAnimation()
         emailET()
         forgotPassBinding.sendOTPButton.setOnClickListener { sendOtp() }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): ForgotPassViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[ForgotPassViewModel::class.java]
     }
 
     private fun insertEmail() {
@@ -49,12 +61,20 @@ class ForgotPassActivity : AppCompatActivity() {
             else -> {
                 if (!TextUtils.isEmpty(email)) {
                     if (emailValidation(email)) {
-                        val moveToOtp = Intent(this, AuthPassActivity::class.java)
-                        startActivity(moveToOtp)
-                        overridePendingTransition(
-                            R.anim.slide_out_bottom,
-                            R.anim.slide_in_bottom
+//                        sendEmail(email)
+//                        val moveToOtp = Intent(this, AuthPassActivity::class.java)
+//                        startActivity(moveToOtp)
+//                        overridePendingTransition(
+//                            R.anim.slide_out_bottom,
+//                            R.anim.slide_in_bottom
+//                        )
+                        val moveToAuth = Intent(
+                            this@ForgotPassActivity,
+                            AuthPassActivity::class.java
                         )
+                        moveToAuth.putExtra("email", email)
+                        startActivity(moveToAuth)
+                        finish()
                     } else {
                         showAlert(
                             getString(R.string.send_otp_fail),
@@ -70,6 +90,41 @@ class ForgotPassActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun sendEmail(email: String) {
+        forgotPassViewModel.userForgotPass(email).observe(this@ForgotPassActivity) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        showToast("login Method")
+                        showAlert(
+                            "Send OTP Failed",
+                            "Make sure Email are filled in correctly"
+                        )
+                        {}
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        val moveToAuth = Intent(
+                            this@ForgotPassActivity,
+                            AuthPassActivity::class.java
+                        )
+                        moveToAuth.putExtra("email", email)
+                        startActivity(moveToAuth)
+                        finish()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showAlert(

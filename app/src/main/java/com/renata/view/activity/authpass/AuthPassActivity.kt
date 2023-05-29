@@ -11,20 +11,28 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.renata.R
 import com.renata.databinding.ActivityAuthPassBinding
+import com.renata.utils.ViewModelFactory
+import com.renata.view.activity.forgotpass.ForgotPassViewModel
 import com.renata.view.activity.reset.ResetPassActivity
+import com.renata.view.activity.reset.ResetPassViewModel
 
 class AuthPassActivity : AppCompatActivity() {
 
     private lateinit var authPassBinding: ActivityAuthPassBinding
+    private lateinit var authPassViewModel: AuthPassViewModel
+    private lateinit var email: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authPassBinding = ActivityAuthPassBinding.inflate(layoutInflater)
         setContentView(authPassBinding.root)
-
         showLoading(false)
+        authPassViewModel = obtainViewModel(this as AppCompatActivity)
+        email = intent.getStringExtra("email").toString()
+        authPassBinding.email.text = email
         setupView()
         setupAnimation()
         authPassBinding.resendOTP.setOnClickListener {
@@ -37,8 +45,19 @@ class AuthPassActivity : AppCompatActivity() {
             showAlert(
                 getString(R.string.auth_success),
                 getString(R.string.auth_to_reset)
-            ) { moveToReset() }
+            ) { val moveToReset = Intent(
+                this@AuthPassActivity,
+                ResetPassActivity::class.java
+            )
+                moveToReset.putExtra("email", email)
+                startActivity(moveToReset)
+                finish() }
         }
+    }
+
+    private fun obtainViewModel(activity: AppCompatActivity): AuthPassViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[AuthPassViewModel::class.java]
     }
 
     private fun setupView() {

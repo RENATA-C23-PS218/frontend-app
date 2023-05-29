@@ -55,7 +55,6 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterConPassET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val password = registerBinding.edRegisterPassword.text.toString()
                 val conPass = registerBinding.edRegisterConfirmPassword.text.toString()
@@ -71,7 +70,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -83,7 +81,6 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterEmailET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = registerBinding.edRegisterEmail.text.toString()
                 if (email.isEmpty()) {
@@ -97,12 +94,10 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable) {
 
             }
         })
-
     }
 
     private fun passwordET() {
@@ -110,7 +105,6 @@ class RegisterActivity : AppCompatActivity() {
         myRegisterPasswordET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = registerBinding.edRegisterPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -124,7 +118,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -209,7 +202,6 @@ class RegisterActivity : AppCompatActivity() {
                         is Result.Loading -> {
                             showLoading(true)
                         }
-
                         is Result.Error -> {
                             showLoading(false)
                             showAlert(
@@ -217,7 +209,6 @@ class RegisterActivity : AppCompatActivity() {
                                 getString(R.string.regis_fail_cause2)
                             ) { }
                         }
-
                         is Result.Success -> {
                             showLoading(false)
                             showAlert(
@@ -236,10 +227,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupView() {

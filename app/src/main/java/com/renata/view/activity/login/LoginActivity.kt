@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,7 @@ import com.renata.utils.passwordValidation
 import com.renata.view.activity.forgotpass.ForgotPassActivity
 import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.register.RegisterActivity
+import com.renata.data.Result
 
 class LoginActivity : AppCompatActivity() {
 
@@ -67,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
         myLoginEmailET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = loginBinding.edLoginEmail.text.toString()
                 if (email.isEmpty()) {
@@ -81,12 +82,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable) {
 
             }
         })
-
     }
 
     private fun passwordET() {
@@ -94,7 +93,6 @@ class LoginActivity : AppCompatActivity() {
         myLoginPasswordET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = loginBinding.edLoginPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -108,7 +106,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable) {
 
             }
@@ -195,6 +192,7 @@ class LoginActivity : AppCompatActivity() {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     if (passwordValidation(password) && emailValidation(email)) {
                         showLoading(true)
+//                        login(email, password)
                         val moveToMain = Intent(this, NavigationActivity::class.java)
                         startActivity(moveToMain)
                         overridePendingTransition(
@@ -219,6 +217,41 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun login(email: String, password: String) {
+        loginViewModel.userLogin(email, password).observe(this@LoginActivity) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        showToast("login Method")
+                        showAlert(
+                            getString(R.string.login_fail),
+                            getString(R.string.login_fail_cause2)
+                        )
+                        {}
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        //loginSuccess(result.data)
+                        val moveToMain = Intent(this, NavigationActivity::class.java)
+                        startActivity(moveToMain)
+                        overridePendingTransition(
+                            R.anim.slide_out_bottom,
+                            R.anim.slide_in_bottom
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun insertEmail() {

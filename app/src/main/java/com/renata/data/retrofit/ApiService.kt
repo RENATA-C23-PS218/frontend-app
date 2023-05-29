@@ -1,6 +1,10 @@
 package com.renata.data.retrofit
 
+import com.renata.data.user.forgotpass.ForgotPassResponse
+import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
+import com.renata.data.user.resetpass.ResetPassResponse
+import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import retrofit2.http.*
 
 interface ApiService {
@@ -23,19 +27,31 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("login")
-    suspend fun login()
+    suspend fun login(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): LoginResponse
 
     @FormUrlEncoded
     @POST("forgot-password")
-    suspend fun forgotPass()
+    suspend fun forgotPass(
+        @Field("email") email: String
+    ): ForgotPassResponse
 
     @FormUrlEncoded
     @POST("verify-reset-password")
-    suspend fun verifResetPass()
+    suspend fun verifResetPass(
+        @Field("email") email: String,
+        @Field("otp") otp: Int
+    ): VerifyResetPassResponse
 
     @FormUrlEncoded
     @PUT("reset-password")
-    suspend fun resetPass()
+    suspend fun resetPass(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("confirmPassword") confirmPassword: String
+    ): ResetPassResponse
 
     @FormUrlEncoded
     @GET("profile")

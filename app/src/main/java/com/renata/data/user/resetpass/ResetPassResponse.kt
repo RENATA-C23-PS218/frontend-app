@@ -1,11 +1,11 @@
-package com.renata.data.user.register
+package com.renata.data.user.resetpass
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RegisterResponse(
+data class ResetPassResponse(
     @field:SerializedName("success")
     val success: Boolean,
 

@@ -6,7 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
+import com.renata.data.user.forgotpass.ForgotPassResponse
+import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
+import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.ml.Model
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -15,12 +18,12 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 
-class RenataRepository(private val application: Application) : RenataInterface {
+class RenataRepository(private val application: Application) {
 
     private var imageSize: Int = 224
     private val apiService: ApiService = ApiConfig.getApiService()
 
-    override suspend fun classifyImage(image: Bitmap): String {
+    fun classifyImage(image: Bitmap): String {
         try {
             val model: Model = Model.newInstance(application.applicationContext)
             val inputFeature0 = TensorBuffer.createFixedSize(
@@ -79,6 +82,63 @@ class RenataRepository(private val application: Application) : RenataInterface {
         emit(Result.Loading)
         try {
             val response = apiService.register(
+                email,
+                password,
+                confirmPass
+            )
+            if (response.success) {
+                emit(Result.Error(response.message))
+            } else {
+                emit(Result.Success(response))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun login(
+        email: String,
+        password: String
+    ): LiveData<Result<LoginResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.login(email, password)
+            if (response.success) {
+                emit(Result.Error(response.message))
+            } else {
+                emit(Result.Success(response))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun userForgotPass(
+        email: String,
+    ): LiveData<Result<ForgotPassResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.forgotPass(
+                email
+            )
+            if (response.success) {
+                emit(Result.Error(response.message))
+            } else {
+                emit(Result.Success(response))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun userResetPass(
+        email: String,
+        password: String,
+        confirmPass: String
+    ): LiveData<Result<ResetPassResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.resetPass(
                 email,
                 password,
                 confirmPass
