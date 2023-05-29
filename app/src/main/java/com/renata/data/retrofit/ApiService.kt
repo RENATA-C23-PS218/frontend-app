@@ -4,7 +4,9 @@ import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
+import com.renata.data.user.updateprofile.UpdateProfileResponse
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
@@ -59,7 +61,12 @@ interface ApiService {
 
     @FormUrlEncoded
     @POST("profile")
-    suspend fun updateProfile()
+    fun updateProfile(
+        @Field("first_name") first_name: String,
+        @Field("last_name") last_name: String,
+        @Field("phone") phone: String,
+        @Field("address") address: String
+    ): Call<UpdateProfileResponse>
 
     @FormUrlEncoded
     @POST("profile-image")

@@ -41,9 +41,9 @@ class ViewModelFactory(private val application: Application) :
         if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(application) as T
         }
-        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(application) as T
-        }
+//        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+//            return ProfileViewModel(application) as T
+//        }
         if (modelClass.isAssignableFrom(ScanViewModel::class.java)) {
             return ScanViewModel(application) as T
         }
