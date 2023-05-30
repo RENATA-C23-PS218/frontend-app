@@ -13,6 +13,7 @@ import android.util.Patterns
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 
@@ -43,8 +44,31 @@ fun emailValidation(email: String): Boolean {
     return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
 
+//fun passwordValidation(password: String): Boolean {
+//    return !TextUtils.isEmpty(password) && password.length >= 8
+//}
+
 fun passwordValidation(password: String): Boolean {
-    return !TextUtils.isEmpty(password) && password.length >= 8
+    if (password.isEmpty() || password.length < 8) {
+        return false
+    }
+    // Check for at least one uppercase letter
+    if (!Pattern.compile("[A-Z]").matcher(password).find()) {
+        return false
+    }
+    // Check for at least one lowercase letter
+    if (!Pattern.compile("[a-z]").matcher(password).find()) {
+        return false
+    }
+    // Check for at least one digit
+    if (!Pattern.compile("[0-9]").matcher(password).find()) {
+        return false
+    }
+    // Check for at least one symbol
+    if (!Pattern.compile("[^a-zA-Z0-9]").matcher(password).find()) {
+        return false
+    }
+    return true
 }
 
 fun reduceFileImage(file: File): File {

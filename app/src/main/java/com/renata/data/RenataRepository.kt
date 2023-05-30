@@ -9,9 +9,10 @@ import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
 import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
-import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
+import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.ml.Model
+import org.json.JSONObject
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.IOException
@@ -82,7 +83,7 @@ class RenataRepository(private val application: Application) {
         email: String,
         password: String,
         confirmPass: String
-    ): LiveData<Result<RegisterResponse>> = liveData {
+    ): LiveData<Result<String>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.register(
@@ -91,14 +92,39 @@ class RenataRepository(private val application: Application) {
                 confirmPass
             )
             if (response.success) {
+                Log.d(TAG, "Registration success: ${response.message}")
+                val responseData = JSONObject(response.data)
+                val idValue = responseData.getString("id")
+                emit(Result.Success(idValue))
+            } else {
                 Log.d(TAG, "Registration error: ${response.message}")
                 emit(Result.Error(response.message))
-            } else {
-                Log.d(TAG, "Registration success: ${response.message}")
-                emit(Result.Success(response))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Registration exception: ${e.message}")
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun authentication(
+        id: String,
+        otp: String
+    ): LiveData<Result<VerifyEmailResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.verifyEmail(
+                id,
+                otp
+            )
+            if (response.success) {
+                Log.d(TAG, "Authentication success: ${response.message}")
+                emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Authentication error: ${response.message}")
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Authentication exception: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
     }
@@ -111,11 +137,11 @@ class RenataRepository(private val application: Application) {
         try {
             val response = apiService.login(email, password)
             if (response.success) {
-                Log.d(TAG, "Login error: ${response.message}")
-                emit(Result.Error(response.message))
-            } else {
                 Log.d(TAG, "Login success: ${response.message}")
                 emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Login error: ${response.message}")
+                emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Login exception: ${e.message}")
@@ -132,11 +158,11 @@ class RenataRepository(private val application: Application) {
                 email
             )
             if (response.success) {
-                Log.d(TAG, "Forgot password error: ${response.message}")
-                emit(Result.Error(response.message))
-            } else {
                 Log.d(TAG, "Forgot password success: ${response.message}")
                 emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Forgot password error: ${response.message}")
+                emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Forgot password exception: ${e.message}")
@@ -157,11 +183,11 @@ class RenataRepository(private val application: Application) {
                 confirmPass
             )
             if (response.success) {
-                Log.d(TAG, "Reset password error: ${response.message}")
-                emit(Result.Error(response.message))
-            } else {
                 Log.d(TAG, "Reset password success: ${response.message}")
                 emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Reset password error: ${response.message}")
+                emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Reset password exception: ${e.message}")

@@ -99,7 +99,6 @@ class ForgotPassActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         showLoading(false)
-                        showToast("login Method")
                         showAlert(
                             "Send OTP Failed",
                             "Make sure Email are filled in correctly"
