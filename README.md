@@ -4,6 +4,7 @@
 <ul>
   <li>Intent Gallery -> Selecting a photo from the gallery</li>
   <li>Intent Camera -> Taking a photo using the device camera</li>
+  <li>Retrofit -> Get data from API and Put & Post data to API</li>
 </ul>
 
 <h3>Developed By</h3>
