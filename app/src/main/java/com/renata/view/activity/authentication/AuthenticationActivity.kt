@@ -22,19 +22,24 @@ import com.renata.utils.ViewModelFactory
 import com.renata.view.activity.login.LoginActivity
 
 class AuthenticationActivity : AppCompatActivity() {
-
     private lateinit var authenticationBinding: ActivityAuthenticationBinding
     private lateinit var authViewModel: AuthViewModel
     private lateinit var otpInputViews: Array<TextView>
     private lateinit var email: String
     private lateinit var id: String
-    private lateinit var otp: String
+    private var otpInt: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authenticationBinding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(authenticationBinding.root)
         authViewModel = obtainViewModel(this as AppCompatActivity)
+        email = intent.getStringExtra("email").toString()
+        id = intent.getStringExtra("id").toString()
+        authenticationBinding.email.text = email
+        showLoading(false)
+        setupView()
+        setupAnimation()
         otpInputViews = arrayOf(
             authenticationBinding.authOtp1,
             authenticationBinding.authOtp2,
@@ -50,13 +55,11 @@ class AuthenticationActivity : AppCompatActivity() {
                     after: Int
                 ) {
                 }
-
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (s?.length == 1 && index < otpInputViews.lastIndex) {
                         otpInputViews[index + 1].requestFocus()
                     }
                 }
-
                 override fun afterTextChanged(s: Editable?) {}
             })
             if (index == otpInputViews.lastIndex) {
@@ -68,7 +71,6 @@ class AuthenticationActivity : AppCompatActivity() {
                         after: Int
                     ) {
                     }
-
                     override fun onTextChanged(
                         s: CharSequence?,
                         start: Int,
@@ -76,27 +78,20 @@ class AuthenticationActivity : AppCompatActivity() {
                         count: Int
                     ) {
                         if (s?.length == 1) {
-                            otp = otpInputViews.joinToString("") { it.text.toString() }
+                            val otp = otpInputViews.joinToString("") { it.text.toString() }
+                            otpInt = otp.toIntOrNull()
                         }
                     }
-
                     override fun afterTextChanged(s: Editable?) {}
                 })
             }
         }
-        email = intent.getStringExtra("email").toString()
-        id = intent.getStringExtra("id").toString()
-        authenticationBinding.email.text = email
-        showLoading(false)
-        setupView()
-        setupAnimation()
         authenticationBinding.resendOTP.setOnClickListener {
-            showAlert(
-                getString(R.string.resend_otp_req),
-                getString(R.string.resend_otp_res)
-            ) {}
+            resendOtp(id)
         }
-        authenticationBinding.verifyButton.setOnClickListener { authProcess(id, otp) }
+        authenticationBinding.verifyButton.setOnClickListener {
+            authProcess(id, otpInt!!)
+        }
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): AuthViewModel {
@@ -104,12 +99,47 @@ class AuthenticationActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory)[AuthViewModel::class.java]
     }
 
-    private fun authProcess(id: String, otp: String) {
-//        val authOtp1 = authenticationBinding.authOtp1.text.toString()
-//        val authOtp2 = authenticationBinding.authOtp2.text.toString()
-//        val authOtp3 = authenticationBinding.authOtp3.text.toString()
-//        val authOtp4 = authenticationBinding.authOtp4.text.toString()
-//        val combinedText = authOtp1 + authOtp2 + authOtp3 + authOtp4
+    private fun resendOtp(id: String) {
+        authViewModel.resendOTP(id)
+            .observe(this@AuthenticationActivity) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            showLoading(true)
+                        }
+                        is Result.Error -> {
+                            showLoading(false)
+                            val errorMessage = result.data
+                            showAlert(
+                                "Resend OTP Failed",
+                                errorMessage
+                            ) {
+                                otpClear()
+                            }
+                        }
+                        is Result.Success -> {
+                            showLoading(false)
+                            showAlert(
+                                getString(R.string.resend_otp_req),
+                                getString(R.string.resend_otp_res)
+                            ) {
+                                otpClear()
+                            }
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun otpClear() {
+        authenticationBinding.authOtp1.setText("")
+        authenticationBinding.authOtp2.setText("")
+        authenticationBinding.authOtp3.setText("")
+        authenticationBinding.authOtp4.setText("")
+        authenticationBinding.authOtp1.requestFocus()
+    }
+
+    private fun authProcess(id: String, otp: Int) {
         authViewModel.userAuthentication(id, otp)
             .observe(this@AuthenticationActivity) { result ->
                 if (result != null) {

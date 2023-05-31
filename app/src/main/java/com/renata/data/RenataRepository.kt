@@ -11,6 +11,7 @@ import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
+import com.renata.data.user.verifyemail.ResendOTPResponse
 import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.ml.Model
 import org.json.JSONObject
@@ -122,16 +123,48 @@ class RenataRepository(private val application: Application) {
         }
     }
 
-
     fun authentication(
         id: String,
-        otp: String
+        otp: Int
     ): LiveData<Result<VerifyEmailResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.verifyEmail(
                 id,
                 otp
+            )
+            if (response.success) {
+                Log.d(TAG, "Authentication success: ${response.message}")
+                emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Authentication error: ${response.message}")
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Incorrect One-Time Password (OTP)"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "User not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Authentication exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
+        }
+    }
+
+    fun resendOTP(id: String): LiveData<Result<ResendOTPResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.resendVerif(
+                id
             )
             if (response.success) {
                 Log.d(TAG, "Authentication success: ${response.message}")

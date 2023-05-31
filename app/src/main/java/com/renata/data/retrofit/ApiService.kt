@@ -5,6 +5,7 @@ import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.data.user.updateprofile.*
+import com.renata.data.user.verifyemail.ResendOTPResponse
 import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import retrofit2.Call
@@ -24,12 +25,14 @@ interface ApiService {
     @POST("verify")
     suspend fun verifyEmail(
         @Field("id") id: String,
-        @Field("otp") otp: String
+        @Field("otp") otp: Int
     ): VerifyEmailResponse
 
     @FormUrlEncoded
     @POST("resend-verification")
-    suspend fun resendVerif()
+    suspend fun resendVerif(
+        @Field("id") id: String
+    ): ResendOTPResponse
 
     @FormUrlEncoded
     @POST("login")
