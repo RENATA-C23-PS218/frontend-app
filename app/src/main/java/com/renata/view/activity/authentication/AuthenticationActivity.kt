@@ -119,9 +119,10 @@ class AuthenticationActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             showLoading(false)
+                            val errorMessage = result.data
                             showAlert(
                                 getString(R.string.regis_fail),
-                                getString(R.string.regis_fail_cause2)
+                                errorMessage
                             ) { }
                         }
                         is Result.Success -> {

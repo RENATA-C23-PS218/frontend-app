@@ -9,12 +9,14 @@ import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
 import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
+import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.ml.Model
 import org.json.JSONObject
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import retrofit2.HttpException
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -83,7 +85,7 @@ class RenataRepository(private val application: Application) {
         email: String,
         password: String,
         confirmPass: String
-    ): LiveData<Result<String>> = liveData {
+    ): LiveData<Result<RegisterResponse>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.register(
@@ -93,18 +95,33 @@ class RenataRepository(private val application: Application) {
             )
             if (response.success) {
                 Log.d(TAG, "Registration success: ${response.message}")
-                val responseData = JSONObject(response.data)
-                val idValue = responseData.getString("id")
-                emit(Result.Success(idValue))
+                emit(Result.Success(response))
             } else {
-                Log.d(TAG, "Registration error: ${response.message}")
-                emit(Result.Error(response.message))
+                val errorResponse = JSONObject(response.message)
+                val errorMessage = errorResponse.getString("message")
+                Log.d(TAG, "Registration error: $errorMessage")
+                emit(Result.Error(errorMessage))
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Registration exception: ${e.message}")
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "The email is already in use"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "The requested resource was not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Registration exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
         }
     }
+
 
     fun authentication(
         id: String,
@@ -124,8 +141,22 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Authentication exception: ${e.message}")
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Incorrect One-Time Password (OTP)"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "User not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Authentication exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
         }
     }
 
@@ -144,8 +175,22 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Login exception: ${e.message}")
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Email verification required"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "The account information does not match our records"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Login exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
         }
     }
 

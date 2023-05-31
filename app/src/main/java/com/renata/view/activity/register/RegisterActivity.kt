@@ -28,7 +28,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var registerBinding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
-    private var idValue: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -210,17 +209,17 @@ class RegisterActivity : AppCompatActivity() {
                         }
                         is Result.Error -> {
                             showLoading(false)
+                            val errorMessage = result.data
                             showAlert(
                                 getString(R.string.regis_fail),
-                                getString(R.string.regis_fail_cause2)
+                                errorMessage
                             ) { }
                         }
                         is Result.Success -> {
                             showLoading(false)
-                            idValue = result.data
+                            val idValue = result.data.data.id
                             showAlert(
-//                                getString(R.string.regis_success),
-                                "$idValue",
+                                getString(R.string.regis_success),
                                 getString(R.string.regis_to_auth)
                             ) {
                                 val moveToAuth = Intent(

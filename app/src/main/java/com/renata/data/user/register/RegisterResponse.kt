@@ -6,12 +6,24 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RegisterResponse(
-    @SerializedName("data")
-    val data: String,
+    @field:SerializedName("status")
+    val status: String,
+
+    @field:SerializedName("message")
+    val message: String,
 
     @field:SerializedName("success")
     val success: Boolean,
 
-    @field:SerializedName("message")
-    val message: String
+    @field:SerializedName("data")
+    val data: Data,
+) : Parcelable
+
+@Parcelize
+data class Data(
+    @field:SerializedName("id")
+    val id: String,
+
+    @field:SerializedName("email")
+    val email: String
 ) : Parcelable

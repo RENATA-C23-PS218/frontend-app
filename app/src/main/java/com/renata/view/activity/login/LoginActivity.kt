@@ -235,9 +235,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         showLoading(false)
+                        val errorMessage = result.data
                         showAlert(
                             getString(R.string.login_fail),
-                            getString(R.string.login_fail_cause2)
+                            errorMessage
                         )
                         {}
                     }
