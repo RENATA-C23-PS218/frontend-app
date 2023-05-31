@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.renata.data.user.login.LoginPreferences
+import com.renata.data.user.login.LoginResult
 import com.renata.databinding.FragmentAccountBinding
 import com.renata.view.activity.profile.ProfileActivity
 import com.renata.view.activity.setting.SettingActivity
@@ -15,6 +17,8 @@ class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
     private val accountBinding get() = _binding!!
+    private lateinit var loginPreference: LoginPreferences
+    private lateinit var loginResult: LoginResult
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +30,9 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loginPreference = LoginPreferences(requireContext())
+        loginResult = loginPreference.getUser()
+        accountBinding.tvProfileEmail.text = loginResult.email
         goToSetting()
         changeProfile()
         logout()
@@ -47,6 +54,7 @@ class AccountFragment : Fragment() {
 
     private fun logout() {
         accountBinding.logoutButton.setOnClickListener {
+            loginPreference.removeUser()
             val intentToSplash = Intent(requireContext(), SplashScreenActivity::class.java)
             startActivity(intentToSplash)
             activity?.finishAffinity()

@@ -55,11 +55,13 @@ class AuthenticationActivity : AppCompatActivity() {
                     after: Int
                 ) {
                 }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (s?.length == 1 && index < otpInputViews.lastIndex) {
                         otpInputViews[index + 1].requestFocus()
                     }
                 }
+
                 override fun afterTextChanged(s: Editable?) {}
             })
             if (index == otpInputViews.lastIndex) {
@@ -71,6 +73,7 @@ class AuthenticationActivity : AppCompatActivity() {
                         after: Int
                     ) {
                     }
+
                     override fun onTextChanged(
                         s: CharSequence?,
                         start: Int,
@@ -82,6 +85,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             otpInt = otp.toIntOrNull()
                         }
                     }
+
                     override fun afterTextChanged(s: Editable?) {}
                 })
             }
@@ -153,7 +157,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             showAlert(
                                 getString(R.string.regis_fail),
                                 errorMessage
-                            ) { }
+                            ) { otpClear() }
                         }
                         is Result.Success -> {
                             showLoading(false)

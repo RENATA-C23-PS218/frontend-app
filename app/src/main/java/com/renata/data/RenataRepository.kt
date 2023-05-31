@@ -13,6 +13,7 @@ import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.data.user.verifyemail.ResendOTPResponse
 import com.renata.data.user.verifyemail.VerifyEmailResponse
+import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import com.renata.ml.Model
 import org.json.JSONObject
 import org.tensorflow.lite.DataType
@@ -243,10 +244,94 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Forgot password exception: ${e.message}")
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Email verification required"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "User not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Login exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
         }
     }
+
+    fun resetAuthentication(
+        email: String,
+        otp: Int
+    ): LiveData<Result<VerifyResetPassResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.verifResetPass(
+                email,
+                otp
+            )
+            if (response.success) {
+                Log.d(TAG, "Authentication success: ${response.message}")
+                emit(Result.Success(response))
+            } else {
+                Log.d(TAG, "Authentication error: ${response.message}")
+                emit(Result.Error(response.message))
+            }
+        } catch (e: Exception) {
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Incorrect One-Time Password (OTP)"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "User not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Authentication exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
+        }
+    }
+
+//    fun resendOTPReset(email: String): LiveData<Result<ResendOTPResponse>> = liveData {
+//        emit(Result.Loading)
+//        try {
+//            val response = apiService.resendVerif(
+//                id
+//            )
+//            if (response.success) {
+//                Log.d(TAG, "Authentication success: ${response.message}")
+//                emit(Result.Success(response))
+//            } else {
+//                Log.d(TAG, "Authentication error: ${response.message}")
+//                emit(Result.Error(response.message))
+//            }
+//        } catch (e: Exception) {
+//            val errorMessage = when (e) {
+//                is HttpException -> {
+//                    val httpCode = e.code()
+//                    when (httpCode) {
+//                        400 -> "Incorrect One-Time Password (OTP)"
+//                        401 -> "Access unauthorized. Please provide valid credentials"
+//                        403 -> "Access forbidden. You don't have permission to perform this action"
+//                        404 -> "User not found"
+//                        500 -> "Internal server error. Please try again later"
+//                        else -> "An HTTP error occurred with code $httpCode"
+//                    }
+//                }
+//                else -> "Authentication exception: ${e.message}"
+//            }
+//            Log.e(TAG, errorMessage)
+//            emit(Result.Error(errorMessage))
+//        }
+//    }
 
     fun userResetPass(
         email: String,
@@ -268,8 +353,22 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Reset password exception: ${e.message}")
-            emit(Result.Error(e.message.toString()))
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    val httpCode = e.code()
+                    when (httpCode) {
+                        400 -> "Email verification required"
+                        401 -> "Access unauthorized. Please provide valid credentials"
+                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        404 -> "User not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Login exception: ${e.message}"
+            }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
         }
     }
 }

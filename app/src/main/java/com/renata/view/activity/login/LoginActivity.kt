@@ -17,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.renata.R
 import com.renata.data.Result
+import com.renata.data.user.login.LoginPreferences
+import com.renata.data.user.login.LoginResponse
+import com.renata.data.user.login.LoginResult
 import com.renata.databinding.ActivityLoginBinding
 import com.renata.utils.AlarmReceiver
 import com.renata.utils.ViewModelFactory
@@ -200,12 +203,6 @@ class LoginActivity : AppCompatActivity() {
                     if (passwordValidation(password) && emailValidation(email)) {
                         showLoading(true)
                         login(email, password)
-//                        val moveToMain = Intent(this, NavigationActivity::class.java)
-//                        startActivity(moveToMain)
-//                        overridePendingTransition(
-//                            R.anim.slide_out_bottom,
-//                            R.anim.slide_in_bottom
-//                        )
                     } else {
                         showLoading(false)
                         showAlert(
@@ -244,17 +241,30 @@ class LoginActivity : AppCompatActivity() {
                     }
                     is Result.Success -> {
                         showLoading(false)
-                        //loginSuccess(result.data)
-                        val moveToMain = Intent(this, NavigationActivity::class.java)
-                        startActivity(moveToMain)
-                        overridePendingTransition(
-                            R.anim.slide_out_bottom,
-                            R.anim.slide_in_bottom
-                        )
+                        loginSuccess(result.data)
                     }
                 }
             }
         }
+    }
+
+    private fun loginSuccess(loginResponse: LoginResponse) {
+        saveLoginData(loginResponse)
+        val moveToMain = Intent(this, NavigationActivity::class.java)
+        startActivity(moveToMain)
+        overridePendingTransition(
+            R.anim.slide_out_bottom,
+            R.anim.slide_in_bottom
+        )
+    }
+
+    private fun saveLoginData(loginResponse: LoginResponse) {
+        val loginPreference = LoginPreferences(this)
+        val loginResult = loginResponse.data
+        val loginModel = LoginResult(
+            id = loginResult.id, email = loginResult.email, token = loginResult.token
+        )
+        loginPreference.setLogin(loginModel)
     }
 
     private fun insertEmail() {
