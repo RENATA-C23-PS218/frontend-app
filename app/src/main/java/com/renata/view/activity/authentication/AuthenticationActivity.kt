@@ -144,31 +144,30 @@ class AuthenticationActivity : AppCompatActivity() {
     }
 
     private fun authProcess(id: String, otp: Int) {
-        authViewModel.userAuthentication(id, otp)
-            .observe(this@AuthenticationActivity) { result ->
-                if (result != null) {
-                    when (result) {
-                        is Result.Loading -> {
-                            showLoading(true)
-                        }
-                        is Result.Error -> {
-                            showLoading(false)
-                            val errorMessage = result.data
-                            showAlert(
-                                getString(R.string.regis_fail),
-                                errorMessage
-                            ) { otpClear() }
-                        }
-                        is Result.Success -> {
-                            showLoading(false)
-                            showAlert(
-                                getString(R.string.auth_success),
-                                getString(R.string.auth_to_login)
-                            ) { moveToLogin() }
-                        }
+        authViewModel.userAuthentication(id, otp).observe(this@AuthenticationActivity) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                    }
+                    is Result.Error -> {
+                        showLoading(false)
+                        val errorMessage = result.data
+                        showAlert(
+                            getString(R.string.regis_fail),
+                            errorMessage
+                        ) { otpClear() }
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        showAlert(
+                            getString(R.string.auth_success),
+                            getString(R.string.auth_to_login)
+                        ) { moveToLogin() }
                     }
                 }
             }
+        }
     }
 
     private fun setupView() {

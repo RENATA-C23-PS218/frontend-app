@@ -6,7 +6,9 @@ import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.data.user.updateprofile.*
 import com.renata.data.user.verifyemail.ResendOTPResponse
+import com.renata.data.user.verifyemail.VerifyEmailRequest
 import com.renata.data.user.verifyemail.VerifyEmailResponse
+import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -21,12 +23,12 @@ interface ApiService {
         @Field("confirmPassword") confirmPassword: String
     ): RegisterResponse
 
-    @FormUrlEncoded
     @POST("verify")
+    @Headers("Content-Type: application/json; charset=UTF-8")
     suspend fun verifyEmail(
-        @Field("id") id: String,
-        @Field("otp") otp: Int
+        @Body requestBody: VerifyEmailRequest
     ): VerifyEmailResponse
+
 
     @FormUrlEncoded
     @POST("resend-verification")
@@ -47,11 +49,10 @@ interface ApiService {
         @Field("email") email: String
     ): ForgotPassResponse
 
-    @FormUrlEncoded
     @POST("verify-reset-password")
+    @Headers("Content-Type: application/json; charset=UTF-8")
     suspend fun verifResetPass(
-        @Field("email") email: String,
-        @Field("otp") otp: Int
+        @Body requestBody: VerifyResetPassRequest
     ): VerifyResetPassResponse
 
     @FormUrlEncoded

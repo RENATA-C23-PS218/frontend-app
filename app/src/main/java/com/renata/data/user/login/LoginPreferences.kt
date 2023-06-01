@@ -22,7 +22,7 @@ class LoginPreferences(context: Context) {
         val id = preferences.getString(ID, null)
         val email = preferences.getString(EMAIL, null)
         val token = preferences.getString(TOKEN, null)
-        return LoginResult(email, id, token)
+        return LoginResult(id, email, token)
     }
 
     fun removeUser() {

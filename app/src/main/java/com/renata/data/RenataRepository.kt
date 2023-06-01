@@ -12,7 +12,9 @@ import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
 import com.renata.data.user.resetpass.ResetPassResponse
 import com.renata.data.user.verifyemail.ResendOTPResponse
+import com.renata.data.user.verifyemail.VerifyEmailRequest
 import com.renata.data.user.verifyemail.VerifyEmailResponse
+import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import com.renata.ml.Model
 import org.json.JSONObject
@@ -130,10 +132,8 @@ class RenataRepository(private val application: Application) {
     ): LiveData<Result<VerifyEmailResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.verifyEmail(
-                id,
-                otp
-            )
+            val requestBody = VerifyEmailRequest(id, otp)
+            val response = apiService.verifyEmail(requestBody)
             if (response.success) {
                 Log.d(TAG, "Authentication success: ${response.message}")
                 emit(Result.Success(response))
@@ -164,9 +164,7 @@ class RenataRepository(private val application: Application) {
     fun resendOTP(id: String): LiveData<Result<ResendOTPResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.resendVerif(
-                id
-            )
+            val response = apiService.resendVerif(id)
             if (response.success) {
                 Log.d(TAG, "Authentication success: ${response.message}")
                 emit(Result.Success(response))
@@ -269,10 +267,8 @@ class RenataRepository(private val application: Application) {
     ): LiveData<Result<VerifyResetPassResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.verifResetPass(
-                email,
-                otp
-            )
+            val requestBody = VerifyResetPassRequest(email, otp)
+            val response = apiService.verifResetPass(requestBody)
             if (response.success) {
                 Log.d(TAG, "Authentication success: ${response.message}")
                 emit(Result.Success(response))
