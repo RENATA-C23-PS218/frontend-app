@@ -12,8 +12,8 @@ import retrofit2.Response
 
 class ProfileViewModel : ViewModel() {
     val user = MutableLiveData<UpdateProfileResponse>()
-    fun setUserProfile(first_name: String, last_name: String, phone: String, address: String) {
-        val client = ApiConfig.getApiService().updateProfile(first_name, last_name, phone, address)
+    fun setUserProfile(token: String, first_name: String, last_name: String, phone: String, address: String) {
+        val client = ApiConfig.getApiService().updateProfile(token, first_name, last_name, phone, address)
         client.enqueue(object : Callback<UpdateProfileResponse> {
             override fun onResponse(
                 call: Call<UpdateProfileResponse>,

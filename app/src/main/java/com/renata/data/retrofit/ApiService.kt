@@ -10,6 +10,7 @@ import com.renata.data.user.verifyemail.VerifyEmailRequest
 import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -70,14 +71,18 @@ interface ApiService {
     @FormUrlEncoded
     @POST("profile")
     fun updateProfile(
+        @Header("Authorization") Bearer: String,
         @Field("first_name") first_name: String,
         @Field("last_name") last_name: String,
         @Field("phone") phone: String,
         @Field("address") address: String
     ): Call<UpdateProfileResponse>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("profile-image")
-    suspend fun uploadProfilePict()
+    fun uploadProfilePict(
+        @Header("Authorization") Bearer: String,
+        @Part file: MultipartBody.Part
+    ): Call<UpdatePhotoResponse>
 
 }

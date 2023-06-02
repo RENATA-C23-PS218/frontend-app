@@ -32,15 +32,17 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loginPreference = LoginPreferences(requireContext())
         loginResult = loginPreference.getUser()
+        val token = loginResult.token
         accountBinding.tvProfileEmail.text = loginResult.email
         goToSetting()
-        changeProfile()
+        changeProfile(token)
         logout()
     }
 
-    private fun changeProfile() {
+    private fun changeProfile(token: String?) {
         accountBinding.editProfile.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
+            intent.putExtra("token",token)
             startActivity(intent)
         }
     }

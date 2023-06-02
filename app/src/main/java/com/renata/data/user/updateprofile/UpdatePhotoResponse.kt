@@ -2,8 +2,7 @@ package com.renata.data.user.updateprofile
 
 import com.google.gson.annotations.SerializedName
 
-
-data class UpdateProfileResponse(
+data class UpdatePhotoResponse(
     @field:SerializedName("status")
     val status: Number,
 
@@ -12,4 +11,12 @@ data class UpdateProfileResponse(
 
     @field:SerializedName("success")
     val success: Boolean,
+
+    @field:SerializedName("data")
+    val data: Data,
+)
+
+data class Data(
+    @field:SerializedName("url")
+    val url: String
 )
