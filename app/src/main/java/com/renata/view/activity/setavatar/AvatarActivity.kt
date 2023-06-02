@@ -100,6 +100,8 @@ class AvatarActivity : AppCompatActivity() {
     }
 
     private fun uploadPhoto() {
+        val intent = intent.getStringExtra("token")
+        val token = "Bearer $intent"
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -108,8 +110,6 @@ class AvatarActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
-            val intent = intent.getStringExtra("token")
-            val token = "Bearer $intent"
             val client = ApiConfig.getApiService().uploadProfilePict(token, imageMultipart)
             client.enqueue(object : Callback<UpdatePhotoResponse> {
                 override fun onResponse(

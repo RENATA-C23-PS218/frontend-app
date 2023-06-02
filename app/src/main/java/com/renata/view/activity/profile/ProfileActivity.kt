@@ -45,6 +45,9 @@ class ProfileActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(ProfileViewModel::class.java)
 
+        val intent = intent.getStringExtra("token")
+        val token = "Bearer $intent"
+        getDataProfile(token)
 
 
         profileBinding.saveButton.setOnClickListener {
@@ -78,6 +81,23 @@ class ProfileActivity : AppCompatActivity() {
                 { onBackPressed() }
             } else {
                 Toast.makeText(this@ProfileActivity, "Change Failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getDataProfile(token: String){
+        if (token !=null){
+            profileViewModel.userProfile(token)
+            profileViewModel.getUserProfile().observe(this){
+                if (it !=null) {
+                    profileBinding.apply {
+                        val data = it.data
+                        edFirstName.setText(data.first_name)
+                        edLastName.setText(data.last_name)
+                        edPhone.setText(data.phone)
+                        edAddress.setText(data.address)
+                    }
+                }
             }
         }
     }
