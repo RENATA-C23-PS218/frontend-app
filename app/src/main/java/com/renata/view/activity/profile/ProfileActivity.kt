@@ -8,14 +8,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.renata.R
 import com.renata.data.retrofit.ApiConfig
 import com.renata.data.user.login.LoginPreferences
 import com.renata.data.user.login.LoginResult
+import com.renata.data.user.updateprofile.UpdatePhotoResponse
 import com.renata.data.user.updateprofile.UpdateProfileResponse
 import com.renata.databinding.ActivityProfileBinding
 import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.setavatar.AvatarActivity
+import com.renata.view.activity.setavatar.AvatarViewModel
+import com.renata.view.fragment.account.AccountFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +28,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileBinding: ActivityProfileBinding
     private lateinit var profileViewModel: ProfileViewModel
+    var avatarViewModel: AvatarViewModel = AvatarViewModel()
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
 
@@ -45,10 +50,15 @@ class ProfileActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(ProfileViewModel::class.java)
 
+        avatarViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(AvatarViewModel::class.java)
+
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
         getDataProfile(token)
-
+        getPhoto()
 
         profileBinding.saveButton.setOnClickListener {
             loginPreference = LoginPreferences(this)
@@ -66,6 +76,22 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPhoto(){
+//        val image = intent.getStringExtra("image")
+//            Glide.with(this@ProfileActivity)
+//                .load(image)
+//                .centerCrop()
+//                .into(profileBinding.profileImage)
+        avatarViewModel.getPhoto().observe(this){
+            val data = it.data
+            Glide.with(this@ProfileActivity)
+                .load(data.url)
+                .centerCrop()
+                .into(profileBinding.profileImage)
+        }
+
+    }
+
     private fun saveChanges(firstName: String, lastName: String, phone: String, address: String) {
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
@@ -78,12 +104,16 @@ class ProfileActivity : AppCompatActivity() {
                     getString(R.string.save_changes),
                     getString(R.string.save_changes_cause)
                 )
-                { onBackPressed() }
+                {
+                    getDataProfile(token)// tes
+                    onBackPressed()
+                }
             } else {
                 Toast.makeText(this@ProfileActivity, "Change Failed", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
     private fun getDataProfile(token: String){
         if (token !=null){
@@ -96,6 +126,10 @@ class ProfileActivity : AppCompatActivity() {
                         edLastName.setText(data.last_name)
                         edPhone.setText(data.phone)
                         edAddress.setText(data.address)
+                        // testing. masih salah
+//                        val intent = Intent(this@ProfileActivity, AccountFragment::class.java)
+//                        intent.putExtra("username", data.full_name)
+//                        startActivity(intent)
                     }
                 }
             }

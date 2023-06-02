@@ -61,9 +61,6 @@ class ViewModelFactory(private val application: Application) :
         if (modelClass.isAssignableFrom(ResetPassViewModel::class.java)) {
             return ResetPassViewModel(application) as T
         }
-        if (modelClass.isAssignableFrom(AvatarViewModel::class.java)) {
-            return AvatarViewModel(application) as T
-        }
         throw java.lang.IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 

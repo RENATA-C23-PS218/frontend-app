@@ -5,14 +5,12 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import com.renata.data.retrofit.ApiConfig
-import com.renata.data.user.updateprofile.UpdatePhotoResponse
+import androidx.lifecycle.ViewModelProvider
 import com.renata.databinding.ActivityAvatarBinding
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.reduceFileImage
@@ -21,13 +19,11 @@ import com.renata.utils.uriToFile
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 
 class AvatarActivity : AppCompatActivity() {
     private lateinit var avatarBinding: ActivityAvatarBinding
+    private lateinit var avatarViewModel: AvatarViewModel
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
 
@@ -35,6 +31,11 @@ class AvatarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         avatarBinding = ActivityAvatarBinding.inflate(layoutInflater)
         setContentView(avatarBinding.root)
+
+        avatarViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(AvatarViewModel::class.java)
 
         showLoading(false)
         avatarBinding.cameraButton.setOnClickListener { cameraPhoto() }
@@ -110,38 +111,15 @@ class AvatarActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
-            val client = ApiConfig.getApiService().uploadProfilePict(token, imageMultipart)
-            client.enqueue(object : Callback<UpdatePhotoResponse> {
-                override fun onResponse(
-                    call: Call<UpdatePhotoResponse>,
-                    response: Response<UpdatePhotoResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        if (responseBody != null) {
-                            Toast.makeText(
-                                this@AvatarActivity,
-                                responseBody.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } else {
-                        Log.e(TAG, "onFailure: ${response.message()}")
-                        Toast.makeText(this@AvatarActivity, response.message(), Toast.LENGTH_SHORT)
-                            .show()
-                    }
+            avatarViewModel.uploadPhoto(token, imageMultipart)
+            avatarViewModel.getPhoto().observe(this){
+                if (it !=null) {
+                    Toast.makeText(this@AvatarActivity, it.message, Toast.LENGTH_SHORT).show()
                 }
-
-                override fun onFailure(call: Call<UpdatePhotoResponse>, t: Throwable) {
-                    Toast.makeText(this@AvatarActivity, t.message, Toast.LENGTH_SHORT).show()
-                }
-            })
+            }
         } else {
             Toast.makeText(this@AvatarActivity, "Choose the image first", Toast.LENGTH_SHORT).show()
         }
     }
 
-    companion object {
-        const val TAG = "AvatarActivity"
-    }
 }
