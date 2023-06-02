@@ -16,6 +16,7 @@ import com.renata.utils.createCustomTempFile
 import com.renata.utils.reduceFileImage
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
+import com.renata.view.activity.profile.ProfileActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -115,6 +116,8 @@ class AvatarActivity : AppCompatActivity() {
             avatarViewModel.getPhoto().observe(this){
                 if (it !=null) {
                     Toast.makeText(this@AvatarActivity, it.message, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@AvatarActivity, ProfileActivity::class.java)
+                    startActivity(intent)
                 }
             }
         } else {
