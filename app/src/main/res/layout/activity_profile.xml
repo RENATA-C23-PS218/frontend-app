@@ -93,7 +93,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="ex : John"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="ex : 085718620532"
                 android:inputType="phone"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +152,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="ex : Cimahi, Jawa Barat"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,7 +182,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="ex : Doe"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 

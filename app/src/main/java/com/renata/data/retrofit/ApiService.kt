@@ -64,9 +64,10 @@ interface ApiService {
         @Field("confirmPassword") confirmPassword: String
     ): ResetPassResponse
 
-    @FormUrlEncoded
     @GET("profile")
-    suspend fun getProfile()
+    fun getProfile(
+        @Header("Authorization") Bearer: String,
+    ): Call<ProfileResponse>
 
     @FormUrlEncoded
     @POST("profile")
