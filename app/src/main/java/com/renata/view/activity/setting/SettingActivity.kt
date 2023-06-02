@@ -10,10 +10,8 @@ import com.renata.databinding.ActivitySettingBinding
 import com.renata.utils.AlarmReceiver
 
 class SettingActivity : AppCompatActivity(), View.OnClickListener {
-
     private lateinit var settingBinding: ActivitySettingBinding
     private lateinit var alarmReceiver: AlarmReceiver
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

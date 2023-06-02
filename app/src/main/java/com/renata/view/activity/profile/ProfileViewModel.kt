@@ -14,8 +14,15 @@ import retrofit2.Response
 class ProfileViewModel : ViewModel() {
     val user = MutableLiveData<UpdateProfileResponse>()
     val userProfile = MutableLiveData<ProfileResponse>()
-    fun setUserProfile(token: String, first_name: String, last_name: String, phone: String, address: String) {
-        val client = ApiConfig.getApiService().updateProfile(token, first_name, last_name, phone, address)
+    fun setUserProfile(
+        token: String,
+        first_name: String,
+        last_name: String,
+        phone: String,
+        address: String
+    ) {
+        val client =
+            ApiConfig.getApiService().updateProfile(token, first_name, last_name, phone, address)
         client.enqueue(object : Callback<UpdateProfileResponse> {
             override fun onResponse(
                 call: Call<UpdateProfileResponse>,
@@ -33,14 +40,14 @@ class ProfileViewModel : ViewModel() {
         })
     }
 
-    fun userProfile(token : String){
+    fun userProfile(token: String) {
         val client = ApiConfig.getApiService().getProfile(token)
-        client.enqueue(object: Callback<ProfileResponse>{
+        client.enqueue(object : Callback<ProfileResponse> {
             override fun onResponse(
                 call: Call<ProfileResponse>,
                 response: Response<ProfileResponse>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     userProfile.postValue(response.body())
                 }
             }

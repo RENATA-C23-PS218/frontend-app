@@ -3,15 +3,22 @@ package com.renata.view.activity.profile
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.renata.R
+import com.renata.data.retrofit.ApiConfig
 import com.renata.data.user.login.LoginPreferences
 import com.renata.data.user.login.LoginResult
+import com.renata.data.user.updateprofile.UpdateProfileResponse
 import com.renata.databinding.ActivityProfileBinding
+import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.setavatar.AvatarActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -20,12 +27,18 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
 
+    companion object {
+        private const val TAG = "Profile Activity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(profileBinding.root)
+
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
+        val sendToken = loginResult.token
 
         profileViewModel = ViewModelProvider(
             this,
@@ -38,9 +51,6 @@ class ProfileActivity : AppCompatActivity() {
             loginPreference = LoginPreferences(this)
             loginResult = loginPreference.getUser()
             val firstName = profileBinding.edFirstName.text.toString()
-            if (firstName !=null){
-                profileBinding.edFirstName.setHint("")
-            }
             val lastName = profileBinding.edLastName.text.toString()
             val phone = profileBinding.edPhone.text.toString()
             val address = profileBinding.edAddress.text.toString()
@@ -51,11 +61,6 @@ class ProfileActivity : AppCompatActivity() {
         profileBinding.backButton.setOnClickListener {
             onBackPressed()
         }
-
-        val intent = intent.getStringExtra("token")
-        val token = "Bearer $intent"
-        getDataProfile(token)
-
     }
 
     private fun saveChanges(firstName: String, lastName: String, phone: String, address: String) {
@@ -85,23 +90,6 @@ class ProfileActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
-    private fun getDataProfile(token: String){
-        if (token !=null){
-            profileViewModel.userProfile(token)
-            profileViewModel.getUserProfile().observe(this){
-                if (it !=null) {
-                    profileBinding.apply {
-                        val data = it.data
-                        edFirstName.setText(data.first_name)
-                        edLastName.setText(data.last_name)
-                        edPhone.setText(data.phone)
-                        edAddress.setText(data.address)
-                    }
-                }
-
-            }
-        }
-    }
 
     private fun showAlert(
         title: String,
@@ -118,6 +106,39 @@ class ProfileActivity : AppCompatActivity() {
             create()
             show()
         }
+    }
+
+    // without ViewModel
+    private fun saveChangess(firstName: String, lastName: String, phone: String, address: String) {
+
+        val intent = intent.getStringExtra("token")
+        val token = "Bearer $intent"
+        val client =
+            ApiConfig.getApiService().updateProfile(token, firstName, lastName, phone, address)
+        client.enqueue(object : Callback<UpdateProfileResponse> {
+            override fun onResponse(
+                call: Call<UpdateProfileResponse>,
+                response: Response<UpdateProfileResponse>
+            ) {
+                val responseBody = response.body()
+                Log.d(TAG, "onResponse: $responseBody")
+                if (responseBody != null) {
+                    Toast.makeText(this@ProfileActivity, "change success", Toast.LENGTH_SHORT)
+                        .show()
+                    val intent = Intent(this@ProfileActivity, NavigationActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Log.d(TAG, "onFailure: ${response.message()}")
+                    Toast.makeText(this@ProfileActivity, "Change Failed", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
+                Log.d(TAG, "onfailure: ${t.message}")
+            }
+
+        })
     }
 
 }

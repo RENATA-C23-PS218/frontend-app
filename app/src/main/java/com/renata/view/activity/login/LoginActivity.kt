@@ -30,16 +30,15 @@ import com.renata.view.activity.main.NavigationActivity
 import com.renata.view.activity.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var loginBinding: ActivityLoginBinding
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var alarmReceiver: AlarmReceiver
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
+
         alarmReceiver = AlarmReceiver()
         loginViewModel = obtainViewModel(this as AppCompatActivity)
         showLoading(false)
@@ -71,9 +70,7 @@ class LoginActivity : AppCompatActivity() {
     private fun emailET() {
         val myLoginEmailET = loginBinding.edLoginEmail
         myLoginEmailET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = loginBinding.edLoginEmail.text.toString()
                 if (email.isEmpty()) {
@@ -88,18 +85,14 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
     private fun passwordET() {
         val myLoginPasswordET = loginBinding.edLoginPassword
         myLoginPasswordET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = loginBinding.edLoginPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -114,9 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
@@ -208,16 +199,14 @@ class LoginActivity : AppCompatActivity() {
                         showAlert(
                             getString(R.string.login_fail),
                             getString(R.string.login_fail_cause1)
-                        )
-                        { }
+                        ) {}
                     }
                 } else {
                     showLoading(false)
                     showAlert(
                         getString(R.string.login_fail),
                         getString(R.string.login_fail_cause2)
-                    )
-                    { finish() }
+                    ) { finish() }
                 }
             }
         }
@@ -236,8 +225,7 @@ class LoginActivity : AppCompatActivity() {
                         showAlert(
                             getString(R.string.login_fail),
                             errorMessage
-                        )
-                        {}
+                        ) {}
                     }
                     is Result.Success -> {
                         showLoading(false)
@@ -285,9 +273,7 @@ class LoginActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton("OK") { dialog, _ ->
-                positiveAction.invoke(dialog)
-            }
+            setPositiveButton("OK") { dialog, _ -> positiveAction.invoke(dialog) }
             setCancelable(false)
             create()
             show()
@@ -297,5 +283,4 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         loginBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

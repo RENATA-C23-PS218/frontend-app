@@ -23,7 +23,6 @@ import com.renata.utils.passwordValidation
 import com.renata.view.activity.login.LoginActivity
 
 class ResetPassActivity : AppCompatActivity() {
-
     private lateinit var resetPassBinding: ActivityResetPassBinding
     private lateinit var resetPassViewModel: ResetPassViewModel
     private lateinit var email: String
@@ -32,6 +31,7 @@ class ResetPassActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         resetPassBinding = ActivityResetPassBinding.inflate(layoutInflater)
         setContentView(resetPassBinding.root)
+
         showLoading(false)
         email = intent.getStringExtra("email").toString()
         resetPassViewModel = obtainViewModel(this as AppCompatActivity)
@@ -50,9 +50,7 @@ class ResetPassActivity : AppCompatActivity() {
     private fun confirmPasswordET() {
         val myRegisterConPassET = resetPassBinding.edResetConfirmPassword
         myRegisterConPassET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val password = resetPassBinding.edResetPassword.text.toString()
                 val conPass = resetPassBinding.edResetConfirmPassword.text.toString()
@@ -69,18 +67,14 @@ class ResetPassActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
     private fun passwordET() {
         val myRegisterPasswordET = resetPassBinding.edResetPassword
         myRegisterPasswordET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = resetPassBinding.edResetPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -95,9 +89,7 @@ class ResetPassActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
@@ -126,30 +118,26 @@ class ResetPassActivity : AppCompatActivity() {
                         if (confirmPass == password) {
                             showLoading(false)
                             resetPassword(email, password, confirmPass)
-//                            showAlert(
-//                                getString(R.string.reset_success),
-//                                getString(R.string.reset_to_login)
-//                            ) { login() }
                         } else {
                             showLoading(false)
                             showAlert(
                                 getString(R.string.reset_fail),
                                 getString(R.string.reset_fail_cause3)
-                            ) { }
+                            ) {}
                         }
                     } else {
                         showLoading(false)
                         showAlert(
                             getString(R.string.reset_fail),
                             getString(R.string.reset_fail_cause2)
-                        ) { }
+                        ) {}
                     }
                 } else {
                     showLoading(false)
                     showAlert(
                         getString(R.string.reset_fail),
                         getString(R.string.reset_fail_cause1)
-                    ) { finish() }
+                    ) {}
                 }
             }
         }
@@ -168,7 +156,7 @@ class ResetPassActivity : AppCompatActivity() {
                             showAlert(
                                 getString(R.string.reset_fail),
                                 getString(R.string.reset_fail_cause3)
-                            ) { }
+                            ) {}
                         }
                         is Result.Success -> {
                             showLoading(false)
@@ -239,9 +227,7 @@ class ResetPassActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton("OK") { dialog, _ ->
-                positiveAction.invoke(dialog)
-            }
+            setPositiveButton("OK") { dialog, _ -> positiveAction.invoke(dialog) }
             setCancelable(false)
             create()
             show()
@@ -270,5 +256,4 @@ class ResetPassActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         resetPassBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

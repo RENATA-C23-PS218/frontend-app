@@ -36,5 +36,4 @@ class LoginPreferences(context: Context) {
         const val EMAIL = "email"
         const val TOKEN = "token"
     }
-
 }

@@ -33,7 +33,6 @@ import java.nio.ByteOrder
 import kotlin.math.min
 
 class ScanActivity : AppCompatActivity() {
-
     private lateinit var scanBinding: ActivityScanBinding
     private lateinit var scanViewModel: ScanViewModel
     private lateinit var currentPhotoPath: String
@@ -44,6 +43,7 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
+
         scanViewModel = obtainViewModel(this as AppCompatActivity)
 //        scanBinding.layoutAfter?.visibility = View.GONE
         showLoading(false)
@@ -193,9 +193,7 @@ class ScanActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_fail, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogFailDismiss_button)
         builder.setView(view)
-        button.setOnClickListener {
-            builder.dismiss()
-        }
+        button.setOnClickListener { builder.dismiss() }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
     }
@@ -206,9 +204,7 @@ class ScanActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_image_null, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogTry_button)
         builder.setView(view)
-        button.setOnClickListener {
-            builder.dismiss()
-        }
+        button.setOnClickListener { builder.dismiss() }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
     }
@@ -268,5 +264,4 @@ class ScanActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         scanBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

@@ -13,20 +13,18 @@ import com.renata.databinding.ActivityNavigationBinding
 import com.renata.view.activity.scan.ScanActivity
 
 class NavigationActivity : AppCompatActivity() {
-
     private lateinit var navigationBinding: ActivityNavigationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigationBinding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(navigationBinding.root)
+
         showLoading(false)
         val navView: BottomNavigationView = navigationBinding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_history, R.id.navigation_scan, R.id.navigation_account
-            )
+            setOf(R.id.navigation_history, R.id.navigation_scan, R.id.navigation_account)
         )
         navView.setupWithNavController(navController)
         navigationBinding.scanFab.setOnClickListener {
@@ -51,5 +49,4 @@ class NavigationActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         navigationBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

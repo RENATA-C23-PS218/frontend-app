@@ -12,8 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.renata.data.retrofit.ApiConfig
-import com.renata.data.user.login.LoginPreferences
-import com.renata.data.user.login.LoginResult
 import com.renata.data.user.updateprofile.UpdatePhotoResponse
 import com.renata.databinding.ActivityAvatarBinding
 import com.renata.utils.createCustomTempFile
@@ -29,7 +27,6 @@ import retrofit2.Response
 import java.io.File
 
 class AvatarActivity : AppCompatActivity() {
-
     private lateinit var avatarBinding: ActivityAvatarBinding
     private lateinit var currentPhotoPath: String
     private var getFile: File? = null
@@ -38,10 +35,11 @@ class AvatarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         avatarBinding = ActivityAvatarBinding.inflate(layoutInflater)
         setContentView(avatarBinding.root)
+
         showLoading(false)
         avatarBinding.cameraButton.setOnClickListener { cameraPhoto() }
         avatarBinding.galleryButton.setOnClickListener { galleryPhoto() }
-        avatarBinding.changeButton.setOnClickListener {uploadPhoto()}
+        avatarBinding.changeButton.setOnClickListener { uploadPhoto() }
         avatarBinding.backButton.setOnClickListener {
             onBackPressed()
         }
@@ -102,47 +100,48 @@ class AvatarActivity : AppCompatActivity() {
     }
 
     private fun uploadPhoto() {
-            if (getFile != null) {
-                val file = reduceFileImage(getFile as File)
-                val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "file",
-                    file.name,
-                    requestImageFile
-                )
-
-                val intent = intent.getStringExtra("token")
-                val token = "Bearer $intent"
-                val client = ApiConfig.getApiService().uploadProfilePict(token, imageMultipart)
-                client.enqueue(object: Callback<UpdatePhotoResponse>{
-                    override fun onResponse(
-                        call: Call<UpdatePhotoResponse>,
-                        response: Response<UpdatePhotoResponse>
-                    ) {
-                        if (response.isSuccessful){
-                            val responseBody = response.body()
-                            if (responseBody != null){
-                                Toast.makeText(this@AvatarActivity, responseBody.message, Toast.LENGTH_SHORT).show()
-                            }
-                        }else{
-                            Log.e(TAG, "onFailure: ${response.message()}")
-                            Toast.makeText(this@AvatarActivity, response.message(), Toast.LENGTH_SHORT).show()
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "file",
+                file.name,
+                requestImageFile
+            )
+            val intent = intent.getStringExtra("token")
+            val token = "Bearer $intent"
+            val client = ApiConfig.getApiService().uploadProfilePict(token, imageMultipart)
+            client.enqueue(object : Callback<UpdatePhotoResponse> {
+                override fun onResponse(
+                    call: Call<UpdatePhotoResponse>,
+                    response: Response<UpdatePhotoResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            Toast.makeText(
+                                this@AvatarActivity,
+                                responseBody.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    } else {
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                        Toast.makeText(this@AvatarActivity, response.message(), Toast.LENGTH_SHORT)
+                            .show()
                     }
+                }
 
-                    override fun onFailure(call: Call<UpdatePhotoResponse>, t: Throwable) {
-                        Toast.makeText(this@AvatarActivity, t.message, Toast.LENGTH_SHORT).show()
-                    }
-
-                })
-
-            }else{
-                Toast.makeText(this@AvatarActivity, "Choose the image first", Toast.LENGTH_SHORT).show()
-            }
+                override fun onFailure(call: Call<UpdatePhotoResponse>, t: Throwable) {
+                    Toast.makeText(this@AvatarActivity, t.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(this@AvatarActivity, "Choose the image first", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
         const val TAG = "AvatarActivity"
     }
-
 }

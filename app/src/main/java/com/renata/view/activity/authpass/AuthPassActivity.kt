@@ -22,7 +22,6 @@ import com.renata.utils.ViewModelFactory
 import com.renata.view.activity.reset.ResetPassActivity
 
 class AuthPassActivity : AppCompatActivity() {
-
     private lateinit var authPassBinding: ActivityAuthPassBinding
     private lateinit var authPassViewModel: AuthPassViewModel
     private lateinit var otpInputViews: Array<TextView>
@@ -33,6 +32,7 @@ class AuthPassActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         authPassBinding = ActivityAuthPassBinding.inflate(layoutInflater)
         setContentView(authPassBinding.root)
+
         showLoading(false)
         authPassViewModel = obtainViewModel(this as AppCompatActivity)
         email = intent.getStringExtra("email").toString()
@@ -109,8 +109,7 @@ class AuthPassActivity : AppCompatActivity() {
                         showAlert(
                             "Send OTP Failed",
                             "Make sure Email are filled in correctly"
-                        )
-                        { otpClear() }
+                        ) { otpClear() }
                     }
                     is Result.Success -> {
                         showLoading(false)
@@ -238,9 +237,7 @@ class AuthPassActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton("OK") { dialog, _ ->
-                positiveAction.invoke(dialog)
-            }
+            setPositiveButton("OK") { dialog, _ -> positiveAction.invoke(dialog) }
             setCancelable(false)
             create()
             show()

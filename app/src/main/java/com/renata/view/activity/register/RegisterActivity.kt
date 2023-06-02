@@ -25,7 +25,6 @@ import com.renata.view.activity.authentication.AuthenticationActivity
 import com.renata.view.activity.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
-
     private lateinit var registerBinding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
 
@@ -33,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(registerBinding.root)
+
         registerViewModel = obtainViewModel(this as AppCompatActivity)
         showLoading(false)
         setupView()
@@ -52,9 +52,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun confirmPasswordET() {
         val myRegisterConPassET = registerBinding.edRegisterConfirmPassword
         myRegisterConPassET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val password = registerBinding.edRegisterPassword.text.toString()
                 val conPass = registerBinding.edRegisterConfirmPassword.text.toString()
@@ -71,18 +69,14 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
     private fun emailET() {
         val myRegisterEmailET = registerBinding.edRegisterEmail
         myRegisterEmailET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = registerBinding.edRegisterEmail.text.toString()
                 if (email.isEmpty()) {
@@ -97,18 +91,14 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
     private fun passwordET() {
         val myRegisterPasswordET = registerBinding.edRegisterPassword
         myRegisterPasswordET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val pass = registerBinding.edRegisterPassword.text.toString()
                 if (pass.isEmpty()) {
@@ -123,9 +113,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 
@@ -162,18 +150,6 @@ class RegisterActivity : AppCompatActivity() {
                         if (confirmPass == password) {
                             showLoading(false)
                             register(email, password, confirmPass)
-//                            showAlert(
-//                                getString(R.string.regis_success),
-//                                getString(R.string.regis_to_auth)
-//                            ) {
-//                                val moveToAuth = Intent(
-//                                    this@RegisterActivity,
-//                                    AuthenticationActivity::class.java
-//                                )
-//                                moveToAuth.putExtra("email", email)
-//                                startActivity(moveToAuth)
-//                                finish()
-//                            }
                         } else {
                             showLoading(false)
                             showAlert(
@@ -341,5 +317,4 @@ class RegisterActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         registerBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

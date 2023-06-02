@@ -33,6 +33,7 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         authenticationBinding = ActivityAuthenticationBinding.inflate(layoutInflater)
         setContentView(authenticationBinding.root)
+
         authViewModel = obtainViewModel(this as AppCompatActivity)
         email = intent.getStringExtra("email").toString()
         id = intent.getStringExtra("id").toString()
@@ -117,18 +118,14 @@ class AuthenticationActivity : AppCompatActivity() {
                             showAlert(
                                 "Resend OTP Failed",
                                 errorMessage
-                            ) {
-                                otpClear()
-                            }
+                            ) { otpClear() }
                         }
                         is Result.Success -> {
                             showLoading(false)
                             showAlert(
                                 getString(R.string.resend_otp_req),
                                 getString(R.string.resend_otp_res)
-                            ) {
-                                otpClear()
-                            }
+                            ) { otpClear() }
                         }
                     }
                 }
@@ -239,9 +236,7 @@ class AuthenticationActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton("OK") { dialog, _ ->
-                positiveAction.invoke(dialog)
-            }
+            setPositiveButton("OK") { dialog, _ -> positiveAction.invoke(dialog) }
             setCancelable(false)
             create()
             show()

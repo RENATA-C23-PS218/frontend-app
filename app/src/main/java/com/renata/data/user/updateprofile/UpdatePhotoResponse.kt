@@ -18,5 +18,5 @@ data class UpdatePhotoResponse(
 
 data class Data(
     @field:SerializedName("url")
-    val url: String
+    val url: String,
 )

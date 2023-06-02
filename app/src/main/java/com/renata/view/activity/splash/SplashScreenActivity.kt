@@ -17,13 +17,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SplashScreenActivity : AppCompatActivity() {
-
     private lateinit var splashViewModel: SplashViewModel
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginModel: LoginResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         loginPreference = LoginPreferences(this)
         loginModel = loginPreference.getUser()
         splashViewModel = obtainViewModel(this as AppCompatActivity)
@@ -54,5 +54,4 @@ class SplashScreenActivity : AppCompatActivity() {
     companion object {
         const val splashTime: Long = 1000
     }
-
 }

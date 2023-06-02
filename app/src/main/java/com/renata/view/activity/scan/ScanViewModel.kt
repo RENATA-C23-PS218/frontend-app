@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 
 class ScanViewModel(application: Application) : ViewModel() {
     private val renataRepository: RenataRepository = RenataRepository(application)
-
     fun classifyImage(image: Bitmap): LiveData<String> {
         val result = MutableLiveData<String>()
         viewModelScope.launch {

@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.renata.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
-
     private lateinit var resultBinding: ActivityResultBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,10 +18,8 @@ class ResultActivity : AppCompatActivity() {
         val byteArray = intent.getByteArrayExtra("image")
         val bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray!!.size)
         resultBinding.previewImageView.setImageBitmap(bitmap)
-
         val detectedClass = intent.getStringExtra("detected_class")
         resultBinding.soilType.text = detectedClass
-
         resultBinding.backButton.setOnClickListener {
             resultBinding.soilType.text = ""
             finish()
@@ -33,5 +30,4 @@ class ResultActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         resultBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

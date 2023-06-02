@@ -16,7 +16,6 @@ import com.renata.view.activity.setting.SettingActivity
 import com.renata.view.activity.splash.SplashScreenActivity
 
 class AccountFragment : Fragment() {
-
     private var _binding: FragmentAccountBinding? = null
     private val accountBinding get() = _binding!!
     private lateinit var loginPreference: LoginPreferences
@@ -41,23 +40,26 @@ class AccountFragment : Fragment() {
         changeProfile(token)
         logout()
 
-        accountViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel::class.java)
+        accountViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(ProfileViewModel::class.java)
     }
 
     private fun changeProfile(token: String?) {
         accountBinding.editProfile.setOnClickListener {
             val intent = Intent(requireContext(), ProfileActivity::class.java)
-            intent.putExtra("token",token)
+            intent.putExtra("token", token)
             startActivity(intent)
         }
     }
 
-    private fun getData(token: String?){
+    private fun getData(token: String?) {
         val getToken = "Bearer $token"
 
-        if (getToken !=null) {
+        if (getToken != null) {
             accountViewModel.userProfile(getToken)
-            accountViewModel.getUserProfile().observe(viewLifecycleOwner){
+            accountViewModel.getUserProfile().observe(viewLifecycleOwner) {
                 val data = it.data
                 accountBinding.tvProfileName.text = data.full_name
                 accountBinding.tvProfileEmail.text = data.email
@@ -85,5 +87,4 @@ class AccountFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

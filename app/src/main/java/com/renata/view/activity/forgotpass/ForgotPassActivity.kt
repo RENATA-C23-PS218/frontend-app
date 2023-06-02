@@ -12,7 +12,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +23,6 @@ import com.renata.utils.emailValidation
 import com.renata.view.activity.authpass.AuthPassActivity
 
 class ForgotPassActivity : AppCompatActivity() {
-
     private lateinit var forgotPassBinding: ActivityForgotPassBinding
     private lateinit var forgotPassViewModel: ForgotPassViewModel
 
@@ -32,6 +30,7 @@ class ForgotPassActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         forgotPassBinding = ActivityForgotPassBinding.inflate(layoutInflater)
         setContentView(forgotPassBinding.root)
+
         showLoading(false)
         forgotPassViewModel = obtainViewModel(this as AppCompatActivity)
         setupView()
@@ -60,12 +59,6 @@ class ForgotPassActivity : AppCompatActivity() {
                 if (!TextUtils.isEmpty(email)) {
                     if (emailValidation(email)) {
                         sendEmail(email)
-//                        val moveToOtp = Intent(this, AuthPassActivity::class.java)
-//                        startActivity(moveToOtp)
-//                        overridePendingTransition(
-//                            R.anim.slide_out_bottom,
-//                            R.anim.slide_in_bottom
-//                        )
                         val moveToAuth = Intent(
                             this@ForgotPassActivity,
                             AuthPassActivity::class.java
@@ -82,9 +75,9 @@ class ForgotPassActivity : AppCompatActivity() {
                     }
                 } else {
                     showAlert(
-                        getString(R.string.send_otp_fail), getString(R.string.send_otp_fail_cause2)
-                    )
-                    { finish() }
+                        getString(R.string.send_otp_fail),
+                        getString(R.string.send_otp_fail_cause2)
+                    ) { finish() }
                 }
             }
         }
@@ -102,8 +95,7 @@ class ForgotPassActivity : AppCompatActivity() {
                         showAlert(
                             "Send OTP Failed",
                             "Make sure Email are filled in correctly"
-                        )
-                        {}
+                        ) {}
                     }
                     is Result.Success -> {
                         showLoading(false)
@@ -120,10 +112,6 @@ class ForgotPassActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
     private fun showAlert(
         title: String,
         message: String,
@@ -132,9 +120,7 @@ class ForgotPassActivity : AppCompatActivity() {
         AlertDialog.Builder(this).apply {
             setTitle(title)
             setMessage(message)
-            setPositiveButton("OK") { dialog, _ ->
-                positiveAction.invoke(dialog)
-            }
+            setPositiveButton("OK") { dialog, _ -> positiveAction.invoke(dialog) }
             setCancelable(false)
             create()
             show()
@@ -144,9 +130,7 @@ class ForgotPassActivity : AppCompatActivity() {
     private fun emailET() {
         val myLoginEmailET = forgotPassBinding.edEmailForgot
         myLoginEmailET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-            }
-
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = forgotPassBinding.edEmailForgot.text.toString()
                 if (email.isEmpty()) {
@@ -161,11 +145,8 @@ class ForgotPassActivity : AppCompatActivity() {
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
-
     }
 
     private fun setupView() {
@@ -211,5 +192,4 @@ class ForgotPassActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         forgotPassBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

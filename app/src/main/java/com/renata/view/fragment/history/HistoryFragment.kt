@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.renata.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
-
     private var _binding: FragmentHistoryBinding? = null
     private val historyBinding get() = _binding!!
 
