@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
@@ -75,5 +74,6 @@ dependencies {
     // Navigation Component
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
-
+    //Image Compressor
+    implementation 'id.zelory:compressor:3.0.1'
 }

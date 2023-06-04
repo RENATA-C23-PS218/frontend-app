@@ -65,7 +65,6 @@ class RenataRepository(private val application: Application) {
                 }
             }
             val classes = arrayOf(
-                "Unknown",
                 "Aluvial",
                 "Andosol",
                 "Entisol",
@@ -73,11 +72,10 @@ class RenataRepository(private val application: Application) {
                 "Inceptisol",
                 "Kapur",
                 "Laterit",
-                "Pasir"
+                "pasir"
             )
             val detectedClass = classes[maxPos]
             model.close()
-
             Log.d(TAG, "Image classification result: $detectedClass")
             return detectedClass
         } catch (e: IOException) {

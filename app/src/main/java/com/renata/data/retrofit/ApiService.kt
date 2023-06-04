@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
-
+    // AUTH API SERVICE SECTION
     @FormUrlEncoded
     @POST("register")
     suspend fun register(
@@ -29,7 +29,6 @@ interface ApiService {
     suspend fun verifyEmail(
         @Body requestBody: VerifyEmailRequest
     ): VerifyEmailResponse
-
 
     @FormUrlEncoded
     @POST("resend-verification")
@@ -64,6 +63,7 @@ interface ApiService {
         @Field("confirmPassword") confirmPassword: String
     ): ResetPassResponse
 
+    // PROFILE API SERVICE SECTION
     @GET("profile")
     fun getProfile(
         @Header("Authorization") Bearer: String,
@@ -86,4 +86,13 @@ interface ApiService {
         @Part file: MultipartBody.Part
     ): Call<UpdatePhotoResponse>
 
+    // PLANT API SERVICE SECTION
+    @FormUrlEncoded
+    @POST("profile")
+    fun planReccomend(
+    ): Call<UpdateProfileResponse>
+    @FormUrlEncoded
+    @POST("profile")
+    fun scanHistory(
+    ): Call<UpdateProfileResponse>
 }

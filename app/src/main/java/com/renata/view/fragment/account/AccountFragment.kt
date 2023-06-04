@@ -32,18 +32,18 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         loginPreference = LoginPreferences(requireContext())
         loginResult = loginPreference.getUser()
+        accountViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        ).get(ProfileViewModel::class.java)
         val token = loginResult.token
         getData(token)
         goToSetting()
         changeProfile(token)
         logout()
-
-        accountViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(ProfileViewModel::class.java)
     }
 
     private fun changeProfile(token: String?) {
@@ -56,7 +56,6 @@ class AccountFragment : Fragment() {
 
     private fun getData(token: String?) {
         val getToken = "Bearer $token"
-
         if (getToken != null) {
             accountViewModel.userProfile(getToken)
             accountViewModel.getUserProfile().observe(viewLifecycleOwner) {

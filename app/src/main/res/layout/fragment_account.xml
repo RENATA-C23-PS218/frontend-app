@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/account_toolbar"
-            android:fontFamily="@font/rajdhani700"
             android:textColor="?attr/colorPrimary"
             android:textSize="26sp"
+            android:fontFamily="@font/rajdhani700"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -72,7 +72,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/holder_name"
                 android:textAlignment="center"
-                android:textSize="22sp" />
+                android:textSize="26sp"
+                android:fontFamily="@font/rajdhani700"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tv_profile_email"
@@ -80,7 +82,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/holder_email"
                 android:textAlignment="center"
-                android:textSize="22sp" />
+                android:textSize="26sp"
+                android:fontFamily="@font/rajdhani700"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <Button
