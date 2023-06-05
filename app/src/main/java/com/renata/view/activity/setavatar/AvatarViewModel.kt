@@ -1,6 +1,5 @@
 package com.renata.view.activity.setavatar
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AvatarViewModel() : ViewModel(){
+class AvatarViewModel : ViewModel() {
     val photo = MutableLiveData<UpdatePhotoResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -21,12 +20,12 @@ class AvatarViewModel() : ViewModel(){
     fun uploadPhoto(token: String, image: MultipartBody.Part) {
         _isLoading.postValue(true)
         val client = ApiConfig.getApiService().uploadProfilePict(token, image)
-        client.enqueue(object: Callback<UpdatePhotoResponse>{
+        client.enqueue(object : Callback<UpdatePhotoResponse> {
             override fun onResponse(
                 call: Call<UpdatePhotoResponse>,
                 response: Response<UpdatePhotoResponse>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     photo.postValue(response.body())
                 }
                 _isLoading.postValue(false)

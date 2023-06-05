@@ -8,6 +8,7 @@ import com.renata.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var resultBinding: ActivityResultBinding
+    private lateinit var plantNames: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,8 @@ class ResultActivity : AppCompatActivity() {
         resultBinding.previewImageView.setImageBitmap(bitmap)
         val detectedClass = intent.getStringExtra("detected_class")
         resultBinding.soilType.text = detectedClass
+        val plantRecommendation = intent.getStringExtra("plant_recommendation")
+        resultBinding.recomCrop.text = plantRecommendation
         resultBinding.backButton.setOnClickListener {
             resultBinding.soilType.text = ""
             finish()
@@ -31,3 +34,4 @@ class ResultActivity : AppCompatActivity() {
         resultBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
+

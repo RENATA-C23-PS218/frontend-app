@@ -18,8 +18,8 @@ import com.renata.view.activity.splash.SplashScreenActivity
 class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
     private val accountBinding get() = _binding!!
-    private lateinit var loginPreference: LoginPreferences
     var accountViewModel: ProfileViewModel = ProfileViewModel()
+    private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
 
     override fun onCreateView(

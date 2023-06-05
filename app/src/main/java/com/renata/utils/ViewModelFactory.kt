@@ -11,7 +11,6 @@ import com.renata.view.activity.main.NavigationViewModel
 import com.renata.view.activity.register.RegisterViewModel
 import com.renata.view.activity.reset.ResetPassViewModel
 import com.renata.view.activity.scan.ScanViewModel
-import com.renata.view.activity.setavatar.AvatarViewModel
 import com.renata.view.activity.setting.SettingViewModel
 import com.renata.view.activity.splash.SplashViewModel
 import com.renata.view.fragment.account.AccountViewModel

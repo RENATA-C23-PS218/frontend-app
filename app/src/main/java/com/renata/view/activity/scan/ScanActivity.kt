@@ -10,32 +10,34 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.ViewModelProvider
+import com.renata.data.Result
+import com.renata.data.user.login.LoginPreferences
+import com.renata.data.user.login.LoginResult
 import com.renata.databinding.ActivityScanBinding
-import com.renata.ml.Model
 import com.renata.utils.ViewModelFactory
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
 import com.renata.view.activity.result.ResultActivity
-import okio.IOException
-import org.tensorflow.lite.DataType
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
 import kotlin.math.min
 
 class ScanActivity : AppCompatActivity() {
     private lateinit var scanBinding: ActivityScanBinding
     private lateinit var scanViewModel: ScanViewModel
     private lateinit var currentPhotoPath: String
+    private lateinit var loginPreference: LoginPreferences
+    private lateinit var loginResult: LoginResult
+    val plantNames = mutableListOf<String>()
+    private var plantRecommendation: String = ""
     private var getFile: File? = null
     private var imageSize: Int = 224
 
@@ -44,13 +46,20 @@ class ScanActivity : AppCompatActivity() {
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
 
+        loginPreference = LoginPreferences(this)
+        loginResult = loginPreference.getUser()
+        val token = "Bearer ${loginResult.token}"
         scanViewModel = obtainViewModel(this as AppCompatActivity)
         scanBinding.layoutAfter?.visibility = View.GONE
         showLoading(false)
         scanBinding.previewImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
-        scanBinding.detectButton.setOnClickListener { detectPhoto() }
+        scanBinding.detectButton.setOnClickListener {
+            if (token != null) {
+                detectPhoto(token)
+            }
+        }
         scanBinding.backButton.setOnClickListener { onBackPressed() }
     }
 
@@ -59,7 +68,14 @@ class ScanActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory)[ScanViewModel::class.java]
     }
 
-    private fun detectPhoto() {
+    private fun saveToHistory() {
+
+    }
+
+    private fun generateCrop(detectedClass: String) {
+    }
+
+    private fun detectPhoto(token: String) {
         showLoading(true)
         val drawable = scanBinding.previewImageView.drawable
         if (drawable != null) {
@@ -70,7 +86,7 @@ class ScanActivity : AppCompatActivity() {
             val compressedImage = compressBitmap(thumbnail)
             scanViewModel.classifyImage(compressedImage).observe(this) { detectedClass ->
                 if (detectedClass != null) {
-                    showResult(detectedClass, image)
+                    showResult(detectedClass, image, token)
                 } else {
                     alertFail()
                 }
@@ -101,7 +117,7 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun showResult(detectedClass: String, image: Bitmap) {
+    private fun showResult(detectedClass: String, image: Bitmap, token: String) {
         showLoading(false)
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog).create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
@@ -113,23 +129,46 @@ class ScanActivity : AppCompatActivity() {
             scanBinding.layoutAfter?.visibility = View.VISIBLE
             scanBinding.soilType?.text = detectedClass
             scanBinding.cropButton?.setOnClickListener {
-                val compressedImage = compressBitmap(image)
-                val intent = Intent(this@ScanActivity, ResultActivity::class.java)
-                val bStream = ByteArrayOutputStream()
-                compressedImage.compress(Bitmap.CompressFormat.PNG, 50, bStream)
-                val byteArray = bStream.toByteArray()
-                intent.putExtra("image", byteArray)
-                intent.putExtra("detected_class", detectedClass)
-                startActivity(intent)
-                overridePendingTransition(
-                    com.renata.R.anim.slide_out_bottom,
-                    com.renata.R.anim.slide_in_bottom
-                )
+                scanViewModel.cropRecommendation(token, detectedClass)
+                    .observe(this@ScanActivity) { result ->
+                        if (result != null) {
+                            when (result) {
+                                is Result.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Result.Error -> {
+                                    showLoading(false)
+                                    Toast.makeText(this, "Masuk Result.Error", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                                is Result.Success -> {
+                                    showLoading(false)
+                                    val plantRecommendation =
+                                        result.data.dataPlant.joinToString(", ") { it.plant_name }
+                                    val compressedImage = compressBitmap(image)
+                                    val intent =
+                                        Intent(this@ScanActivity, ResultActivity::class.java)
+                                    val bStream = ByteArrayOutputStream()
+                                    compressedImage.compress(Bitmap.CompressFormat.PNG, 50, bStream)
+                                    val byteArray = bStream.toByteArray()
+                                    intent.putExtra("image", byteArray)
+                                    intent.putExtra("detected_class", detectedClass)
+                                    intent.putExtra("plant_recommendation", plantRecommendation)
+                                    startActivity(intent)
+                                    overridePendingTransition(
+                                        com.renata.R.anim.slide_out_bottom,
+                                        com.renata.R.anim.slide_in_bottom
+                                    )
+                                }
+                            }
+                        }
+                    }
             }
         }
         builder.setCanceledOnTouchOutside(false)
         builder.show()
     }
+
 
     private fun alertFail() {
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog)
@@ -213,55 +252,5 @@ class ScanActivity : AppCompatActivity() {
         val intent = intent
         finish()
         startActivity(intent)
-    }
-
-    fun classifyImage(image: Bitmap) {
-        try {
-            val model: Model = Model.newInstance(applicationContext)
-            val inputFeature0 = TensorBuffer.createFixedSize(
-                intArrayOf(1, imageSize, imageSize, 3),
-                DataType.FLOAT32
-            )
-            val byteBuffer: ByteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
-            byteBuffer.order(ByteOrder.nativeOrder())
-            val intValues = IntArray(imageSize * imageSize)
-            image.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
-            var pixel = 0
-            for (i in 0 until imageSize) {
-                for (j in 0 until imageSize) {
-                    val value = intValues[pixel++] // RGB
-                    byteBuffer.putFloat(((value shr 16) and 0xFF) * (1f / 1))
-                    byteBuffer.putFloat(((value shr 8) and 0xFF) * (1f / 1))
-                    byteBuffer.putFloat((value and 0xFF) * (1f / 1))
-                }
-            }
-            inputFeature0.loadBuffer(byteBuffer)
-            val outputs: Model.Outputs = model.process(inputFeature0)
-            val outputFeature0: TensorBuffer = outputs.outputFeature0AsTensorBuffer
-            val confidences: FloatArray = outputFeature0.floatArray
-            var maxPos = 0
-            var maxConfidence = 0f
-            for (i in confidences.indices) {
-                if (confidences[i] > maxConfidence) {
-                    maxConfidence = confidences[i]
-                    maxPos = i
-                }
-            }
-            val classes = arrayOf(
-                "Aluvial",
-                "Andosol",
-                "Entisol",
-                "Humus",
-                "Inceptisol",
-                "Kapur",
-                "Laterit",
-                "pasir"
-            )
-            val detectedClass = classes[maxPos]
-            model.close()
-            showResult(detectedClass, image)
-        } catch (e: IOException) {
-            alertFail()
-        }
     }
 }

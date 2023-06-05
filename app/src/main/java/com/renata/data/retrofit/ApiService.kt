@@ -1,5 +1,7 @@
 package com.renata.data.retrofit
 
+import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
+import com.renata.data.plant.scanhistory.ScanHistoryResponse
 import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
@@ -88,11 +90,15 @@ interface ApiService {
 
     // PLANT API SERVICE SECTION
     @FormUrlEncoded
-    @POST("profile")
-    fun planReccomend(
-    ): Call<UpdateProfileResponse>
+    @POST("plant-recommendations")
+    fun planRecommend(
+        @Header("Authorization") token: String,
+        @Field("soilType") soil: String
+    ): Call<PlantRecommendationResponse>
+
     @FormUrlEncoded
-    @POST("profile")
+    @GET("scan-histories")
     fun scanHistory(
-    ): Call<UpdateProfileResponse>
+        @Header("Authorization") token: String,
+    ): Call<ScanHistoryResponse>
 }

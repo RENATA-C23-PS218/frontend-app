@@ -113,8 +113,8 @@ class AvatarActivity : AppCompatActivity() {
                 requestImageFile
             )
             avatarViewModel.uploadPhoto(token, imageMultipart)
-            avatarViewModel.getPhoto().observe(this){
-                if (it !=null) {
+            avatarViewModel.getPhoto().observe(this) {
+                if (it != null) {
                     Toast.makeText(this@AvatarActivity, it.message, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@AvatarActivity, ProfileActivity::class.java)
                     startActivity(intent)

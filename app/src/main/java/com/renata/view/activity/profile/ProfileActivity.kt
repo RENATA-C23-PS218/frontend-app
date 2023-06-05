@@ -67,13 +67,13 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPhoto(){
+    private fun getPhoto() {
 //        val image = intent.getStringExtra("image")
 //            Glide.with(this@ProfileActivity)
 //                .load(image)
 //                .centerCrop()
 //                .into(profileBinding.profileImage)
-        avatarViewModel.getPhoto().observe(this){
+        avatarViewModel.getPhoto().observe(this) {
             val data = it.data
             Glide.with(this@ProfileActivity)
                 .load(data.url)
@@ -106,11 +106,11 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    private fun getDataProfile(token: String){
-        if (token !=null){
+    private fun getDataProfile(token: String) {
+        if (token != null) {
             profileViewModel.userProfile(token)
-            profileViewModel.getUserProfile().observe(this){
-                if (it !=null) {
+            profileViewModel.getUserProfile().observe(this) {
+                if (it != null) {
                     profileBinding.apply {
                         val data = it.data
                         edFirstName.setText(data.first_name)

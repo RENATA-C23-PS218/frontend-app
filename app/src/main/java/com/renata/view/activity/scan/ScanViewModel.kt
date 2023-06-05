@@ -23,4 +23,7 @@ class ScanViewModel(application: Application) : ViewModel() {
         }
         return result
     }
+
+    fun cropRecommendation(token: String, soilType: String) =
+        renataRepository.cropRecomm(token, soilType)
 }

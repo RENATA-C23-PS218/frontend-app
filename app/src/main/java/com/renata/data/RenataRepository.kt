@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
 import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
 import com.renata.data.user.forgotpass.ForgotPassResponse
@@ -17,10 +18,14 @@ import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import com.renata.ml.Model
+import kotlinx.coroutines.CompletableDeferred
 import org.json.JSONObject
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -361,6 +366,53 @@ class RenataRepository(private val application: Application) {
                 }
                 else -> "Login exception: ${e.message}"
             }
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
+        }
+    }
+
+    fun cropRecomm(
+        token: String,
+        soil: String
+    ): LiveData<Result<PlantRecommendationResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val call = apiService.planRecommend(token, soil)
+            val response = CompletableDeferred<Response<PlantRecommendationResponse>>()
+            call.enqueue(object : Callback<PlantRecommendationResponse> {
+                override fun onResponse(
+                    call: Call<PlantRecommendationResponse>,
+                    res: Response<PlantRecommendationResponse>
+                ) {
+                    response.complete(res)
+                }
+
+                override fun onFailure(call: Call<PlantRecommendationResponse>, t: Throwable) {
+                    response.completeExceptionally(t)
+                }
+            })
+            val res = response.await()
+            if (res.isSuccessful) {
+                val responseBody = res.body()
+                if (responseBody != null) {
+                    if (responseBody.success) {
+                        Log.d(TAG, "Plant Recommendation success: ${responseBody.message}")
+                        emit(Result.Success(responseBody))
+                    } else {
+                        Log.d(TAG, "Plant Recommendation error: ${responseBody.message}")
+                        emit(Result.Error(responseBody.message))
+                    }
+                } else {
+                    Log.e(TAG, "Empty response body")
+                    emit(Result.Error("Empty response body"))
+                }
+            } else {
+                val errorMessage = "HTTP error ${res.code()}: ${res.message()}"
+                Log.e(TAG, errorMessage)
+                emit(Result.Error(errorMessage))
+            }
+        } catch (e: Exception) {
+            val errorMessage = "Plant Recommendation exception: ${e.message}"
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
         }
