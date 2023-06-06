@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.renata.data.RenataRepository
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class ScanViewModel(application: Application) : ViewModel() {
     private val renataRepository: RenataRepository = RenataRepository(application)
@@ -24,6 +26,6 @@ class ScanViewModel(application: Application) : ViewModel() {
         return result
     }
 
-    fun cropRecommendation(token: String, soilType: String) =
-        renataRepository.cropRecomm(token, soilType)
+    fun cropRecommendation(token: String, soilType: RequestBody, image: MultipartBody.Part) =
+        renataRepository.cropRecomm(token, soilType, image)
 }

@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
+import com.renata.data.plant.scanhistory.ScanHistoryResponse
 import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
 import com.renata.data.user.forgotpass.ForgotPassResponse
@@ -19,6 +20,8 @@ import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import com.renata.ml.Model
 import kotlinx.coroutines.CompletableDeferred
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -288,39 +291,6 @@ class RenataRepository(private val application: Application) {
         }
     }
 
-//    fun resendOTPReset(email: String): LiveData<Result<ResendOTPResponse>> = liveData {
-//        emit(Result.Loading)
-//        try {
-//            val response = apiService.resendVerif(
-//                id
-//            )
-//            if (response.success) {
-//                Log.d(TAG, "Authentication success: ${response.message}")
-//                emit(Result.Success(response))
-//            } else {
-//                Log.d(TAG, "Authentication error: ${response.message}")
-//                emit(Result.Error(response.message))
-//            }
-//        } catch (e: Exception) {
-//            val errorMessage = when (e) {
-//                is HttpException -> {
-//                    val httpCode = e.code()
-//                    when (httpCode) {
-//                        400 -> "Incorrect One-Time Password (OTP)"
-//                        401 -> "Access unauthorized. Please provide valid credentials"
-//                        403 -> "Access forbidden. You don't have permission to perform this action"
-//                        404 -> "User not found"
-//                        500 -> "Internal server error. Please try again later"
-//                        else -> "An HTTP error occurred with code $httpCode"
-//                    }
-//                }
-//                else -> "Authentication exception: ${e.message}"
-//            }
-//            Log.e(TAG, errorMessage)
-//            emit(Result.Error(errorMessage))
-//        }
-//    }
-
     fun userResetPass(
         email: String,
         password: String,
@@ -362,11 +332,12 @@ class RenataRepository(private val application: Application) {
 
     fun cropRecomm(
         token: String,
-        soil: String
+        soil: RequestBody,
+        image: MultipartBody.Part
     ): LiveData<Result<PlantRecommendationResponse>> = liveData {
         emit(Result.Loading)
         try {
-            val call = apiService.planRecommend(token, soil)
+            val call = apiService.planRecommend(token, soil, image)
             val response = CompletableDeferred<Response<PlantRecommendationResponse>>()
             call.enqueue(object : Callback<PlantRecommendationResponse> {
                 override fun onResponse(
@@ -385,10 +356,10 @@ class RenataRepository(private val application: Application) {
                 val responseBody = res.body()
                 if (responseBody != null) {
                     if (responseBody.success) {
-                        Log.d(TAG, "Plant Recommendation success: ${responseBody.message}")
+                        Log.d(TAG, "Plant recommendation success: ${responseBody.message}")
                         emit(Result.Success(responseBody))
                     } else {
-                        Log.d(TAG, "Plant Recommendation error: ${responseBody.message}")
+                        Log.d(TAG, "Plant recommendation error: ${responseBody.message}")
                         emit(Result.Error(responseBody.message))
                     }
                 } else {
@@ -401,7 +372,53 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(errorMessage))
             }
         } catch (e: Exception) {
-            val errorMessage = "Plant Recommendation exception: ${e.message}"
+            val errorMessage = "Plant recommendation exception: ${e.message}"
+            Log.e(TAG, errorMessage)
+            emit(Result.Error(errorMessage))
+        }
+    }
+
+    fun scanHistory(
+        token: String
+    ): LiveData<Result<ScanHistoryResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val call = apiService.scanHistory(token)
+            val response = CompletableDeferred<Response<ScanHistoryResponse>>()
+            call.enqueue(object : Callback<ScanHistoryResponse> {
+                override fun onResponse(
+                    call: Call<ScanHistoryResponse>,
+                    res: Response<ScanHistoryResponse>
+                ) {
+                    response.complete(res)
+                }
+
+                override fun onFailure(call: Call<ScanHistoryResponse>, t: Throwable) {
+                    response.completeExceptionally(t)
+                }
+            })
+            val res = response.await()
+            if (res.isSuccessful) {
+                val responseBody = res.body()
+                if (responseBody != null) {
+                    if (responseBody.success) {
+                        Log.d(TAG, "Scan history success: ${responseBody.message}")
+                        emit(Result.Success(responseBody))
+                    } else {
+                        Log.d(TAG, "Scan history error: ${responseBody.message}")
+                        emit(Result.Error(responseBody.message))
+                    }
+                } else {
+                    Log.e(TAG, "Empty response body")
+                    emit(Result.Error("Empty response body"))
+                }
+            } else {
+                val errorMessage = "HTTP error ${res.code()}: ${res.message()}"
+                Log.e(TAG, errorMessage)
+                emit(Result.Error(errorMessage))
+            }
+        } catch (e: Exception) {
+            val errorMessage = "Scan history exception: ${e.message}"
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
         }

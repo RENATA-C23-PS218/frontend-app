@@ -13,6 +13,7 @@ import com.renata.data.user.verifyemail.VerifyEmailResponse
 import com.renata.data.user.verifyresetpass.VerifyResetPassRequest
 import com.renata.data.user.verifyresetpass.VerifyResetPassResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -89,16 +90,16 @@ interface ApiService {
     ): Call<UpdatePhotoResponse>
 
     // PLANT API SERVICE SECTION
-    @FormUrlEncoded
+    @Multipart
     @POST("plant-recommendations")
     fun planRecommend(
         @Header("Authorization") token: String,
-        @Field("soilType") soil: String
+        @Part("soilType") soil: RequestBody,
+        @Part file: MultipartBody.Part
     ): Call<PlantRecommendationResponse>
 
-    @FormUrlEncoded
     @GET("scan-histories")
     fun scanHistory(
-        @Header("Authorization") token: String,
+        @Header("Authorization") token: String
     ): Call<ScanHistoryResponse>
 }

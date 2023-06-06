@@ -26,6 +26,9 @@ import com.renata.utils.createCustomTempFile
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
 import com.renata.view.activity.result.ResultActivity
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
 import kotlin.math.min
@@ -46,10 +49,10 @@ class ScanActivity : AppCompatActivity() {
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
 
+        scanViewModel = obtainViewModel(this as AppCompatActivity)
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
         val token = "Bearer ${loginResult.token}"
-        scanViewModel = obtainViewModel(this as AppCompatActivity)
         scanBinding.layoutAfter?.visibility = View.GONE
         showLoading(false)
         scanBinding.previewImageView.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -68,13 +71,6 @@ class ScanActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory)[ScanViewModel::class.java]
     }
 
-    private fun saveToHistory() {
-
-    }
-
-    private fun generateCrop(detectedClass: String) {
-    }
-
     private fun detectPhoto(token: String) {
         showLoading(true)
         val drawable = scanBinding.previewImageView.drawable
@@ -84,9 +80,18 @@ class ScanActivity : AppCompatActivity() {
             val thumbnail = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
             scanBinding.previewImageView.setImageBitmap(thumbnail)
             val compressedImage = compressBitmap(thumbnail)
+            val outputStream = ByteArrayOutputStream()
+            compressedImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            val requestImageFile = outputStream.toByteArray()
+                .toRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "file",
+                "image.jpg",
+                requestImageFile
+            )
             scanViewModel.classifyImage(compressedImage).observe(this) { detectedClass ->
                 if (detectedClass != null) {
-                    showResult(detectedClass, image, token)
+                    showResult(detectedClass, image, token, imageMultipart)
                 } else {
                     alertFail()
                 }
@@ -117,8 +122,16 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun showResult(detectedClass: String, image: Bitmap, token: String) {
+    private fun showResult(
+        detectedClass: String,
+        image: Bitmap,
+        token: String,
+        imageFile: MultipartBody.Part
+    ) {
         showLoading(false)
+        val detectedClassString = detectedClass
+        val detectedClassRequestBody =
+            detectedClassString.toRequestBody("text/plain".toMediaTypeOrNull())
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog).create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogDismiss_button)
@@ -129,7 +142,7 @@ class ScanActivity : AppCompatActivity() {
             scanBinding.layoutAfter?.visibility = View.VISIBLE
             scanBinding.soilType?.text = detectedClass
             scanBinding.cropButton?.setOnClickListener {
-                scanViewModel.cropRecommendation(token, detectedClass)
+                scanViewModel.cropRecommendation(token, detectedClassRequestBody, imageFile)
                     .observe(this@ScanActivity) { result ->
                         if (result != null) {
                             when (result) {

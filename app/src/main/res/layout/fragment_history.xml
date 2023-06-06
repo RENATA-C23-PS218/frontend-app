@@ -7,6 +7,7 @@
     tools:context=".view.fragment.history.HistoryFragment">
 
     <LinearLayout
+        android:id="@+id/layout_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -61,7 +62,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_listHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/history_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

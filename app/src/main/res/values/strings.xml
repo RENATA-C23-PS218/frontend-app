@@ -108,4 +108,5 @@
     <string name="exFirstName">ex : John</string>
     <string name="exLastName">ex : Doe</string>
     <string name="exAddress">ex : Cimahi, Jawa Barat</string>
+    <string name="date_placeholder">date</string>
 </resources>

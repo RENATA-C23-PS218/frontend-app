@@ -44,10 +44,6 @@ fun emailValidation(email: String): Boolean {
     return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
 
-//fun passwordValidation(password: String): Boolean {
-//    return !TextUtils.isEmpty(password) && password.length >= 8
-//}
-
 fun passwordValidation(password: String): Boolean {
     if (password.isEmpty() || password.length < 8) {
         return false

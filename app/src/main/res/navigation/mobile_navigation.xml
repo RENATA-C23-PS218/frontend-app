@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_history" >
     </fragment>
     <fragment
-        android:id="@+id/navigation_scan"
-        android:name="com.renata.view.fragment.scan.ScanFragment"
-        android:label="fragment_scan"
-        tools:layout="@layout/fragment_scan" >
-    </fragment>
-    <fragment
         android:id="@+id/navigation_account"
         android:name="com.renata.view.fragment.account.AccountFragment"
         android:label="fragment_account"
