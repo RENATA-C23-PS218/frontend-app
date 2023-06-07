@@ -26,16 +26,19 @@
 
     <application
         android:allowBackup="true"
-        android:largeHeap="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_renata"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_renata_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Renata"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.activity.detailhistory.DetailHistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activity.result.ResultActivity"
             android:exported="false" />

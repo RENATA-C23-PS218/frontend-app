@@ -64,10 +64,10 @@ class AccountFragment : Fragment() {
                     accountBinding.tvProfileEmail.text = data.email
                     val image = data.avatar_link
                     val name = data.full_name
-                    if (image == "" || name == ""){
+                    if (image == "" || name == "") {
                         accountBinding.tvProfileName.setText(R.string.app_name)
                         accountBinding.profileImage.setImageResource(R.drawable.image_placeholder)
-                    }else{
+                    } else {
                         accountBinding.tvProfileName.text = data.full_name
                         Glide.with(this@AccountFragment)
                             .load(data.avatar_link)
@@ -95,12 +95,12 @@ class AccountFragment : Fragment() {
             val tes = loginResult.token
             val tokenNow = "Bearer $tes"
             accountViewModel.userProfile(tokenNow)
-            accountViewModel.getUserProfile().observe(viewLifecycleOwner){
-                    val data = it.data
-                    val image = data.avatar_link
-                if (image == ""){
+            accountViewModel.getUserProfile().observe(viewLifecycleOwner) {
+                val data = it.data
+                val image = data.avatar_link
+                if (image == "") {
                     accountBinding.profileImage.setImageResource(R.drawable.image_placeholder)
-                }else{
+                } else {
                     Glide.with(requireActivity())
                         .load(image)
                         .into(accountBinding.profileImage)

@@ -104,4 +104,10 @@
     <string name="scan_success">Scan Success</string>
     <string name="alert_no_image">No Image Detected</string>
     <string name="image_req">Please Choose The Image First</string>
+    <string name="exPhone">ex : 085718620532</string>
+    <string name="exFirstName">ex : John</string>
+    <string name="exLastName">ex : Doe</string>
+    <string name="exAddress">ex : Cimahi, Jawa Barat</string>
+    <string name="date_placeholder">date</string>
+    <string name="detail_result_toolbar">Detail Result</string>
 </resources>

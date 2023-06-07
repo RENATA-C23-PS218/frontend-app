@@ -109,4 +109,5 @@
     <string name="exLastName">ex : Doe</string>
     <string name="exAddress">ex : Cimahi, Jawa Barat</string>
     <string name="date_placeholder">date</string>
+    <string name="detail_result_toolbar">Detail Result</string>
 </resources>

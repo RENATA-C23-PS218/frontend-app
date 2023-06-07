@@ -10,6 +10,11 @@ import java.util.*
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
     private var scanHistories: List<ScanHistory> = listOf()
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     fun updateData(histories: List<ScanHistory>) {
         scanHistories = histories
@@ -40,6 +45,13 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
             Glide.with(itemView)
                 .load(scanHistory.image)
                 .into(binding.ivSoilImage)
+            binding.root.setOnClickListener {
+                onItemClickCallback.onItemClicked(scanHistory)
+            }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: ScanHistory)
     }
 }

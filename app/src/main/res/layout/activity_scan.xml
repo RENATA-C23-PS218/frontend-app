@@ -42,7 +42,7 @@
             android:fontFamily="@font/rajdhani700"
             android:text="@string/scanner_toolbar"
             android:textColor="?attr/colorPrimary"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -100,7 +100,7 @@
                 android:text="@string/soil_type_title"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +127,7 @@
                 android:text="@string/soil_placeholder"
                 android:textAlignment="center"
                 android:textColor="@color/brown"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier1" />
 

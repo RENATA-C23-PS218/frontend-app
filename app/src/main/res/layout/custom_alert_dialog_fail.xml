@@ -27,7 +27,7 @@
             android:text="@string/scan_failed"
             android:fontFamily="@font/rajdhani600"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="@dimen/text_size_medium" />
 
         <Button
             android:id="@+id/dialogFailDismiss_button"

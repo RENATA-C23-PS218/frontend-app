@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:text="@string/account_toolbar"
             android:textColor="?attr/colorPrimary"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_toolbar"
             android:fontFamily="@font/rajdhani700"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
@@ -35,12 +35,14 @@
             android:id="@+id/profile_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             app:civ_border_color="#FFFF"
             app:civ_border_width="2dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/image_placeholder"/>
 
         <ImageView
             android:id="@+id/edit_profile"
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/holder_name"
                 android:textAlignment="center"
-                android:textSize="26sp"
+                android:textSize="@dimen/text_size_toolbar"
                 android:fontFamily="@font/rajdhani700"
                 android:textStyle="bold"/>
 
@@ -81,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/holder_email"
                 android:textAlignment="center"
-                android:textSize="26sp"
+                android:textSize="@dimen/text_size_toolbar"
                 android:fontFamily="@font/rajdhani700"
                 android:textStyle="bold"/>
         </LinearLayout>

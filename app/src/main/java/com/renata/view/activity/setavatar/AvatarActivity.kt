@@ -20,7 +20,6 @@ import com.renata.utils.createCustomTempFile
 import com.renata.utils.reduceFileImage
 import com.renata.utils.rotateFile
 import com.renata.utils.uriToFile
-import com.renata.view.activity.profile.ProfileActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -122,7 +121,7 @@ class AvatarActivity : AppCompatActivity() {
                     showAlert(
                         getString(R.string.save_changes),
                         getString(R.string.save_changes_cause)
-                    ){
+                    ) {
                         val resultIntent = Intent()
                         resultIntent.putExtra("photo", photo)
                         setResult(Activity.RESULT_OK, resultIntent)

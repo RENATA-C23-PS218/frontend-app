@@ -46,7 +46,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/green1"
                 android:fontFamily="@font/rajdhani700"
-                android:textSize="36sp"
+                android:textSize="@dimen/text_size_authtitle"
                 app:layout_constraintBottom_toTopOf="@+id/titleTextView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

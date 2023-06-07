@@ -156,8 +156,17 @@ class ScanActivity : AppCompatActivity() {
                                 }
                                 is Result.Success -> {
                                     showLoading(false)
+                                    val recommendedPlants =
+                                        result.data.dataPlant.shuffled().take(10)
+                                    val bullet = "\u2022" // Character for bullet symbol
                                     val plantRecommendation =
-                                        result.data.dataPlant.joinToString(", ") { it.plant_name }
+                                        recommendedPlants.mapIndexed { index, plant ->
+                                            if (index == 0) {
+                                                "$bullet ${plant.plant_name}"
+                                            } else {
+                                                "$bullet ${plant.plant_name}"
+                                            }
+                                        }.joinToString("\n")
                                     val compressedImage = compressBitmap(image)
                                     val intent =
                                         Intent(this@ScanActivity, ResultActivity::class.java)

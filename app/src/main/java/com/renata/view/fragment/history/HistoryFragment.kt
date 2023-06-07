@@ -1,20 +1,22 @@
 package com.renata.view.fragment.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.renata.data.Result
 import com.renata.data.plant.scanhistory.HistoryAdapter
+import com.renata.data.plant.scanhistory.ScanHistory
 import com.renata.data.user.login.LoginPreferences
 import com.renata.data.user.login.LoginResult
 import com.renata.databinding.FragmentHistoryBinding
 import com.renata.utils.ViewModelFactory
+import com.renata.view.activity.detailhistory.DetailHistoryActivity
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -23,6 +25,7 @@ class HistoryFragment : Fragment() {
     private lateinit var loginResult: LoginResult
     private lateinit var historyViewModel: HistoryViewModel
     private lateinit var adapter: HistoryAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +64,17 @@ class HistoryFragment : Fragment() {
                 }
             }
         }
+        adapter.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: ScanHistory) {
+                Intent(requireContext(), DetailHistoryActivity::class.java).also {
+                    it.putExtra(DetailHistoryActivity.SOIL_PICT, data.image)
+                    it.putExtra(DetailHistoryActivity.SOIL_NAME, data.soil_Type)
+                    // it.putExtra(DetailHistoryActivity.PLAN_RECOMM, data.) // Anda perlu menambahkan data yang ingin Anda kirim ke DetailHistoryActivity
+                    it.putExtra(DetailHistoryActivity.SCAN_DATE, data.date)
+                    startActivity(it)
+                }
+            }
+        })
     }
 
 

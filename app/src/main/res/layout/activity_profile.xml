@@ -29,7 +29,7 @@
             android:fontFamily="@font/rajdhani700"
             android:text="@string/update_profile_toolbar"
             android:textColor="?attr/colorPrimary"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 

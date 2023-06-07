@@ -111,9 +111,9 @@ class ProfileActivity : AppCompatActivity() {
                         edPhone.setText(data.phone)
                         edAddress.setText(data.address)
                         val image = data.avatar_link
-                        if (image == ""){
+                        if (image == "") {
                             profileBinding.profileImage.setImageResource(R.drawable.image_placeholder)
-                        }else{
+                        } else {
                             Glide.with(this@ProfileActivity)
                                 .load(data.avatar_link)
                                 .into(profileImage)
@@ -129,8 +129,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PROFILE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            avatarViewModel.getPhoto().observe(this){
-                if (it==null){
+            avatarViewModel.getPhoto().observe(this) {
+                if (it == null) {
                     showLoading(true)
                 }
                 val data = it.data

@@ -36,7 +36,7 @@
             android:textAlignment="center"
             android:textColor="?attr/colorPrimary"
             android:fontFamily="@font/rajdhani700"
-            android:textSize="36sp"
+            android:textSize="@dimen/text_size_authtitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -1,7 +1,6 @@
 package com.renata.data.user.updateprofile
 
 import com.google.gson.annotations.SerializedName
-import com.renata.data.user.login.Data
 
 data class UpdateProfileResponse(
     @field:SerializedName("status")

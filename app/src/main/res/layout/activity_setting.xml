@@ -30,7 +30,7 @@
             android:text="@string/setting_toolbar"
             android:fontFamily="@font/rajdhani700"
             android:textColor="@color/green2"
-            android:textSize="26sp"
+            android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
