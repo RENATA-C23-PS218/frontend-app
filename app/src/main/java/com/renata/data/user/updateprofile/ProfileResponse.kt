@@ -33,7 +33,10 @@ data class DataProfile(
     val phone: String,
 
     @field:SerializedName("address")
-    val address: String
+    val address: String,
+
+    @field:SerializedName("avatar_link")
+    val avatar_link: String
 )
 
 

@@ -1,5 +1,7 @@
 package com.renata.view.activity.setavatar
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -8,9 +10,11 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
+import com.renata.R
 import com.renata.databinding.ActivityAvatarBinding
 import com.renata.utils.createCustomTempFile
 import com.renata.utils.reduceFileImage
@@ -97,10 +101,6 @@ class AvatarActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        avatarBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
     private fun uploadPhoto() {
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
@@ -113,11 +113,22 @@ class AvatarActivity : AppCompatActivity() {
                 requestImageFile
             )
             avatarViewModel.uploadPhoto(token, imageMultipart)
+            showLoading(true)
             avatarViewModel.getPhoto().observe(this) {
                 if (it != null) {
-                    Toast.makeText(this@AvatarActivity, it.message, Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@AvatarActivity, ProfileActivity::class.java)
-                    startActivity(intent)
+                    val data = it.data
+                    val photo = data.url
+                    showLoading(false)
+                    showAlert(
+                        getString(R.string.save_changes),
+                        getString(R.string.save_changes_cause)
+                    ){
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("photo", photo)
+                        setResult(Activity.RESULT_OK, resultIntent)
+                        finish()
+                    }
+
                 }
             }
         } else {
@@ -125,4 +136,27 @@ class AvatarActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun showAlert(
+        title: String,
+        message: String,
+        positiveAction: (dialog: DialogInterface) -> Unit
+    ) {
+        AlertDialog.Builder(this).apply {
+            setTitle(title)
+            setMessage(message)
+            setPositiveButton("OK") { dialog, _ ->
+                positiveAction.invoke(dialog)
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        avatarBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
 }
+

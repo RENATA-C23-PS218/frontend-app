@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.renata.data.retrofit.ApiConfig
+import com.renata.data.user.updateprofile.DataPhoto
 import com.renata.data.user.updateprofile.UpdatePhotoResponse
 import okhttp3.MultipartBody
 import retrofit2.Call

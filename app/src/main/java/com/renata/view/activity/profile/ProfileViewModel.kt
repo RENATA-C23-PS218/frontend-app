@@ -14,6 +14,9 @@ import retrofit2.Response
 class ProfileViewModel : ViewModel() {
     val user = MutableLiveData<UpdateProfileResponse>()
     val userProfile = MutableLiveData<ProfileResponse>()
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
     fun setUserProfile(
         token: String,
         first_name: String,
@@ -21,6 +24,7 @@ class ProfileViewModel : ViewModel() {
         phone: String,
         address: String
     ) {
+        _isLoading.postValue(true)
         val client =
             ApiConfig.getApiService().updateProfile(token, first_name, last_name, phone, address)
         client.enqueue(object : Callback<UpdateProfileResponse> {
@@ -31,10 +35,12 @@ class ProfileViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     user.postValue(response.body())
                 }
+                _isLoading.postValue(false)
             }
 
             override fun onFailure(call: Call<UpdateProfileResponse>, t: Throwable) {
                 t.message?.let { Log.d("Failure", it) }
+                _isLoading.postValue(false)
             }
 
         })

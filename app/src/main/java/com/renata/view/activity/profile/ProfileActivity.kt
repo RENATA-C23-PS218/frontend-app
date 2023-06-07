@@ -1,8 +1,10 @@
 package com.renata.view.activity.profile
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     var avatarViewModel: AvatarViewModel = AvatarViewModel()
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
+    private val PROFILE_ACTIVITY_REQUEST_CODE = 1
 
     companion object {
         private const val TAG = "Profile Activity"
@@ -49,7 +52,6 @@ class ProfileActivity : AppCompatActivity() {
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
         getDataProfile(token)
-        getPhoto()
 
         profileBinding.saveButton.setOnClickListener {
             loginPreference = LoginPreferences(this)
@@ -67,37 +69,28 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun getPhoto() {
-//        val image = intent.getStringExtra("image")
-//            Glide.with(this@ProfileActivity)
-//                .load(image)
-//                .centerCrop()
-//                .into(profileBinding.profileImage)
-        avatarViewModel.getPhoto().observe(this) {
-            val data = it.data
-            Glide.with(this@ProfileActivity)
-                .load(data.url)
-                .centerCrop()
-                .into(profileBinding.profileImage)
-        }
-
-    }
-
     private fun saveChanges(firstName: String, lastName: String, phone: String, address: String) {
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
         if (token != null) {
             profileViewModel.setUserProfile(token, firstName, lastName, phone, address)
         }
+        showLoading(true)
         profileViewModel.getUser().observe(this) {
             if (it.success) {
+                val data = it.data
+                showLoading(false)
                 showAlert(
                     getString(R.string.save_changes),
                     getString(R.string.save_changes_cause)
                 )
                 {
-                    getDataProfile(token)// tes
-                    onBackPressed()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("image", data.avatar_link)
+                    resultIntent.putExtra("name", data.full_name)
+                    resultIntent.putExtra("email", data.email)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
                 }
             } else {
                 Toast.makeText(this@ProfileActivity, "Change Failed", Toast.LENGTH_SHORT).show()
@@ -117,12 +110,35 @@ class ProfileActivity : AppCompatActivity() {
                         edLastName.setText(data.last_name)
                         edPhone.setText(data.phone)
                         edAddress.setText(data.address)
-                        // testing. masih salah
-//                        val intent = Intent(this@ProfileActivity, AccountFragment::class.java)
-//                        intent.putExtra("username", data.full_name)
-//                        startActivity(intent)
+                        val image = data.avatar_link
+                        if (image == ""){
+                            profileBinding.profileImage.setImageResource(R.drawable.image_placeholder)
+                        }else{
+                            Glide.with(this@ProfileActivity)
+                                .load(data.avatar_link)
+                                .into(profileImage)
+                        }
+                        showLoading(false)
                     }
                 }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PROFILE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            avatarViewModel.getPhoto().observe(this){
+                if (it==null){
+                    showLoading(true)
+                }
+                val data = it.data
+                val image = data.url
+                Glide.with(this)
+                    .load(image)
+                    .into(profileBinding.profileImage)
+                showLoading(false)
             }
         }
     }
@@ -133,6 +149,10 @@ class ProfileActivity : AppCompatActivity() {
         moveToChangeAvatar.putExtra("token", token)
         startActivity(moveToChangeAvatar)
         overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        profileBinding.progressBar3?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
 

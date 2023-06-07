@@ -13,10 +13,10 @@ data class UpdatePhotoResponse(
     val success: Boolean,
 
     @field:SerializedName("data")
-    val data: Data,
+    val data: DataPhoto,
 )
 
-data class Data(
+data class DataPhoto(
     @field:SerializedName("url")
     val url: String,
 )

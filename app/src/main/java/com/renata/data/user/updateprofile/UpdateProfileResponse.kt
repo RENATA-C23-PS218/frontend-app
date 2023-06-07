@@ -14,5 +14,5 @@ data class UpdateProfileResponse(
     val success: Boolean,
 
     @field:SerializedName("data")
-    val data: Data,
+    val data: DataProfile,
 )
