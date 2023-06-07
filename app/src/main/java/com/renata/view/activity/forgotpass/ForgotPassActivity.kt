@@ -59,13 +59,6 @@ class ForgotPassActivity : AppCompatActivity() {
                 if (!TextUtils.isEmpty(email)) {
                     if (emailValidation(email)) {
                         sendEmail(email)
-                        val moveToAuth = Intent(
-                            this@ForgotPassActivity,
-                            AuthPassActivity::class.java
-                        )
-                        moveToAuth.putExtra("email", email)
-                        startActivity(moveToAuth)
-                        forgotPassBinding.edEmailForgot.text = null
                     } else {
                         showAlert(
                             getString(R.string.send_otp_fail),
@@ -92,20 +85,26 @@ class ForgotPassActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         showLoading(false)
+                        val errorMessage = result.data
                         showAlert(
-                            "Send OTP Failed",
-                            "Make sure Email are filled in correctly"
+                            getString(R.string.send_otp_fail_2),
+                            errorMessage
                         ) {}
                     }
                     is Result.Success -> {
                         showLoading(false)
-                        val moveToAuth = Intent(
-                            this@ForgotPassActivity,
-                            AuthPassActivity::class.java
-                        )
-                        moveToAuth.putExtra("email", email)
-                        startActivity(moveToAuth)
-                        finish()
+                        showAlert(
+                            getString(R.string.resend_otp_req),
+                            getString(R.string.resend_otp_res)
+                        ) {
+                            val moveToAuth = Intent(
+                                this@ForgotPassActivity,
+                                AuthPassActivity::class.java
+                            )
+                            moveToAuth.putExtra("email", email)
+                            startActivity(moveToAuth)
+                            finish()
+                        }
                     }
                 }
             }

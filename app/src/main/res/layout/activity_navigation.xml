@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:backgroundTint="@color/green2"
+        android:contentDescription="@string/cd_scan"
         android:src="@drawable/ic_scan"
         app:borderWidth="0dp"
         app:elevation="10dp"

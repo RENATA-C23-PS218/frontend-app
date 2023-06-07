@@ -8,7 +8,6 @@ import com.renata.databinding.ActivityResultBinding
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var resultBinding: ActivityResultBinding
-    private lateinit var plantNames: ArrayList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

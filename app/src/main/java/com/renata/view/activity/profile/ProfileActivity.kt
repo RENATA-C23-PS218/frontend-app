@@ -26,10 +26,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var loginResult: LoginResult
     private val PROFILE_ACTIVITY_REQUEST_CODE = 1
 
-    companion object {
-        private const val TAG = "Profile Activity"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
@@ -37,7 +33,6 @@ class ProfileActivity : AppCompatActivity() {
 
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
-        val sendToken = loginResult.token
 
         profileViewModel = ViewModelProvider(
             this,
@@ -93,7 +88,11 @@ class ProfileActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-                Toast.makeText(this@ProfileActivity, "Change Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ProfileActivity,
+                    getString(R.string.change_profile_fail),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

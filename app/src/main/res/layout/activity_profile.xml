@@ -17,6 +17,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_profile"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -47,7 +48,7 @@
             app:civ_border_color="#FFFF"
             app:civ_border_width="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/changeAvatarButton"
@@ -55,9 +56,9 @@
             android:layout_height="64dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:contentDescription="Change Avatar"
-            android:text="Change Avatar"
+            android:contentDescription="@string/change_avatar_button"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/change_avatar_button"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_image"
@@ -70,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="First Name"
+            android:text="@string/first_name_title"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
@@ -100,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Phone"
+            android:text="@string/phone_title"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/lNameEditTextLayout" />
@@ -130,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Address"
+            android:text="@string/address_title"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/phoneEditTextLayout" />
@@ -160,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Last Name"
+            android:text="@string/last_name_title"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/profile_image"
             app:layout_constraintTop_toBottomOf="@+id/fNameEditTextLayout" />
@@ -192,10 +193,10 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="32dp"
             android:contentDescription="@string/save_changes_button"
-            android:text="@string/save_changes_button"
             android:fontFamily="@font/rajdhani700"
-            android:textSize="20sp"
+            android:text="@string/save_changes_button"
             android:textAllCaps="false"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addressEditTextLayout" />

@@ -107,8 +107,8 @@ class AuthPassActivity : AppCompatActivity() {
                     is Result.Error -> {
                         showLoading(false)
                         showAlert(
-                            "Send OTP Failed",
-                            "Make sure Email are filled in correctly"
+                            getString(R.string.send_otp_fail_2),
+                            getString(R.string.send_otp_fail_cause2)
                         ) { otpClear() }
                     }
                     is Result.Success -> {
@@ -135,7 +135,7 @@ class AuthPassActivity : AppCompatActivity() {
                             showLoading(false)
                             val errorMessage = result.data
                             showAlert(
-                                "Authentication Fail",
+                                getString(R.string.auth_fail),
                                 errorMessage
                             ) { otpClear() }
                         }

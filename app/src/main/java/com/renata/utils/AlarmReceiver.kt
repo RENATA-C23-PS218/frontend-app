@@ -19,7 +19,6 @@ import com.renata.view.activity.splash.SplashScreenActivity
 import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
-
     override fun onReceive(context: Context, intent: Intent) {
         val title = context.getString(R.string.alarm_message1)
         val message = context.getString(R.string.alarm_message2)

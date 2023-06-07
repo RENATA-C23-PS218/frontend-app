@@ -17,6 +17,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_back"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -26,8 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Update Profile"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/update_profile_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
@@ -64,8 +65,8 @@
                 android:layout_height="64dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:contentDescription="Change Avatar"
-                android:text="Change Avatar"
+                android:contentDescription="@string/change_avatar_button"
+                android:text="@string/change_avatar_button"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_image"
@@ -78,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="First Name"
+                android:text="@string/first_name_title"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/profile_image"
                 app:layout_constraintTop_toBottomOf="@+id/profile_image" />
@@ -100,7 +101,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="ex : John"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Phone"
+                android:text="@string/phone_title"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/profile_image"
                 app:layout_constraintTop_toBottomOf="@+id/lNameEditTextLayout" />
@@ -130,7 +130,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="ex : 085718620532"
                     android:inputType="phone"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Address"
+                android:text="@string/address_title"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/profile_image"
                 app:layout_constraintTop_toBottomOf="@+id/phoneEditTextLayout" />
@@ -161,7 +160,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="ex : Cimahi, Jawa Barat"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -171,7 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Last Name"
+                android:text="@string/last_name_title"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/profile_image"
                 app:layout_constraintTop_toBottomOf="@+id/fNameEditTextLayout" />
@@ -192,7 +190,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:hint="ex : Doe"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 

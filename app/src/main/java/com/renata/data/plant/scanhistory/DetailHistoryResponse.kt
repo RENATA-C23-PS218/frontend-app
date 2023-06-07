@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class ScanHistoryResponse(
+class DetailHistoryResponse(
     @SerializedName("message")
     val message: String,
 
@@ -13,28 +13,19 @@ class ScanHistoryResponse(
     val success: Boolean,
 
     @SerializedName("data")
-    val dataHistory: DataHistory
+    val dataDetailHistory: DataDetailHistory
 ) : Parcelable
 
 @Parcelize
-data class DataHistory(
-    @SerializedName("user_id")
-    val id: String,
-
-    @SerializedName("scanHistories")
-    val scanHistory: List<ScanHistory>
-) : Parcelable
-
-@Parcelize
-data class ScanHistory(
-    @SerializedName("scan_id")
-    val scan_id: String,
-
+data class DataDetailHistory(
     @SerializedName("soil_type")
     val soil_Type: String,
 
     @SerializedName("date_scan")
     val date: String,
+
+    @SerializedName("plant_recommendations")
+    val plant: List<String>,
 
     @SerializedName("soil_image")
     val image: String

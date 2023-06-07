@@ -34,6 +34,7 @@
     <string name="result_toolbar">Result</string>
     <string name="change_avatar_toolbar">Change Avatar</string>
     <string name="update_profile_toolbar">Update Profile</string>
+    <string name="detail_history_toolbar">Detail History</string>
     <!-- INTENT TEXT -->
     <string name="want_register">Don\'t have an account?</string>
     <string name="register_intent">Register here</string>
@@ -65,6 +66,7 @@
     <string name="plant_placeholder">plant</string>
     <string name="holder_name">Username</string>
     <string name="holder_email">User Email</string>
+    <string name="date_placeholder">date</string>
     <!-- MESSAGE -->
     <string name="insert_email">Please insert your Email</string>
     <string name="insert_pass">Please insert your Password</string>
@@ -108,6 +110,25 @@
     <string name="exFirstName">ex : John</string>
     <string name="exLastName">ex : Doe</string>
     <string name="exAddress">ex : Cimahi, Jawa Barat</string>
-    <string name="date_placeholder">date</string>
-    <string name="detail_result_toolbar">Detail Result</string>
+    <string name="cd_back">Back</string>
+    <string name="cd_previewImage">Profile Image Placeholder</string>
+    <string name="date_title">Scan Date</string>
+    <string name="cd_soil_image">Soil Image</string>
+    <string name="cd_scan">Scan</string>
+    <string name="cd_profile">Profile</string>
+    <string name="change_avatar_button">Change Avatar</string>
+    <string name="first_name_title">First Name</string>
+    <string name="last_name_title">Last Name</string>
+    <string name="phone_title">Phone</string>
+    <string name="address_title">Address</string>
+    <string name="scan_again_button">Scan Again</string>
+    <string name="treat_button">Treat</string>
+    <string name="plant_button">Plant</string>
+    <string name="change_profile">Change Profile</string>
+    <string name="resend_otp_fail">Resend OTP Failed</string>
+    <string name="send_otp_fail_2">Send OTP Failed</string>
+    <string name="auth_fail">Authentication Fail</string>
+    <string name="change_profile_fail">Change Failed</string>
+    <string name="choose_image">Choose the image first</string>
+    <string name="fail_show_history">Failed to display history</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.renata.data.retrofit
 
 import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
+import com.renata.data.plant.scanhistory.DetailHistoryResponse
 import com.renata.data.plant.scanhistory.ScanHistoryResponse
 import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
@@ -102,4 +103,10 @@ interface ApiService {
     fun scanHistory(
         @Header("Authorization") token: String
     ): Call<ScanHistoryResponse>
+
+    @GET("history-detail/{id}")
+    fun detailsHistory(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Call<DetailHistoryResponse>
 }

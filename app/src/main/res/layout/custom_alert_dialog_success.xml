@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/scan_success"
             android:fontFamily="@font/rajdhani600"
+            android:text="@string/scan_success"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_medium" />
 

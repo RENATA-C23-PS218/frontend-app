@@ -31,8 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/history_not_found"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/history_not_found"
             android:textColor="@color/brown"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold" />
@@ -52,8 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/history_toolbar"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/history_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />

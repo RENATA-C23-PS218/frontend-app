@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.renata.R
 import com.renata.data.Result
 import com.renata.data.plant.scanhistory.HistoryAdapter
 import com.renata.data.plant.scanhistory.ScanHistory
@@ -24,8 +25,6 @@ class HistoryFragment : Fragment() {
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
     private lateinit var historyViewModel: HistoryViewModel
-    private lateinit var adapter: HistoryAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,39 +50,79 @@ class HistoryFragment : Fragment() {
             when (result) {
                 is Result.Success -> {
                     val data = result.data
-                    if (data.success) {
-                        historyBinding.layoutLoading.visibility = View.INVISIBLE
-                        val histories = data.dataHistory.scanHistory
-                        adapter.updateData(histories)
+                    if (data != null) {
+                        if (data.success) {
+                            val histories = data.dataHistory.scanHistory
+                            if (histories.size != 0) {
+                                historyBinding.layoutLoading.visibility = View.INVISIBLE
+                                adapter.updateData(histories)
+                            } else {
+                                historyBinding.layoutLoading.visibility = View.VISIBLE
+                            }
+                        } else {
+                            historyBinding.layoutLoading.visibility = View.VISIBLE
+                        }
                     } else {
+                        historyBinding.layoutLoading.visibility = View.VISIBLE
                     }
                 }
                 is Result.Error -> {
+                    historyBinding.layoutLoading.visibility = View.VISIBLE
+                    historyBinding.noHistory.text = getString(R.string.fail_show_history)
                 }
                 is Result.Loading -> {
+                    historyBinding.layoutLoading.visibility = View.VISIBLE
                 }
             }
         }
         adapter.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ScanHistory) {
-                Intent(requireContext(), DetailHistoryActivity::class.java).also {
-                    it.putExtra(DetailHistoryActivity.SOIL_PICT, data.image)
-                    it.putExtra(DetailHistoryActivity.SOIL_NAME, data.soil_Type)
-                    // it.putExtra(DetailHistoryActivity.PLAN_RECOMM, data.) // Anda perlu menambahkan data yang ingin Anda kirim ke DetailHistoryActivity
-                    it.putExtra(DetailHistoryActivity.SCAN_DATE, data.date)
-                    startActivity(it)
-                }
+                val scanId = data.scan_id
+                historyViewModel.detailHistory(token, scanId)
+                    .observe(viewLifecycleOwner) { result ->
+                        when (result) {
+                            is Result.Success -> {
+                                val detailHistory = result.data.dataDetailHistory
+                                val recommendedPlants =
+                                    detailHistory.plant.shuffled().take(10)
+                                val bullet = "\u2022" // Character for bullet symbol
+                                val plantRecommendation =
+                                    recommendedPlants.mapIndexed { index, plant ->
+                                        if (index == 0) {
+                                            "$bullet $plant"
+                                        } else {
+                                            "$bullet $plant"
+                                        }
+                                    }.joinToString("\n")
+                                Intent(requireContext(), DetailHistoryActivity::class.java).also {
+                                    it.putExtra(
+                                        DetailHistoryActivity.SOIL_PICT,
+                                        detailHistory.image
+                                    )
+                                    it.putExtra(
+                                        DetailHistoryActivity.SOIL_NAME,
+                                        detailHistory.soil_Type
+                                    )
+                                    it.putExtra(
+                                        DetailHistoryActivity.PLANT_RECOMM,
+                                        plantRecommendation
+                                    )
+                                    it.putExtra(DetailHistoryActivity.SCAN_DATE, detailHistory.date)
+                                    startActivity(it)
+                                }
+                            }
+                            is Result.Error -> {
+                            }
+                            is Result.Loading -> {
+                            }
+                        }
+                    }
             }
         })
     }
 
-
     private fun obtainViewModel(activity: AppCompatActivity): HistoryViewModel {
         val factory = ViewModelFactory.getInstance(activity.application)
         return ViewModelProvider(activity, factory)[HistoryViewModel::class.java]
-    }
-
-    private fun showLoading(state: Boolean) {
-        historyBinding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

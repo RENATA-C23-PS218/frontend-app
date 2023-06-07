@@ -30,6 +30,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_back"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -39,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/result_toolbar"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/result_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
@@ -63,6 +64,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
+                android:contentDescription="@string/cd_soil_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +76,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:text="Soil Type"
+                android:text="@string/soil_type_title"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_medium"
@@ -117,7 +119,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:text="Plant Recommendations"
+                android:text="@string/plant_recommendations_title"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_medium"
@@ -146,9 +148,12 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:justificationMode="inter_word"
+                android:ellipsize="none"
+                android:maxLines="10"
                 android:text="@string/plant_placeholder"
-                android:textSize="20sp"
+                android:textColor="@color/brown"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/barrier2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,6 +30,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_back"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -39,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/change_avatar_toolbar"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/change_avatar_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
@@ -48,13 +49,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -66,8 +66,10 @@
                 android:layout_height="350dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_previewImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_image"
                 tools:ignore="MissingConstraints" />
 
             <Button
@@ -78,10 +80,10 @@
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/camera_button"
                 android:elevation="2dp"
+                android:fontFamily="@font/rajdhani700"
                 android:scaleType="fitCenter"
                 android:text="@string/camera_button"
                 android:textAllCaps="false"
-                android:fontFamily="@font/rajdhani700"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
@@ -93,9 +95,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:contentDescription="@string/gallery_button"
+                android:fontFamily="@font/rajdhani700"
                 android:text="@string/gallery_button"
                 android:textAllCaps="false"
-                android:fontFamily="@font/rajdhani700"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
@@ -108,9 +110,9 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/change_button"
+                android:fontFamily="@font/rajdhani700"
                 android:text="@string/change_button"
                 android:textAllCaps="false"
-                android:fontFamily="@font/rajdhani700"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

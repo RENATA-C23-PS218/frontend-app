@@ -15,6 +15,7 @@ class DetailHistoryActivity : AppCompatActivity() {
         const val SOIL_PICT = "image"
         const val SOIL_NAME = "name"
         const val SCAN_DATE = "date"
+        const val PLANT_RECOMM = "plant"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +27,8 @@ class DetailHistoryActivity : AppCompatActivity() {
         val soilPict = intent.getStringExtra(SOIL_PICT)
         val soilName = intent.getStringExtra(SOIL_NAME)
         val scanDate = intent.getStringExtra(SCAN_DATE)
+        val plantRec = intent.getStringExtra(PLANT_RECOMM)
+        detailHistoryBinding.recomCropDetail.text = plantRec
         detailHistoryBinding.soilTypeDetail.text = soilName
         detailHistoryBinding.scanDateDetail.text =
             DateFormatter.formatDate(scanDate!!, TimeZone.getDefault().id)

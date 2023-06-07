@@ -131,7 +131,11 @@ class AvatarActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toast.makeText(this@AvatarActivity, "Choose the image first", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@AvatarActivity,
+                getString(R.string.choose_image),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

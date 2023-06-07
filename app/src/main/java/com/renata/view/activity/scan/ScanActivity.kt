@@ -10,7 +10,6 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,8 +38,6 @@ class ScanActivity : AppCompatActivity() {
     private lateinit var currentPhotoPath: String
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
-    val plantNames = mutableListOf<String>()
-    private var plantRecommendation: String = ""
     private var getFile: File? = null
     private var imageSize: Int = 224
 
@@ -53,16 +50,12 @@ class ScanActivity : AppCompatActivity() {
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
         val token = "Bearer ${loginResult.token}"
-        scanBinding.layoutAfter?.visibility = View.GONE
+        scanBinding.layoutAfter.visibility = View.GONE
         showLoading(false)
         scanBinding.previewImageView.scaleType = ImageView.ScaleType.CENTER_CROP
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
-        scanBinding.detectButton.setOnClickListener {
-            if (token != null) {
-                detectPhoto(token)
-            }
-        }
+        scanBinding.detectButton.setOnClickListener { detectPhoto(token) }
         scanBinding.backButton.setOnClickListener { onBackPressed() }
     }
 
@@ -129,19 +122,18 @@ class ScanActivity : AppCompatActivity() {
         imageFile: MultipartBody.Part
     ) {
         showLoading(false)
-        val detectedClassString = detectedClass
         val detectedClassRequestBody =
-            detectedClassString.toRequestBody("text/plain".toMediaTypeOrNull())
+            detectedClass.toRequestBody("text/plain".toMediaTypeOrNull())
         val builder = AlertDialog.Builder(this, com.renata.R.style.CustomAlertDialog).create()
         val view = layoutInflater.inflate(com.renata.R.layout.custom_alert_dialog_success, null)
         val button = view.findViewById<Button>(com.renata.R.id.dialogDismiss_button)
         builder.setView(view)
         button.setOnClickListener {
             builder.dismiss()
-            scanBinding.layoutBefore?.visibility = View.GONE
-            scanBinding.layoutAfter?.visibility = View.VISIBLE
-            scanBinding.soilType?.text = detectedClass
-            scanBinding.cropButton?.setOnClickListener {
+            scanBinding.layoutBefore.visibility = View.GONE
+            scanBinding.layoutAfter.visibility = View.VISIBLE
+            scanBinding.soilType.text = detectedClass
+            scanBinding.cropButton.setOnClickListener {
                 scanViewModel.cropRecommendation(token, detectedClassRequestBody, imageFile)
                     .observe(this@ScanActivity) { result ->
                         if (result != null) {
@@ -151,14 +143,12 @@ class ScanActivity : AppCompatActivity() {
                                 }
                                 is Result.Error -> {
                                     showLoading(false)
-                                    Toast.makeText(this, "Masuk Result.Error", Toast.LENGTH_SHORT)
-                                        .show()
                                 }
                                 is Result.Success -> {
                                     showLoading(false)
                                     val recommendedPlants =
                                         result.data.dataPlant.shuffled().take(10)
-                                    val bullet = "\u2022" // Character for bullet symbol
+                                    val bullet = "\u2022"
                                     val plantRecommendation =
                                         recommendedPlants.mapIndexed { index, plant ->
                                             if (index == 0) {
@@ -181,6 +171,7 @@ class ScanActivity : AppCompatActivity() {
                                         com.renata.R.anim.slide_out_bottom,
                                         com.renata.R.anim.slide_in_bottom
                                     )
+                                    finish()
                                 }
                             }
                         }

@@ -48,19 +48,15 @@ fun passwordValidation(password: String): Boolean {
     if (password.isEmpty() || password.length < 8) {
         return false
     }
-    // Check for at least one uppercase letter
     if (!Pattern.compile("[A-Z]").matcher(password).find()) {
         return false
     }
-    // Check for at least one lowercase letter
     if (!Pattern.compile("[a-z]").matcher(password).find()) {
         return false
     }
-    // Check for at least one digit
     if (!Pattern.compile("[0-9]").matcher(password).find()) {
         return false
     }
-    // Check for at least one symbol
     if (!Pattern.compile("[^a-zA-Z0-9]").matcher(password).find()) {
         return false
     }
@@ -86,9 +82,10 @@ fun rotateFile(file: File, isBackCamera: Boolean = false) {
     val matrix = Matrix()
     val bitmap = BitmapFactory.decodeFile(file.path)
     val exif = ExifInterface(file.path)
-    val orientation =
-        exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
-    val rotationDegrees = when (orientation) {
+    val rotationDegrees = when (exif.getAttributeInt(
+        ExifInterface.TAG_ORIENTATION,
+        ExifInterface.ORIENTATION_UNDEFINED
+    )) {
         ExifInterface.ORIENTATION_ROTATE_90 -> 90
         ExifInterface.ORIENTATION_ROTATE_180 -> 180
         ExifInterface.ORIENTATION_ROTATE_270 -> 270

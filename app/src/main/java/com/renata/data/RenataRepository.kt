@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
+import com.renata.data.plant.scanhistory.DetailHistoryResponse
 import com.renata.data.plant.scanhistory.ScanHistoryResponse
 import com.renata.data.retrofit.ApiConfig
 import com.renata.data.retrofit.ApiService
@@ -35,8 +36,6 @@ import java.nio.ByteOrder
 
 
 class RenataRepository(private val application: Application) {
-
-    private var imageSize: Int = 224
     private val apiService: ApiService = ApiConfig.getApiService()
     private val TAG = "RenataRepository"
 
@@ -104,8 +103,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "The email is already in use"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -139,8 +137,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Incorrect One-Time Password (OTP)"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -170,8 +167,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Incorrect One-Time Password (OTP)"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -204,8 +200,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Email verification required"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -239,8 +234,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Email verification required"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -274,8 +268,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Incorrect One-Time Password (OTP)"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -313,8 +306,7 @@ class RenataRepository(private val application: Application) {
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
-                    val httpCode = e.code()
-                    when (httpCode) {
+                    when (val httpCode = e.code()) {
                         400 -> "Email verification required"
                         401 -> "Access unauthorized. Please provide valid credentials"
                         403 -> "Access forbidden. You don't have permission to perform this action"
@@ -378,9 +370,7 @@ class RenataRepository(private val application: Application) {
         }
     }
 
-    fun scanHistory(
-        token: String
-    ): LiveData<Result<ScanHistoryResponse>> = liveData {
+    fun scanHistory(token: String): LiveData<Result<ScanHistoryResponse>> = liveData {
         emit(Result.Loading)
         try {
             val call = apiService.scanHistory(token)
@@ -423,4 +413,49 @@ class RenataRepository(private val application: Application) {
             emit(Result.Error(errorMessage))
         }
     }
+
+    fun detailHistory(token: String, id: String): LiveData<Result<DetailHistoryResponse>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val call = apiService.detailsHistory(token, id)
+                val response = CompletableDeferred<Response<DetailHistoryResponse>>()
+                call.enqueue(object : Callback<DetailHistoryResponse> {
+                    override fun onResponse(
+                        call: Call<DetailHistoryResponse>,
+                        res: Response<DetailHistoryResponse>
+                    ) {
+                        response.complete(res)
+                    }
+
+                    override fun onFailure(call: Call<DetailHistoryResponse>, t: Throwable) {
+                        response.completeExceptionally(t)
+                    }
+                })
+                val res = response.await()
+                if (res.isSuccessful) {
+                    val responseBody = res.body()
+                    if (responseBody != null) {
+                        if (responseBody.success) {
+                            Log.d(TAG, "Detail history success: ${responseBody.message}")
+                            emit(Result.Success(responseBody))
+                        } else {
+                            Log.d(TAG, "Detail history error: ${responseBody.message}")
+                            emit(Result.Error(responseBody.message))
+                        }
+                    } else {
+                        Log.e(TAG, "Empty response body")
+                        emit(Result.Error("Empty response body"))
+                    }
+                } else {
+                    val errorMessage = "HTTP error ${res.code()}: ${res.message()}"
+                    Log.e(TAG, errorMessage)
+                    emit(Result.Error(errorMessage))
+                }
+            } catch (e: Exception) {
+                val errorMessage = "Detail history exception: ${e.message}"
+                Log.e(TAG, errorMessage)
+                emit(Result.Error(errorMessage))
+            }
+        }
 }

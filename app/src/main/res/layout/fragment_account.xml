@@ -19,10 +19,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/rajdhani700"
             android:text="@string/account_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
-            android:fontFamily="@font/rajdhani700"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -36,13 +36,13 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="16dp"
+            android:src="@drawable/image_placeholder"
             app:civ_border_color="#FFFF"
             app:civ_border_width="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/image_placeholder"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/edit_profile"
@@ -50,7 +50,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/circle_background"
-            android:contentDescription="Change Profile"
+            android:contentDescription="@string/change_profile"
             android:padding="8dp"
             android:src="@drawable/ic_edit"
             app:layout_constraintEnd_toEndOf="@+id/profile_image"
@@ -60,9 +60,9 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
             android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image">
@@ -71,21 +71,21 @@
                 android:id="@+id/tv_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rajdhani700"
                 android:text="@string/holder_name"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_size_toolbar"
-                android:fontFamily="@font/rajdhani700"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/rajdhani700"
                 android:text="@string/holder_email"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_size_toolbar"
-                android:fontFamily="@font/rajdhani700"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <Button
@@ -113,8 +113,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
             android:contentDescription="@string/logout_button"
-            android:text="@string/logout_button"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/logout_button"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

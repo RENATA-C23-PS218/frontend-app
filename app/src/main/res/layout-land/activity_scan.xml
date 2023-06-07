@@ -30,6 +30,7 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/cd_back"
             android:padding="8dp"
             android:src="@drawable/ic_back" />
 
@@ -39,8 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/scanner_toolbar"
             android:fontFamily="@font/rajdhani700"
+            android:text="@string/scanner_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
@@ -65,6 +66,7 @@
                 android:layout_height="350dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:contentDescription="@string/cd_soil_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
@@ -84,51 +86,152 @@
                 app:lottie_rawRes="@raw/loading_images"
                 tools:ignore="MissingConstraints" />
 
-            <Button
-                android:id="@+id/cameraButton"
-                android:layout_width="150dp"
-                android:layout_height="64dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutAfter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/camera_button"
-                android:elevation="2dp"
-                android:fontFamily="@font/rajdhani700"
-                android:scaleType="fitCenter"
-                android:text="@string/camera_button"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
+                app:layout_constraintTop_toBottomOf="@+id/previewImageView">
 
-            <Button
-                android:id="@+id/galleryButton"
-                android:layout_width="150dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
-                android:contentDescription="@string/gallery_button"
-                android:fontFamily="@font/rajdhani700"
-                android:text="@string/gallery_button"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
+                <TextView
+                    android:id="@+id/title1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/soil_type_title"
+                    android:textAlignment="center"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/detectButton"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
+                <View
+                    android:id="@+id/barrier1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="?attr/colorPrimary"
+                    android:backgroundTint="?attr/colorPrimary"
+                    app:layout_constraintTop_toBottomOf="@+id/title1" />
+
+                <TextView
+                    android:id="@+id/soilType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/soil_placeholder"
+                    android:textAlignment="center"
+                    android:textColor="@color/brown"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/barrier1" />
+
+                <Button
+                    android:id="@+id/cropButton"
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/camera_button"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/rajdhani700"
+                    android:scaleType="fitCenter"
+                    android:text="@string/plant_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/soilType" />
+
+                <Button
+                    android:id="@+id/treatButton"
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/gallery_button"
+                    android:fontFamily="@font/rajdhani700"
+                    android:text="@string/treat_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/soilType" />
+
+                <Button
+                    android:id="@+id/scanAgainButton"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/detect_button"
+                    android:fontFamily="@font/rajdhani700"
+                    android:onClick="restartActivity"
+                    android:text="@string/scan_again_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/treatButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutBefore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="16dp"
-                android:contentDescription="@string/detect_button"
-                android:text="@string/detect_button"
-                android:fontFamily="@font/rajdhani700"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cameraButton" />
+                app:layout_constraintTop_toBottomOf="@+id/previewImageView">
+
+                <Button
+                    android:id="@+id/cameraButton"
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/camera_button"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/rajdhani700"
+                    android:scaleType="fitCenter"
+                    android:text="@string/camera_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/galleryButton"
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="16dp"
+                    android:contentDescription="@string/gallery_button"
+                    android:fontFamily="@font/rajdhani700"
+                    android:text="@string/gallery_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/detectButton"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/detect_button"
+                    android:fontFamily="@font/rajdhani700"
+                    android:text="@string/detect_button"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cameraButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

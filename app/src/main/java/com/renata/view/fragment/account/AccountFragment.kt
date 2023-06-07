@@ -26,7 +26,6 @@ class AccountFragment : Fragment() {
     private lateinit var loginResult: LoginResult
     private val PROFILE_ACTIVITY_REQUEST_CODE = 1
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +64,7 @@ class AccountFragment : Fragment() {
                     val image = data.avatar_link
                     val name = data.full_name
                     if (image == "" || name == "") {
-                        accountBinding.tvProfileName.setText(R.string.app_name)
+                        accountBinding.tvProfileName.text = ""
                         accountBinding.profileImage.setImageResource(R.drawable.image_placeholder)
                     } else {
                         accountBinding.tvProfileName.text = data.full_name

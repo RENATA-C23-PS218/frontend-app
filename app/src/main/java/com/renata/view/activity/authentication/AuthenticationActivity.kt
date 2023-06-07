@@ -116,7 +116,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             showLoading(false)
                             val errorMessage = result.data
                             showAlert(
-                                "Resend OTP Failed",
+                                getString(R.string.resend_otp_fail),
                                 errorMessage
                             ) { otpClear() }
                         }
