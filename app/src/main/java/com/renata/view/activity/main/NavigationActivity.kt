@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.renata.R
@@ -20,12 +19,9 @@ class NavigationActivity : AppCompatActivity() {
         navigationBinding = ActivityNavigationBinding.inflate(layoutInflater)
         setContentView(navigationBinding.root)
 
-        showLoading(false)
+        showLoading()
         val navView: BottomNavigationView = navigationBinding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navigation_history, R.id.navigation_scan, R.id.navigation_account)
-        )
         navView.setupWithNavController(navController)
         navigationBinding.scanFab.setOnClickListener {
             val intent = Intent(this, ScanActivity::class.java)
@@ -33,6 +29,7 @@ class NavigationActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Use the navigateUp() method in Navigation Component instead.")
     override fun onBackPressed() {
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)
         when (navController.currentDestination?.id) {
@@ -46,7 +43,11 @@ class NavigationActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        navigationBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    private fun showLoading() {
+        navigationBinding.progressBar.visibility = View.GONE
     }
+
+
+
+
 }

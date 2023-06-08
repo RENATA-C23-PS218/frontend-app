@@ -20,7 +20,7 @@ class ScanViewModel(application: Application) : ViewModel() {
                 val detectedClass = renataRepository.classifyImage(image)
                 result.postValue(detectedClass)
             } catch (e: Exception) {
-                result.postValue(null)
+                result.postValue("")
             }
         }
         return result

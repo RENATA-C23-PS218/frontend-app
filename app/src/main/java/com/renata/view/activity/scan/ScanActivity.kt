@@ -56,7 +56,7 @@ class ScanActivity : AppCompatActivity() {
         scanBinding.cameraButton.setOnClickListener { cameraPhoto() }
         scanBinding.galleryButton.setOnClickListener { galleryPhoto() }
         scanBinding.detectButton.setOnClickListener { detectPhoto(token) }
-        scanBinding.backButton.setOnClickListener { onBackPressed() }
+        scanBinding.backButton.setOnClickListener { finish() }
     }
 
     private fun obtainViewModel(activity: AppCompatActivity): ScanViewModel {
@@ -261,7 +261,7 @@ class ScanActivity : AppCompatActivity() {
         scanBinding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    fun restartActivity(view: View) {
+    fun restartActivity() {
         val intent = intent
         finish()
         startActivity(intent)

@@ -25,8 +25,8 @@ class ResultActivity : AppCompatActivity() {
         resultBinding.backButton.setOnClickListener {
             resultBinding.soilType.text = ""
             finish()
-            onBackPressed()
         }
+        showLoading(true)
     }
 
     private fun showLoading(isLoading: Boolean) {

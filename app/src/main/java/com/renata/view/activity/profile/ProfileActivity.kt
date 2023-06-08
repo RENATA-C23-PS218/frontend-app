@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -21,31 +22,22 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profileBinding: ActivityProfileBinding
     private lateinit var profileViewModel: ProfileViewModel
-    var avatarViewModel: AvatarViewModel = AvatarViewModel()
+    private var avatarViewModel: AvatarViewModel = AvatarViewModel()
     private lateinit var loginPreference: LoginPreferences
     private lateinit var loginResult: LoginResult
-    private val PROFILE_ACTIVITY_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(profileBinding.root)
-
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
-
-        profileViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(ProfileViewModel::class.java)
-
-        avatarViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(AvatarViewModel::class.java)
-
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
+
+        setUpProfileView()
+        setUpAvatarView()
+        goToChangeAvatar()
         getDataProfile(token)
 
         profileBinding.saveButton.setOnClickListener {
@@ -58,18 +50,38 @@ class ProfileActivity : AppCompatActivity() {
             saveChanges(firstName, lastName, phone, address)
         }
 
-        profileBinding.changeAvatarButton.setOnClickListener { goToChangeAvatar() }
-        profileBinding.backButton.setOnClickListener {
-            onBackPressed()
+        profileBinding.backButton.setOnClickListener {finish()}
+    }
+
+    private fun setUpProfileView() {
+        profileViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[ProfileViewModel::class.java]
+    }
+
+    private fun setUpAvatarView(){
+        avatarViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[AvatarViewModel::class.java]
+    }
+
+    private fun goToChangeAvatar() {
+        profileBinding.changeAvatarButton.setOnClickListener {
+            val token = intent.getStringExtra("token")
+            val intent = Intent(this, AvatarActivity::class.java)
+            intent.putExtra("token", token)
+            profileActivityResultLauncher.launch(intent)
         }
+        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun saveChanges(firstName: String, lastName: String, phone: String, address: String) {
         val intent = intent.getStringExtra("token")
         val token = "Bearer $intent"
-        if (token != null) {
-            profileViewModel.setUserProfile(token, firstName, lastName, phone, address)
-        }
+
+        profileViewModel.setUserProfile(token, firstName, lastName, phone, address)
         showLoading(true)
         profileViewModel.getUser().observe(this) {
             if (it.success) {
@@ -99,55 +111,38 @@ class ProfileActivity : AppCompatActivity() {
 
 
     private fun getDataProfile(token: String) {
-        if (token != null) {
-            profileViewModel.userProfile(token)
-            profileViewModel.getUserProfile().observe(this) {
-                if (it != null) {
-                    profileBinding.apply {
-                        val data = it.data
-                        edFirstName.setText(data.first_name)
-                        edLastName.setText(data.last_name)
-                        edPhone.setText(data.phone)
-                        edAddress.setText(data.address)
-                        val image = data.avatar_link
-                        if (image == "") {
-                            profileBinding.profileImage.setImageResource(R.drawable.image_placeholder)
-                        } else {
-                            Glide.with(this@ProfileActivity)
-                                .load(data.avatar_link)
-                                .into(profileImage)
-                        }
-                        showLoading(false)
-                    }
+
+        profileViewModel.userProfile(token)
+        profileViewModel.getUserProfile().observe(this) {
+            profileBinding.apply {
+                val data = it.data
+                edFirstName.setText(data.first_name)
+                edLastName.setText(data.last_name)
+                edPhone.setText(data.phone)
+                edAddress.setText(data.address)
+                val image = data.avatar_link
+                if (image == "") {
+                    profileBinding.profileImage.setImageResource(R.drawable.image_placeholder)
+                } else {
+                    Glide.with(this@ProfileActivity)
+                        .load(data.avatar_link)
+                        .into(profileImage)
                 }
+                showLoading(false)
             }
         }
+
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PROFILE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            avatarViewModel.getPhoto().observe(this) {
-                if (it == null) {
-                    showLoading(true)
-                }
-                val data = it.data
-                val image = data.url
+    private val profileActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            val image = data?.getStringExtra("photo")
                 Glide.with(this)
                     .load(image)
                     .into(profileBinding.profileImage)
                 showLoading(false)
-            }
         }
-    }
-
-    private fun goToChangeAvatar() {
-        val token = intent.getStringExtra("token")
-        val moveToChangeAvatar = Intent(this, AvatarActivity::class.java)
-        moveToChangeAvatar.putExtra("token", token)
-        startActivity(moveToChangeAvatar)
-        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun showLoading(isLoading: Boolean) {

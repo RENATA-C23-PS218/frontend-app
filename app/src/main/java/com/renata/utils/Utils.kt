@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Environment
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.activity.OnBackPressedCallback
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,6 +63,7 @@ fun passwordValidation(password: String): Boolean {
     }
     return true
 }
+
 
 fun reduceFileImage(file: File): File {
     val bitmap = BitmapFactory.decodeFile(file.path)

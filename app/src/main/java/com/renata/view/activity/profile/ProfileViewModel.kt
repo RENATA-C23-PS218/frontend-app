@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProfileViewModel : ViewModel() {
-    val user = MutableLiveData<UpdateProfileResponse>()
+    private val user = MutableLiveData<UpdateProfileResponse>()
     val userProfile = MutableLiveData<ProfileResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
