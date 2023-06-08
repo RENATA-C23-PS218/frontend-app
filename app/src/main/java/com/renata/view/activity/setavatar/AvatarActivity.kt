@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -35,19 +36,22 @@ class AvatarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         avatarBinding = ActivityAvatarBinding.inflate(layoutInflater)
         setContentView(avatarBinding.root)
+        val intent = intent.getStringExtra("token")
+        val token = "Bearer $intent"
 
-        avatarViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(AvatarViewModel::class.java)
-
+        setUpAvatarView()
         showLoading(false)
         avatarBinding.cameraButton.setOnClickListener { cameraPhoto() }
         avatarBinding.galleryButton.setOnClickListener { galleryPhoto() }
-        avatarBinding.changeButton.setOnClickListener { uploadPhoto() }
-        avatarBinding.backButton.setOnClickListener {
-            onBackPressed()
-        }
+        avatarBinding.changeButton.setOnClickListener { uploadPhoto(token) }
+        avatarBinding.backButton.setOnClickListener {backToPrevious() }
+    }
+
+    private fun setUpAvatarView(){
+        avatarViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[AvatarViewModel::class.java]
     }
 
     private fun cameraPhoto() {
@@ -100,9 +104,7 @@ class AvatarActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadPhoto() {
-        val intent = intent.getStringExtra("token")
-        val token = "Bearer $intent"
+    private fun uploadPhoto(token: String) {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -139,6 +141,14 @@ class AvatarActivity : AppCompatActivity() {
         }
     }
 
+    private fun backToPrevious(){
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
 
     private fun showAlert(
         title: String,

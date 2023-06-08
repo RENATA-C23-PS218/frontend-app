@@ -29,7 +29,7 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return historyBinding.root
     }
@@ -50,20 +50,14 @@ class HistoryFragment : Fragment() {
             when (result) {
                 is Result.Success -> {
                     val data = result.data
-                    if (data != null) {
-                        if (data.success) {
-                            val histories = data.dataHistory.scanHistory
-                            if (histories.size != 0) {
-                                historyBinding.layoutLoading.visibility = View.INVISIBLE
-                                adapter.updateData(histories)
-                            } else {
-                                historyBinding.layoutLoading.visibility = View.VISIBLE
-                            }
+                    if (data.success) {
+                        val histories = data.dataHistory.scanHistory
+                        if (histories.isNotEmpty()) {
+                            historyBinding.layoutLoading.visibility = View.INVISIBLE
+                            adapter.updateData(histories)
                         } else {
                             historyBinding.layoutLoading.visibility = View.VISIBLE
                         }
-                    } else {
-                        historyBinding.layoutLoading.visibility = View.VISIBLE
                     }
                 }
                 is Result.Error -> {
