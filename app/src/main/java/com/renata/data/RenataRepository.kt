@@ -92,12 +92,12 @@ class RenataRepository(private val application: Application) {
                 confirmPass
             )
             if (response.success) {
-                Log.d(TAG, "Registration success: ${response.message}")
+                Log.d(TAG, "Register success: ${response.message}")
                 emit(Result.Success(response))
             } else {
                 val errorResponse = JSONObject(response.message)
                 val errorMessage = errorResponse.getString("message")
-                Log.d(TAG, "Registration error: $errorMessage")
+                Log.d(TAG, "Register error: $errorMessage")
                 emit(Result.Error(errorMessage))
             }
         } catch (e: Exception) {
@@ -105,14 +105,11 @@ class RenataRepository(private val application: Application) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
                         400 -> "The email is already in use"
-                        401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
-                        404 -> "The requested resource was not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
                     }
                 }
-                else -> "Registration exception: ${e.message}"
+                else -> "Register exception: ${e.message}"
             }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
@@ -138,9 +135,7 @@ class RenataRepository(private val application: Application) {
             val errorMessage = when (e) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
-                        400 -> "Incorrect One-Time Password (OTP)"
-                        401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
+                        400 -> "Incorrect / Invalid One-Time Password (OTP)"
                         404 -> "User not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
@@ -158,25 +153,22 @@ class RenataRepository(private val application: Application) {
         try {
             val response = apiService.resendVerif(id)
             if (response.success) {
-                Log.d(TAG, "Authentication success: ${response.message}")
+                Log.d(TAG, "Resend OTP success: ${response.message}")
                 emit(Result.Success(response))
             } else {
-                Log.d(TAG, "Authentication error: ${response.message}")
+                Log.d(TAG, "Resend OTP error: ${response.message}")
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
-                        400 -> "Incorrect One-Time Password (OTP)"
-                        401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
                         404 -> "User not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
                     }
                 }
-                else -> "Authentication exception: ${e.message}"
+                else -> "Resend OTP exception: ${e.message}"
             }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
@@ -202,8 +194,6 @@ class RenataRepository(private val application: Application) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
                         400 -> "Email verification required"
-                        401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
                         404 -> "The account information does not match our records"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
@@ -235,15 +225,12 @@ class RenataRepository(private val application: Application) {
             val errorMessage = when (e) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
-                        400 -> "Email verification required"
-                        401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
                         404 -> "User not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
                     }
                 }
-                else -> "Login exception: ${e.message}"
+                else -> "Forgot password exception: ${e.message}"
             }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
@@ -259,10 +246,10 @@ class RenataRepository(private val application: Application) {
             val requestBody = VerifyResetPassRequest(email, otp)
             val response = apiService.verifResetPass(requestBody)
             if (response.success) {
-                Log.d(TAG, "Authentication success: ${response.message}")
+                Log.d(TAG, "Reset authentication success: ${response.message}")
                 emit(Result.Success(response))
             } else {
-                Log.d(TAG, "Authentication error: ${response.message}")
+                Log.d(TAG, "Reset authentication error: ${response.message}")
                 emit(Result.Error(response.message))
             }
         } catch (e: Exception) {
@@ -271,13 +258,12 @@ class RenataRepository(private val application: Application) {
                     when (val httpCode = e.code()) {
                         400 -> "Incorrect One-Time Password (OTP)"
                         401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
                         404 -> "User not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
                     }
                 }
-                else -> "Authentication exception: ${e.message}"
+                else -> "Reset authentication exception: ${e.message}"
             }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
@@ -307,15 +293,14 @@ class RenataRepository(private val application: Application) {
             val errorMessage = when (e) {
                 is HttpException -> {
                     when (val httpCode = e.code()) {
-                        400 -> "Email verification required"
+                        400 -> "Password and Confirm Password doesn't match"
                         401 -> "Access unauthorized. Please provide valid credentials"
-                        403 -> "Access forbidden. You don't have permission to perform this action"
                         404 -> "User not found"
                         500 -> "Internal server error. Please try again later"
                         else -> "An HTTP error occurred with code $httpCode"
                     }
                 }
-                else -> "Login exception: ${e.message}"
+                else -> "Reset password exception: ${e.message}"
             }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
@@ -364,7 +349,16 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(errorMessage))
             }
         } catch (e: Exception) {
-            val errorMessage = "Plant recommendation exception: ${e.message}"
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    when (val httpCode = e.code()) {
+                        404 -> "Soil Type / Plants not found"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Plant recommendation exception: ${e.message}"
+            }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
         }
@@ -408,7 +402,16 @@ class RenataRepository(private val application: Application) {
                 emit(Result.Error(errorMessage))
             }
         } catch (e: Exception) {
-            val errorMessage = "Scan history exception: ${e.message}"
+            val errorMessage = when (e) {
+                is HttpException -> {
+                    when (val httpCode = e.code()) {
+                        404 -> "History not found, please do scan first"
+                        500 -> "Internal server error. Please try again later"
+                        else -> "An HTTP error occurred with code $httpCode"
+                    }
+                }
+                else -> "Scan history exception: ${e.message}"
+            }
             Log.e(TAG, errorMessage)
             emit(Result.Error(errorMessage))
         }
@@ -453,7 +456,17 @@ class RenataRepository(private val application: Application) {
                     emit(Result.Error(errorMessage))
                 }
             } catch (e: Exception) {
-                val errorMessage = "Detail history exception: ${e.message}"
+                val errorMessage = when (e) {
+                    is HttpException -> {
+                        when (val httpCode = e.code()) {
+                            400 -> "Scan ID not provided"
+                            404 -> "Data not found"
+                            500 -> "Internal server error. Please try again later"
+                            else -> "An HTTP error occurred with code $httpCode"
+                        }
+                    }
+                    else -> "Detail history exception: ${e.message}"
+                }
                 Log.e(TAG, errorMessage)
                 emit(Result.Error(errorMessage))
             }

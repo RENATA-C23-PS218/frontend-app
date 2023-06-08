@@ -17,7 +17,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     }
 
     fun updateData(histories: List<ScanHistory>) {
-        scanHistories = histories
+        scanHistories = histories.sortedByDescending { it.date }
         notifyDataSetChanged()
     }
 
@@ -28,7 +28,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        val scanHistory = scanHistories[scanHistories.size - position - 1]
+        val scanHistory = scanHistories[position]
         holder.bind(scanHistory)
     }
 

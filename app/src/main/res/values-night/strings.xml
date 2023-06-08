@@ -131,4 +131,6 @@
     <string name="change_profile_fail">Change Failed</string>
     <string name="choose_image">Choose the image first</string>
     <string name="fail_show_history">Failed to display history</string>
+    <string name="otp_sent_sucess">OTP has been sent</string>
+    <string name="otp_sent_success_mes">The OTP has been sent, please check your email</string>
 </resources>

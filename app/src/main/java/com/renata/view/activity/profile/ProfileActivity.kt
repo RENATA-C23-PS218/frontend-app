@@ -49,8 +49,7 @@ class ProfileActivity : AppCompatActivity() {
             val address = profileBinding.edAddress.text.toString()
             saveChanges(firstName, lastName, phone, address)
         }
-
-        profileBinding.backButton.setOnClickListener {finish()}
+        profileBinding.backButton.setOnClickListener { finish() }
     }
 
     private fun setUpProfileView() {
@@ -60,7 +59,7 @@ class ProfileActivity : AppCompatActivity() {
         )[ProfileViewModel::class.java]
     }
 
-    private fun setUpAvatarView(){
+    private fun setUpAvatarView() {
         avatarViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
@@ -73,8 +72,8 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, AvatarActivity::class.java)
             intent.putExtra("token", token)
             profileActivityResultLauncher.launch(intent)
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
         }
-        overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
     }
 
     private fun saveChanges(firstName: String, lastName: String, phone: String, address: String) {
@@ -134,16 +133,17 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    private val profileActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data
-            val image = data?.getStringExtra("photo")
+    private val profileActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val image = data?.getStringExtra("photo")
                 Glide.with(this)
                     .load(image)
                     .into(profileBinding.profileImage)
                 showLoading(false)
+            }
         }
-    }
 
     private fun showLoading(isLoading: Boolean) {
         profileBinding.progressBar3?.visibility = if (isLoading) View.VISIBLE else View.GONE

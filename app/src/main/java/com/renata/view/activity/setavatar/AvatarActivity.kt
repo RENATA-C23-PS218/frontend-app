@@ -44,10 +44,10 @@ class AvatarActivity : AppCompatActivity() {
         avatarBinding.cameraButton.setOnClickListener { cameraPhoto() }
         avatarBinding.galleryButton.setOnClickListener { galleryPhoto() }
         avatarBinding.changeButton.setOnClickListener { uploadPhoto(token) }
-        avatarBinding.backButton.setOnClickListener {backToPrevious() }
+        avatarBinding.backButton.setOnClickListener { onBackPressed() }
     }
 
-    private fun setUpAvatarView(){
+    private fun setUpAvatarView() {
         avatarViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
@@ -141,7 +141,7 @@ class AvatarActivity : AppCompatActivity() {
         }
     }
 
-    private fun backToPrevious(){
+    private fun backToPrevious() {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finish()

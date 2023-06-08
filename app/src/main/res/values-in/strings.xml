@@ -42,8 +42,8 @@
     <string name="want_login">Sudah punya akun?</string>
     <string name="login_intent">Masuk disini!</string>
     <string name="forgot_pass">Lupa kata sandi</string>
-    <string name="want_resend">Belum menerima kode verifikasi?</string>
-    <string name="resend_otp">Kirim kode verifikasi</string>
+    <string name="want_resend">Belum menerima OTP?</string>
+    <string name="resend_otp">Kirim OTP</string>
     <!-- INPUT TEXT TITLE -->
     <string name="email">Email</string>
     <string name="password">Kata Sandi</string>
@@ -67,7 +67,7 @@
     <string name="plant_placeholder">Tumbuhan</string>
     <string name="holder_name">Nama Pengguna</string>
     <string name="holder_email">Email Pengguna</string>
-    <string name="date_placeholder">tanggal</string>
+    <string name="date_placeholder">Tanggal</string>
     <!-- MESSAGE -->
     <string name="insert_email">Masukkan Email Anda</string>
     <string name="insert_pass">Masukkan Kata Sandi Anda</string>
@@ -79,12 +79,12 @@
     <string name="regis_success">Registrasi Berhasil</string>
     <string name="regis_fail_cause1">Maaf, terjadi kesalahan saat membuat akun Anda. Silakan coba lagi nanti</string>
     <string name="regis_fail_cause2">Maaf, Registrasi gagal. Pastikan semua informasi yang dimaksukkan sudah benar dan lengkap</string>
-    <string name="regis_fail_cause3">Maaf, Registrasi gagal. Pastikan kata sandi dan kata sandi konfirmasi anda sama</string>
+    <string name="regis_fail_cause3">Maaf, Registrasi gagal. Pastikan kata sandi dan konfirmasi kata sandi anda sama</string>
     <string name="regis_to_auth">Selamat! Akun anda telah berhasil dibuat. Harap autentikasi akun Anda terlebih dahulu untuk masuk</string>
     <string name="auth_success">Authentikasi berhasil</string>
-    <string name="auth_to_login">Congratulations! Your account has been successfully created. Please login to get started</string>
+    <string name="auth_to_login">Selamat! Akun anda telah berhasil dibuat. Silakan masuk untuk memulai</string>
     <string name="auth_to_reset">Sekarang ayo ganti kata sandi anda</string>
-    <string name="alarm_message">Have you checked the type of soil around you? Let\'s scan it now</string>
+    <string name="alarm_message">Sudahkah Anda memeriksa jenis tanah di sekitar Anda? Mari kita pindai sekarang</string>
     <string name="permission_denied">Izin Akses Ditolak </string>
     <string name="resend_otp_req">Kirim Permintaan Kode Verifikasi</string>
     <string name="resend_otp_res">Kode Verifikasi telah dikirim lagi, silakan cek email anda</string>
@@ -99,7 +99,7 @@
     <string name="reset_fail_cause2">Password anda setidaknya terdiri dari 8 karakter dan menyertakan angka, huruf besar dan kecil, dan setidaknya satu simbol</string>
     <string name="reset_fail_cause1">Kata sandi dan konfirmasi kata sandi tidak boleh kosong</string>
     <string name="title_activity_navigation">NavigationActivity</string>
-    <string name="send_otp_fail">Tidak bisa mengirim kode verifikasi</string>
+    <string name="send_otp_fail">Tidak bisa mengirim OTP</string>
     <string name="send_otp_fail_cause1">Email tidak valid</string>
     <string name="send_otp_fail_cause2">Pastikan email diisi dengan benar</string>
     <string name="history_not_found">Riwayat tidak ditemukan</string>
@@ -107,15 +107,15 @@
     <string name="scan_success">Berhasil memindai</string>
     <string name="alert_no_image">Tidak ada gambar untuk dipindai</string>
     <string name="image_req">Silakan pilih gambar terlebih dahulu</string>
-    <string name="exPhone">ex : 085718620532</string>
-    <string name="exFirstName">ex : John</string>
-    <string name="exLastName">ex : Doe</string>
-    <string name="exAddress">ex : Cimahi, Jawa Barat</string>
-    <string name="cd_back">Back</string>
-    <string name="cd_previewImage">Profile Image Placeholder</string>
-    <string name="date_title">Scan Date</string>
-    <string name="cd_soil_image">Soil Image</string>
-    <string name="cd_scan">Scan</string>
+    <string name="exPhone">Contoh : 085718620532</string>
+    <string name="exFirstName">Contoh : John</string>
+    <string name="exLastName">Contoh : Doe</string>
+    <string name="exAddress">Contoh : Cimahi, Jawa Barat</string>
+    <string name="cd_back">Kembali</string>
+    <string name="cd_previewImage">Placeholder Gambar Profile</string>
+    <string name="date_title">Tanggal Scan</string>
+    <string name="cd_soil_image">Gambar Tanah</string>
+    <string name="cd_scan">Pindai</string>
     <string name="cd_profile">Profile</string>
     <string name="change_avatar_button">Ganti Avatar</string>
     <string name="first_name_title">Nama Depan</string>
@@ -126,11 +126,13 @@
     <string name="treat_button">Perawatan</string>
     <string name="plant_button">Tumbuhan</string>
     <string name="change_profile">Ganti Profile</string>
-    <string name="resend_otp_fail">gagal mengirim ulang kode verifikasi</string>
-    <string name="send_otp_fail_2">Gagal mengirim kode verifikasi</string>
+    <string name="resend_otp_fail">Gagal mengirim ulang OTP</string>
+    <string name="send_otp_fail_2">Gagal mengirim OTP</string>
     <string name="auth_fail">Authentikasi gagal</string>
     <string name="change_profile_fail">Gagal mengubah profile</string>
     <string name="choose_image">Pilih gambar terlebih dahulu</string>
     <string name="fail_show_history">Gagal menampilkan riwayat</string>
+    <string name="otp_sent_sucess">OTP telah dikirim</string>
+    <string name="otp_sent_success_mes">OTP sudah terkirim, silahkan cek email anda</string>
 
 </resources>

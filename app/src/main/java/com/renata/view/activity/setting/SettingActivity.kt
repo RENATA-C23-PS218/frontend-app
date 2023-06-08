@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.R
 import com.renata.databinding.ActivitySettingBinding
@@ -23,20 +22,11 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
         settingBinding.onNotifButton.setOnClickListener(this)
         settingBinding.offNotifButton.setOnClickListener(this)
         settingBinding.changeLangButton.setOnClickListener { setLanguage() }
-        settingBinding.backButton.setOnClickListener {backToPrevious()}
+        settingBinding.backButton.setOnClickListener { onBackPressed() }
     }
 
     private fun setLanguage() {
         startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-    }
-
-    private fun backToPrevious(){
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finish()
-            }
-        }
-        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     override fun onClick(v: View) {

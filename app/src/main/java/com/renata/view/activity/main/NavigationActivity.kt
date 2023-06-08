@@ -26,6 +26,7 @@ class NavigationActivity : AppCompatActivity() {
         navigationBinding.scanFab.setOnClickListener {
             val intent = Intent(this, ScanActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_out_bottom, R.anim.slide_in_bottom)
         }
     }
 
@@ -46,8 +47,6 @@ class NavigationActivity : AppCompatActivity() {
     private fun showLoading() {
         navigationBinding.progressBar.visibility = View.GONE
     }
-
-
 
 
 }

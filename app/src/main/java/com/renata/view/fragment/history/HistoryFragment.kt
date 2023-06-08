@@ -103,6 +103,10 @@ class HistoryFragment : Fragment() {
                                     )
                                     it.putExtra(DetailHistoryActivity.SCAN_DATE, detailHistory.date)
                                     startActivity(it)
+                                    requireActivity().overridePendingTransition(
+                                        R.anim.slide_out_bottom,
+                                        R.anim.slide_in_bottom
+                                    )
                                 }
                             }
                             is Result.Error -> {

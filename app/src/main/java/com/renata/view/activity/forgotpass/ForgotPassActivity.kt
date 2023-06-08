@@ -94,8 +94,8 @@ class ForgotPassActivity : AppCompatActivity() {
                     is Result.Success -> {
                         showLoading(false)
                         showAlert(
-                            getString(R.string.resend_otp_req),
-                            getString(R.string.resend_otp_res)
+                            getString(R.string.otp_sent_sucess),
+                            getString(R.string.otp_sent_success_mes)
                         ) {
                             val moveToAuth = Intent(
                                 this@ForgotPassActivity,
