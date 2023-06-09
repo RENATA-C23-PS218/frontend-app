@@ -3,6 +3,9 @@
     <!-- APP DESCRIPTION -->
     <string name="app_name">Renata</string>
     <string name="copyright">© 2023 RENATA</string>
+    <!-- NAVIGATION -->
+    <string name="history_nav">History</string>
+    <string name="account_nav">Account</string>
     <!-- BUTTON TEXT -->
     <string name="send_otp_button">Send OTP</string>
     <string name="login_button">Login</string>

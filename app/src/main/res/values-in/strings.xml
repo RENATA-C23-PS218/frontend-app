@@ -4,6 +4,9 @@
     <!-- APP DESCRIPTION -->
     <string name="app_name">Renata</string>
     <string name="copyright">© 2023 RENATA</string>
+    <!-- NAVIGATION -->
+    <string name="history_nav">Riwayat</string>
+    <string name="account_nav">Akun</string>
     <!-- BUTTON TEXT -->
     <string name="send_otp_button">Kirim OTP</string>
     <string name="login_button">Masuk</string>

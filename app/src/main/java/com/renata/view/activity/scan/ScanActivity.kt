@@ -251,6 +251,7 @@ class ScanActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@ScanActivity)
+            rotateFile(myFile, true)
             getFile = myFile
             scanBinding.imageLoading.visibility = View.GONE
             scanBinding.previewImageView.setImageURI(selectedImg)
