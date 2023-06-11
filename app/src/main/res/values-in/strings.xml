@@ -23,7 +23,7 @@
     <string name="save_changes_button">Simpan</string>
     <string name="dark_mode">Gelap</string>
     <string name="confirm_password_button">Konfirmasi Password</string>
-    <string name="change_button">Ubah</string>
+    <string name="change_button">Upload</string>
     <string name="try_again_button">Coba Lagi</string>
     <string name="result_button">Hasil</string>
     <!-- ERROR TEXT -->
@@ -95,6 +95,7 @@
     <string name="alarm_message2">Ayo kita pindai sekarang!</string>
     <string name="save_changes">Simpan Perubahan</string>
     <string name="save_changes_cause">Perubahan anda telah disimpan</string>
+    <string name="success_upload">Upload Berhasil!</string>
     <string name="reset_success">Ganti kata sandi berhasil</string>
     <string name="reset_to_login">Selamat! Kata sandi anda berhasil diganti. Silakan Masuk untuk memulai</string>
     <string name="reset_fail">Oops, Ganti kata sandi gagal</string>

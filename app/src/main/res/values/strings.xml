@@ -94,6 +94,7 @@
     <string name="alarm_message2">Let\'s scan now</string>
     <string name="save_changes">Save Changes</string>
     <string name="save_changes_cause">Your profile changes will be saved</string>
+    <string name="success_upload">Upload Successfully</string>
     <string name="reset_success">Reset Password Success</string>
     <string name="reset_to_login">Congratulations! Your password has been reset. Please login to get started</string>
     <string name="reset_fail">Reset Password Failed</string>

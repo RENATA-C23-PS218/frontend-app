@@ -121,8 +121,7 @@ class AvatarActivity : AppCompatActivity() {
                     val photo = data.url
                     showLoading(false)
                     showAlert(
-                        getString(R.string.save_changes),
-                        getString(R.string.save_changes_cause)
+                        getString(R.string.success_upload),
                     ) {
                         val resultIntent = Intent()
                         resultIntent.putExtra("photo", photo)
@@ -151,12 +150,12 @@ class AvatarActivity : AppCompatActivity() {
     }
 
     private fun showAlert(
-        title: String,
+//        title: String,
         message: String,
         positiveAction: (dialog: DialogInterface) -> Unit
     ) {
         AlertDialog.Builder(this).apply {
-            setTitle(title)
+//            setTitle(title)
             setMessage(message)
             setPositiveButton("OK") { dialog, _ ->
                 positiveAction.invoke(dialog)
