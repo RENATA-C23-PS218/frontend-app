@@ -34,7 +34,7 @@
     <string name="result_toolbar">Result</string>
     <string name="change_avatar_toolbar">Change Avatar</string>
     <string name="update_profile_toolbar">Update Profile</string>
-    <string name="detail_history_toolbar">Detail History</string>
+    <string name="detail_history_toolbar">History Detail</string>
     <!-- INTENT TEXT -->
     <string name="want_register">Don\'t have an account?</string>
     <string name="register_intent">Register here</string>
@@ -133,4 +133,5 @@
     <string name="fail_show_history">Failed to display history</string>
     <string name="otp_sent_sucess">OTP has been sent</string>
     <string name="otp_sent_success_mes">The OTP has been sent, please check your email</string>
+    <string name="grow_button">How To Grow</string>
 </resources>

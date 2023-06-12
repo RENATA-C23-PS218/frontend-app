@@ -42,7 +42,14 @@ class MyNameEditText : AppCompatEditText, View.OnTouchListener {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                val inputText = s.toString()
+                if (inputText.isEmpty()) {
+                    hideClearButton()
+                    this@MyNameEditText.setBackgroundResource(R.drawable.tv_border_green)
+                } else {
+                    showClearButton()
+                    this@MyNameEditText.setBackgroundResource(R.drawable.tv_border_red)
+                }
             }
 
             override fun afterTextChanged(s: Editable) {

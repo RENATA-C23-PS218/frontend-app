@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.renata.databinding.ActivityResultBinding
+import com.renata.view.activity.grow.GrowActivity
 import com.renata.view.activity.main.NavigationActivity
 
 class ResultActivity : AppCompatActivity() {
@@ -26,6 +27,17 @@ class ResultActivity : AppCompatActivity() {
         resultBinding.recomCrop.text = plantRecommendation
         resultBinding.backButton.setOnClickListener {
             backToMain()
+        }
+        resultBinding.growButton?.setOnClickListener {
+            val intent = Intent(this@ResultActivity, GrowActivity::class.java)
+            intent.putExtra("detected_class", detectedClass)
+            intent.putExtra("plant_recommendation", plantRecommendation)
+            startActivity(intent)
+            overridePendingTransition(
+                com.renata.R.anim.slide_out_bottom,
+                com.renata.R.anim.slide_in_bottom
+            )
+            finish()
         }
     }
 

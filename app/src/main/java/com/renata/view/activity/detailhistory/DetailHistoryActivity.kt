@@ -1,11 +1,13 @@
 package com.renata.view.activity.detailhistory
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.renata.databinding.ActivityDetailHistoryBinding
 import com.renata.utils.DateFormatter
+import com.renata.view.activity.grow.GrowActivity
 import java.util.*
 
 class DetailHistoryActivity : AppCompatActivity() {
@@ -38,6 +40,17 @@ class DetailHistoryActivity : AppCompatActivity() {
         detailHistoryBinding.backButton.setOnClickListener {
             finish()
             onBackPressed()
+        }
+        detailHistoryBinding.growButton?.setOnClickListener {
+            val intent = Intent(this@DetailHistoryActivity, GrowActivity::class.java)
+            intent.putExtra("detected_class", soilName)
+            intent.putExtra("plant_recommendation", plantRec)
+            startActivity(intent)
+            overridePendingTransition(
+                com.renata.R.anim.slide_out_bottom,
+                com.renata.R.anim.slide_in_bottom
+            )
+            finish()
         }
     }
 

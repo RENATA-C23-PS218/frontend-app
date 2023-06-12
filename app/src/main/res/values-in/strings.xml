@@ -138,5 +138,6 @@
     <string name="fail_show_history">Gagal menampilkan riwayat</string>
     <string name="otp_sent_sucess">OTP telah dikirim</string>
     <string name="otp_sent_success_mes">OTP sudah terkirim, silahkan cek email anda</string>
+    <string name="grow_button">How To Grow</string>
 
 </resources>
