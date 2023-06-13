@@ -14,7 +14,6 @@ import com.renata.data.user.login.LoginPreferences
 import com.renata.data.user.login.LoginResult
 import com.renata.databinding.ActivityGrowBinding
 import com.renata.view.activity.main.NavigationActivity
-import com.renata.view.activity.profile.ProfileViewModel
 
 class GrowActivity : AppCompatActivity() {
     private lateinit var growBinding: ActivityGrowBinding
@@ -39,11 +38,12 @@ class GrowActivity : AppCompatActivity() {
             backToMain()
         }
         growBinding.growButton.setOnClickListener {
-            growingStepProcess(detectedClassGrow!!)
+            showLoading(true)
+            growingStepProcess (detectedClassGrow!!)
         }
     }
 
-    private fun setViewModel(){
+    private fun setViewModel() {
         growViewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
@@ -89,13 +89,12 @@ class GrowActivity : AppCompatActivity() {
     }
 
     private fun growStep(plantName: String, soilTypeName: String) {
-        showLoading(true)
         growBinding.growingStep.visibility = View.VISIBLE
         growViewModel.setTreat(plantName, soilTypeName)
-        growViewModel.getTreat().observe(this){
+        growViewModel.getTreat().observe(this) {
+            showLoading(false)
             growBinding.growingStep.text = it.data
         }
-        showLoading(false)
     }
 
     private fun showAlert(
