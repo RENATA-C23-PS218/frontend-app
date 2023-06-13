@@ -9,11 +9,18 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.renata.data.user.login.LoginPreferences
+import com.renata.data.user.login.LoginResult
 import com.renata.databinding.ActivityGrowBinding
 import com.renata.view.activity.main.NavigationActivity
+import com.renata.view.activity.profile.ProfileViewModel
 
 class GrowActivity : AppCompatActivity() {
     private lateinit var growBinding: ActivityGrowBinding
+    private lateinit var growViewModel: GrowViewModel
+    private lateinit var loginPreference: LoginPreferences
+    private lateinit var loginResult: LoginResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +28,7 @@ class GrowActivity : AppCompatActivity() {
         setContentView(growBinding.root)
         showLoading(false)
 
+        setViewModel()
         growBinding.growingStep.visibility = View.GONE
         plantET()
         val detectedClassGrow = intent.getStringExtra("detected_class")
@@ -33,6 +41,13 @@ class GrowActivity : AppCompatActivity() {
         growBinding.growButton.setOnClickListener {
             growingStepProcess(detectedClassGrow!!)
         }
+    }
+
+    private fun setViewModel(){
+        growViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[GrowViewModel::class.java]
     }
 
     private fun plantET() {
@@ -74,7 +89,13 @@ class GrowActivity : AppCompatActivity() {
     }
 
     private fun growStep(plantName: String, soilTypeName: String) {
+        showLoading(true)
         growBinding.growingStep.visibility = View.VISIBLE
+        growViewModel.setTreat(plantName, soilTypeName)
+        growViewModel.getTreat().observe(this){
+            growBinding.growingStep.text = it.data
+        }
+        showLoading(false)
     }
 
     private fun showAlert(

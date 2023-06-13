@@ -3,6 +3,7 @@ package com.renata.data.retrofit
 import com.renata.data.plant.plantrecomm.PlantRecommendationResponse
 import com.renata.data.plant.scanhistory.DetailHistoryResponse
 import com.renata.data.plant.scanhistory.ScanHistoryResponse
+import com.renata.data.plant.treat.TreatResponse
 import com.renata.data.user.forgotpass.ForgotPassResponse
 import com.renata.data.user.login.LoginResponse
 import com.renata.data.user.register.RegisterResponse
@@ -99,6 +100,14 @@ interface ApiService {
         @Part file: MultipartBody.Part
     ): Call<PlantRecommendationResponse>
 
+// Treat
+
+    @Headers("Content-Type: application/json")
+    @POST("predict")
+    fun treatPlant(
+        @Body requestBody: RequestBody
+    ): Call<TreatResponse>
+
     @GET("scan-histories")
     fun scanHistory(
         @Header("Authorization") token: String
@@ -109,4 +118,6 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Call<DetailHistoryResponse>
+
+
 }
