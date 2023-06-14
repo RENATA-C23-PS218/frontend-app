@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/rajdhani700"
-            android:text="How To Grow"
+            android:text="@string/how_to_grow_toolbar"
             android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/text_size_toolbar"
             android:textStyle="bold" />
@@ -165,7 +165,7 @@
                 android:layout_marginEnd="20dp"
                 android:ellipsize="none"
                 android:maxLines="10"
-                android:text="Insert Your Plant Name"
+                android:text="@string/insert_your_plant_name_title"
                 android:textAlignment="center"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="@dimen/text_size_medium"
@@ -194,7 +194,7 @@
                 app:layout_constraintStart_toStartOf="@+id/insert_plant_aler"
                 app:layout_constraintTop_toBottomOf="@+id/barrier3">
 
-                <EditText
+                <com.renata.customview.MyNameEditText
                     android:id="@+id/ed_plant"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

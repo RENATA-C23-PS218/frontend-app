@@ -13,14 +13,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GrowViewModel: ViewModel() {
+class GrowViewModel : ViewModel() {
 
     val treat = MutableLiveData<TreatResponse>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun setTreat(plant: String, soil: String){
+    fun setTreat(plant: String, soil: String) {
         val jsonBody = JSONObject()
         jsonBody.put("plant", plant)
         jsonBody.put("soil", soil)
@@ -28,13 +28,14 @@ class GrowViewModel: ViewModel() {
 
         _isLoading.postValue(true)
         val client = ApiConfig.getApiService().treatPlant(requestBody)
-        client.enqueue(object: Callback<TreatResponse>{
+        client.enqueue(object : Callback<TreatResponse> {
             override fun onResponse(call: Call<TreatResponse>, response: Response<TreatResponse>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     treat.postValue(response.body())
                 }
                 _isLoading.postValue(false)
             }
+
             override fun onFailure(call: Call<TreatResponse>, t: Throwable) {
                 t.message?.let { Log.d("Failure", it) }
                 _isLoading.postValue(false)
@@ -43,7 +44,7 @@ class GrowViewModel: ViewModel() {
         })
     }
 
-    fun getTreat(): LiveData<TreatResponse>{
+    fun getTreat(): LiveData<TreatResponse> {
         return treat
     }
 

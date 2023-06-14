@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 object DateFormatter {
     fun formatDate(currentDateString: String, targetTimeZone: String): String {
         val instant = Instant.parse(currentDateString)
-        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy | HH:mm")
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy | HH:mm")
             .withZone(ZoneId.of(targetTimeZone))
         return formatter.format(instant)
     }

@@ -22,6 +22,7 @@
     <string name="change_button">Change</string>
     <string name="try_again_button">Try Again</string>
     <string name="result_button">Result</string>
+    <string name="grow_button">How To Grow</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Invalid email format</string>
     <string name="error_password">Your password must have at least 8 characters and include number, uppercase and lowercase letters, and at least one symbol</string>
@@ -35,6 +36,7 @@
     <string name="change_avatar_toolbar">Change Avatar</string>
     <string name="update_profile_toolbar">Update Profile</string>
     <string name="detail_history_toolbar">History Detail</string>
+    <string name="how_to_grow_toolbar">How To Grow</string>
     <!-- INTENT TEXT -->
     <string name="want_register">Don\'t have an account?</string>
     <string name="register_intent">Register here</string>
@@ -61,6 +63,7 @@
     <string name="reset_password_req">Enter your new password</string>
     <string name="soil_type_title">Soil Type</string>
     <string name="plant_recommendations_title">Plant Recommendations</string>
+    <string name="insert_your_plant_name_title">Insert Your Plant Name</string>
     <!-- PLACEHOLDER -->
     <string name="soil_placeholder">soil</string>
     <string name="plant_placeholder">plant</string>
@@ -133,5 +136,7 @@
     <string name="fail_show_history">Failed to display history</string>
     <string name="otp_sent_sucess">OTP has been sent</string>
     <string name="otp_sent_success_mes">The OTP has been sent, please check your email</string>
-    <string name="grow_button">How To Grow</string>
+    <string name="insert_plant_error">Please Insert Plant Name</string>
+    <string name="grow_step_fail">Failed to get step on grow</string>
+    <string name="grow_step_fail_cause">Make sure you enter the correct plant name</string>
 </resources>

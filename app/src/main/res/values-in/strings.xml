@@ -23,9 +23,10 @@
     <string name="save_changes_button">Simpan</string>
     <string name="dark_mode">Gelap</string>
     <string name="confirm_password_button">Konfirmasi Password</string>
-    <string name="change_button">Upload</string>
+    <string name="change_button">Unggah</string>
     <string name="try_again_button">Coba Lagi</string>
     <string name="result_button">Hasil</string>
+    <string name="grow_button">Cara Menanam</string>
     <!-- ERROR TEXT -->
     <string name="error_email">Format email salah</string>
     <string name="error_password">Password anda setidaknya terdiri dari 8 karakter dan menyertakan angka, huruf besar dan kecil, dan setidaknya satu simbol</string>
@@ -39,6 +40,7 @@
     <string name="change_avatar_toolbar">Ganti Avatar</string>
     <string name="update_profile_toolbar">Ganti Profile</string>
     <string name="detail_history_toolbar">Detail Riwayat</string>
+    <string name="how_to_grow_toolbar">Cara Menanam</string>
     <!-- INTENT TEXT -->
     <string name="want_register">Belum punya akun?</string>
     <string name="register_intent">Register disini!</string>
@@ -65,6 +67,7 @@
     <string name="reset_password_req">Masukkan Kata Sandi Baru </string>
     <string name="soil_type_title">Jenis Tanah</string>
     <string name="plant_recommendations_title">Tumbuhan Yang Direkomendasikan</string>
+    <string name="insert_your_plant_name_title">Masukkan Nama Tanaman Anda</string>
     <!-- PLACEHOLDER -->
     <string name="soil_placeholder">Tanah</string>
     <string name="plant_placeholder">Tumbuhan</string>
@@ -138,6 +141,7 @@
     <string name="fail_show_history">Gagal menampilkan riwayat</string>
     <string name="otp_sent_sucess">OTP telah dikirim</string>
     <string name="otp_sent_success_mes">OTP sudah terkirim, silahkan cek email anda</string>
-    <string name="grow_button">How To Grow</string>
-
+    <string name="insert_plant_error">Masukkan Nama Tanaman</string>
+    <string name="grow_step_fail">Gagal Mendapatkan Cara Menanam</string>
+    <string name="grow_step_fail_cause">Pastikan Anda Memasukkan Nama Tanaman Dangan Benar</string>
 </resources>

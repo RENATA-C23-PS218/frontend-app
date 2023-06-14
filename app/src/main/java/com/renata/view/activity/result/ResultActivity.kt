@@ -28,7 +28,7 @@ class ResultActivity : AppCompatActivity() {
         resultBinding.backButton.setOnClickListener {
             backToMain()
         }
-        resultBinding.growButton?.setOnClickListener {
+        resultBinding.growButton.setOnClickListener {
             val intent = Intent(this@ResultActivity, GrowActivity::class.java)
             intent.putExtra("detected_class", detectedClass)
             intent.putExtra("plant_recommendation", plantRecommendation)

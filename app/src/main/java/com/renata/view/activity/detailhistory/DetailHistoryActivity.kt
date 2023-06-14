@@ -41,7 +41,7 @@ class DetailHistoryActivity : AppCompatActivity() {
             finish()
             onBackPressed()
         }
-        detailHistoryBinding.growButton?.setOnClickListener {
+        detailHistoryBinding.growButton.setOnClickListener {
             val intent = Intent(this@DetailHistoryActivity, GrowActivity::class.java)
             intent.putExtra("detected_class", soilName)
             intent.putExtra("plant_recommendation", plantRec)

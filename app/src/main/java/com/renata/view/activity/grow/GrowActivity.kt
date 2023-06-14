@@ -10,6 +10,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.renata.R
 import com.renata.data.user.login.LoginPreferences
 import com.renata.data.user.login.LoginResult
 import com.renata.databinding.ActivityGrowBinding
@@ -39,7 +40,7 @@ class GrowActivity : AppCompatActivity() {
         }
         growBinding.growButton.setOnClickListener {
             showLoading(true)
-            growingStepProcess (detectedClassGrow!!)
+            growingStepProcess(detectedClassGrow!!)
         }
     }
 
@@ -72,7 +73,7 @@ class GrowActivity : AppCompatActivity() {
             plant.isEmpty() -> {
                 showLoading(false)
                 growBinding.errorPlant.visibility = View.VISIBLE
-                growBinding.errorPlant.text = "Please Insert Plant Name"
+                growBinding.errorPlant.text = getString(R.string.insert_plant_error)
             }
             else -> {
                 if (!TextUtils.isEmpty(plant)) {
@@ -80,8 +81,8 @@ class GrowActivity : AppCompatActivity() {
                 } else {
                     showLoading(false)
                     showAlert(
-                        "Failed to get step on grow",
-                        "Make sure you enter the correct plant name"
+                        getString(R.string.grow_step_fail),
+                        getString(R.string.grow_step_fail_cause)
                     ) { finish() }
                 }
             }
@@ -121,8 +122,8 @@ class GrowActivity : AppCompatActivity() {
         val intent = Intent(this@GrowActivity, NavigationActivity::class.java)
         startActivity(intent)
         overridePendingTransition(
-            com.renata.R.anim.slide_out_bottom,
-            com.renata.R.anim.slide_in_bottom
+            R.anim.slide_out_bottom,
+            R.anim.slide_in_bottom
         )
         finish()
     }
