@@ -28,6 +28,13 @@ class GrowActivity : AppCompatActivity() {
         setContentView(growBinding.root)
         showLoading(false)
 
+        if (savedInstanceState != null) {
+            val growingStepText = savedInstanceState.getString("growingStepText")
+            growingStepText?.let {
+                growBinding.growingStep.text = it
+                growBinding.growingStep.visibility = View.VISIBLE
+            }
+        }
         setViewModel()
         growBinding.growingStep.visibility = View.GONE
         plantET()
@@ -41,6 +48,23 @@ class GrowActivity : AppCompatActivity() {
         growBinding.growButton.setOnClickListener {
             showLoading(true)
             growingStepProcess(detectedClassGrow!!)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (growBinding.growingStep.visibility == View.VISIBLE) {
+            val growingStepText = growBinding.growingStep.text.toString()
+            outState.putString("growingStepText", growingStepText)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val growingStepText = savedInstanceState.getString("growingStepText")
+        growingStepText?.let {
+            growBinding.growingStep.text = it
+            growBinding.growingStep.visibility = View.VISIBLE
         }
     }
 

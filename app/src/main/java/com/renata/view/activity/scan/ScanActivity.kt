@@ -45,7 +45,6 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         scanBinding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(scanBinding.root)
-
         scanViewModel = obtainViewModel(this as AppCompatActivity)
         loginPreference = LoginPreferences(this)
         loginResult = loginPreference.getUser()
